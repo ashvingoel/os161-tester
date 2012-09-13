@@ -19,3 +19,11 @@ class TestUnit:
 			kernel.send(cmd_char[i])
 		kernel.send('\n')
 		return
+
+	def basic_test_unit(self, cmd, result):
+		send_command(cmd)
+		try:
+			kernel.expect(result)
+		except TIMEOUT:
+			return False
+		return True
