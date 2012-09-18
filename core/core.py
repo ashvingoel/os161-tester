@@ -27,3 +27,10 @@ class TestUnit:
 		except TIMEOUT:
 			return False
 		return True
+
+	def basic_read_test(self, result):
+		try:
+			kernel.expect(result)
+		except TIMEOUT:
+			return False
+		return True
