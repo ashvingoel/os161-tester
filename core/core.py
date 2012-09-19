@@ -1,12 +1,13 @@
 #!/usr/bin/python
 
-import * from pexpect
+import pexpect
 
 class TestUnit:
 	#Implicit assumptions, sys161 is in path
 	def __init__(self, path_to_kernel):
-		kernel = spawn('sys161 '+path_to_kernel)
-		return
+		global kernel
+		path = 'sys161 ' + str(path_to_kernel)
+		kernel = pexpect.spawn(path)
 
 	#We need to wait before we can actually send a command.
 	def send_command(self, cmd):
@@ -16,7 +17,7 @@ class TestUnit:
 		#a lot of fun ;-)
 		cmd_char = list(cmd)
 		for i in cmd_char:
-			kernel.send(cmd_char[i])
+			kernel.send(i)
 		kernel.send('\n')
 		return
 
@@ -24,13 +25,13 @@ class TestUnit:
 		send_command(cmd)
 		try:
 			kernel.expect(result)
-		except TIMEOUT:
+		except pexpect.TIMEOUT, e:
 			return False
 		return True
 
 	def basic_read_test(self, result):
 		try:
 			kernel.expect(result)
-		except TIMEOUT:
+		except pexpect.TIMEOUT, e:
 			return False
 		return True
