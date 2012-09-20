@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import pexpect
+import sys
 
 class TestUnit:
 	#Implicit assumptions, sys161 is in path
@@ -8,6 +9,7 @@ class TestUnit:
 		global kernel
 		path = 'sys161 ' + str(path_to_kernel)
 		kernel = pexpect.spawn(path)
+		#kernel.logfile = sys.stdout
 
 	#We need to wait before we can actually send a command.
 	def send_command(self, cmd):
@@ -20,14 +22,6 @@ class TestUnit:
 			kernel.send(i)
 		kernel.send('\n')
 		return
-
-	def basic_test_unit(self, cmd, result):
-		send_command(cmd)
-		try:
-			kernel.expect(result)
-		except pexpect.TIMEOUT, e:
-			return False
-		return True
 
 	def basic_read_test(self, result):
 		try:
