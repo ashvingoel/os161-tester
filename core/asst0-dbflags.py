@@ -18,6 +18,7 @@ def setDBValue(value, on):
 	kernel.send_command(path)
 
 def testDBValue(value, on, res):
+	print "Turning on dbflags value " + value
 	setDBValue(value, on)
 	return checkDBValue(res)
 
@@ -41,6 +42,8 @@ def main():
 	testDBFlags(path)
 	checkDBValue("0x0")
 	testDBValue(1, on, "0x1")
+	testDBValue(1, off, "0x0")
+	testDBValue(5, on, "0x20")
 
 
 
