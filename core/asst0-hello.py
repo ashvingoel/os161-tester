@@ -4,7 +4,7 @@ import core
 import sys
 
 def testHelloWorld(path_to_kernel):
-	kernel = core.TestUnit(path_to_kernel)
+	kernel = core.TestUnit(path_to_kernel, "Testing Hello World")
 	ret = kernel.basic_read_test("Hello World")
 	kernel.send_command("q")
 	return ret

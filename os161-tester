@@ -1,5 +1,55 @@
 #!/bin/bash
 
-TEST_PATH=$HOME/os161-tester/
+BIN_PATH=/cad2/ece344f/cs161/bin
+TEST_PATH=/cad2/ece344f/os161-tester
 
-$TEST_PATH/ug-bootstrap.sh
+#setup the path, making sure that our path is first
+export PATH=$BIN_PATH:$TEST_PATH:$PATH
+
+PROG=$(basename $0)
+
+function usage() {
+    echo "Usage: $PROG [assignment_nr]" 1>&2;
+    echo "If assignment_nr is not specified, then all tests are run" 1>&2;
+    echo "Otherwise, it must be 0, 1, 2 or 3" 1>&2;
+
+    exit 1;
+}
+
+# make sure that we are in the correct OS161 root directory
+if [ ! -f kernel ]; then
+    echo "$PROG: The os161 kernel executable does not exist in this directory. Run this script from the OS161 root directory." 1>&2;
+    exit 1;
+fi
+
+if [ ! -x kernel ]; then
+    echo "$PROG: The os161 kernel executable in this directory is not executable. Run this script from the OS161 root directory." 1>&2;
+    exit 1;
+fi
+
+# by default, check all assignments
+ASSIGNMENTS="0 1 2 3"
+
+if [ $# -gt 1 ]; then
+    usage;
+fi
+
+if [ $# -eq 1 ]; then
+    if [ $1 -ne "0" -a $1 -ne "1" -a $1 -ne "2" -a $1 -ne "3" ]; then
+        usage;
+    fi
+    # check only one assignment
+    ASSIGNMENTS=$1
+fi
+
+for i in $ASSIGNMENTS; do
+    echo "Running tests for Assignment $i";
+    for test in $TEST_PATH/core/asst${i}*.py; do
+        if [ -x $test ]; then
+            echo $test;
+            $test kernel;
+        fi
+    done
+    echo
+done
+

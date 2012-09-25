@@ -5,10 +5,11 @@ import sys
 
 class TestUnit:
 	#Implicit assumptions, sys161 is in path
-	def __init__(self, path_to_kernel):
+	def __init__(self, path_to_kernel, message):
 		global kernel
 		path = 'sys161 ' + str(path_to_kernel)
 		kernel = pexpect.spawn(path)
+                print message
 		#kernel.logfile = sys.stdout
 
 	#We need to wait before we can actually send a command.

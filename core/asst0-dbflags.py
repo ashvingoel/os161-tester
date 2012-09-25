@@ -33,7 +33,7 @@ def testDBValue(value, on, res):
 
 def testDBFlags(path_to_kernel):
 	global kernel
-	kernel = core.TestUnit(path_to_kernel)
+	kernel = core.TestUnit(path_to_kernel, "Testing dbflags")
 	#Check if we have the dbflags menu option
 	kernel.send_command("?o")
 	res = kernel.basic_read_test('\[dbflags\] Debug flags')
