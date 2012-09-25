@@ -9,12 +9,12 @@ class TestUnit:
 		global kernel
 		path = 'sys161 ' + str(path_to_kernel)
 		kernel = pexpect.spawn(path)
-                print message
 		#kernel.logfile = sys.stdout
+                print message
 
 	#We need to wait before we can actually send a command.
 	def send_command(self, cmd):
-		kernel.expect('for menu')
+		kernel.expect('OS\/161 kernel \[\? for menu\]\: ')
 		#The fun bit is, we need to send the command character by
 		#character to the simulator, otherwise we are going to have
 		#a lot of fun ;-)
@@ -26,6 +26,7 @@ class TestUnit:
 
 	def basic_read_test(self, result):
 		try:
+                        # print "running expect on " + result
 			kernel.expect(result)
 		except pexpect.TIMEOUT, e:
 			return False
