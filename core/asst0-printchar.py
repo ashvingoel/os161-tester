@@ -6,7 +6,9 @@ import sys
 def testPrintChar(path_to_kernel):
 	global kernel
 	kernel = core.TestUnit(path_to_kernel)
-	check = 'H**e**l**l**o**p**r**i**n**t**f**\!'
+	check = 'H*e*l*l*o*w*o*r*l*d*\!*H*e*l*l*o*p*r*i*n*t*f*\!*'
+	#check = 'H*e*l*l*o*p*r*i*n*t*f*\!'
+	#check = 'H**e**l**l**o**p**r**i**n**t**f**\!'
 	kernel.send_command("p /testbin/printchar")
 	out = kernel.basic_read_test(check)
 	if out is True:
