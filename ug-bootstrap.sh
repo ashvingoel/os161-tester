@@ -1,7 +1,8 @@
 #!/bin/bash
 
 BIN_PATH=/cad2/ece344f/cs161/bin
-TEST_PATH=/cad2/ece344f/cs161-tester/
+#TEST_PATH=/cad2/ece344f/cs161-tester/
+TEST_PATH=$HOME/os161-tester/
 
 #setup the path
 export PATH=$PATH:$BIN_PATH:$TEST_PATH
@@ -11,7 +12,7 @@ echo "Entering $HOME/ece344/root"
 cd $HOME/ece344/root
 
 echo "Testing HELLO WORLD"
-asst0-hello.py
+$TEST_PATH/core/asst0-hello.py kernel
 
 echo "Testing dbflags"
-asst0-dbflags.py
+$TEST_PATH/core/asst0-dbflags.py kernel

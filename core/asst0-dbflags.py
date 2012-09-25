@@ -12,10 +12,19 @@ def checkDBValue(res):
 	else:
 		print "FAIL"
 
-
 def setDBValue(value, on):
 	path = "df " + str(value) + " " + on
 	kernel.send_command(path)
+
+def failDBValue(value, on):
+	print "Turning " + on + "dbflags value" + str(value)
+	check = 'Invalid argument'
+	setDBValue(value, on)
+	out = kernel.basic_read_test(check)
+	if out is True:
+		print "PASS"
+	else:
+		print "FAIL"
 
 def testDBValue(value, on, res):
 	print "Turning " + on + " dbflags value " + str(value)
@@ -34,7 +43,6 @@ def testDBFlags(path_to_kernel):
 	else:
 		print "FAIL"
 
-
 def main():
 	on = "on"
 	off = "off"
@@ -44,6 +52,7 @@ def main():
 	testDBValue(1, on, "0x1")
 	testDBValue(1, off, "0x0")
 	testDBValue(5, on, "0x10")
+	failDBValue(13, on)
 
 
 

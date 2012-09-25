@@ -1,0 +1,5 @@
+#!/bin/bash
+
+TEST_PATH=$HOME/os161-tester/
+
+$TEST_PATH/ug-bootstrap.sh
