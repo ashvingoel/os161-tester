@@ -16,3 +16,6 @@ $TEST_PATH/core/asst0-hello.py kernel
 
 echo "Testing dbflags"
 $TEST_PATH/core/asst0-dbflags.py kernel
+
+echo "Testing printchar"
+$TEST_PATH/core/asst0-printchar.py kernel
