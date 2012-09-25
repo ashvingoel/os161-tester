@@ -17,7 +17,7 @@ def setDBValue(value, on):
 	kernel.send_command(path)
 
 def failDBValue(value, on):
-	print "Turning " + on + "dbflags value" + str(value)
+	print "Turning " + on + " dbflags value " + str(value)
 	check = 'Invalid argument'
 	setDBValue(value, on)
 	out = kernel.basic_read_test(check)
