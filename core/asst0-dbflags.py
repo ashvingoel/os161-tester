@@ -18,7 +18,7 @@ def setDBValue(value, on):
 
 def failDBValue(value, on):
 	print "Turning " + on + " dbflags value " + str(value)
-	check = 'Invalid argument'
+	check = 'Usage: df nr on\/off'
 	setDBValue(value, on)
 	out = kernel.basic_read_test(check)
 	if out is True:
