@@ -1,12 +1,15 @@
 #!/bin/bash
 
 BIN_PATH=/cad2/ece344f/cs161/bin
+TEST_PATH=/cad2/ece344f/os161-tester
 
-# Set up the TEST_PATH based on where this script is called from.
-# This allows running the tests from a non-install location.
-TEST_PATH=$(dirname $(readlink -f $BASH_SOURCE))
-
-echo "Tester path is $TEST_PATH"
+# Set up the TEST_PATH for a non-install location.
+BIN_PATH_CANON=$(readlink -f $BIN_PATH)
+CUR_PATH_CANON=$(dirname $(readlink -f $BASH_SOURCE))
+if [ $BIN_PATH_CANON != $CUR_PATH_CANON ]; then
+    TEST_PATH=$CUR_PATH_CANON
+    echo "Tester path is $TEST_PATH"
+fi
 
 #setup the path, making sure that our path is first
 export PATH=$BIN_PATH:$PATH
