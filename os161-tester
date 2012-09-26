@@ -1,10 +1,15 @@
 #!/bin/bash
 
 BIN_PATH=/cad2/ece344f/cs161/bin
-TEST_PATH=/cad2/ece344f/os161-tester
+
+# Set up the TEST_PATH based on where this script is called from.
+# This allows running the tests from a non-install location.
+TEST_PATH=$(dirname $(readlink -f $BASH_SOURCE))
+
+echo "Tester path is $TEST_PATH"
 
 #setup the path, making sure that our path is first
-export PATH=$BIN_PATH:$TEST_PATH:$PATH
+export PATH=$BIN_PATH:$PATH
 
 PROG=$(basename $0)
 
@@ -60,7 +65,7 @@ for i in $ASSIGNMENTS; do
     echo "Running tests for Assignment $i";
     for test in $TEST_PATH/core/asst${i}*.py; do
         if [ -x $test ]; then
-            echo $test;
+            # echo $test;
             $test kernel;
         fi
     done
