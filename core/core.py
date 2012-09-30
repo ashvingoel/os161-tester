@@ -40,3 +40,11 @@ class TestUnit:
 		except pexpect.TIMEOUT, e:
 			return False
 		return True
+
+	def basic_read_test_and_print(self, result):
+                out = self.basic_read_test(result)
+                if out is True:
+                        print "PASS"
+                else:
+                        print "FAIL"
+

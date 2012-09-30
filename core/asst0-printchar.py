@@ -11,12 +11,7 @@ def testPrintChar(path_to_kernel):
 	#check = 'H*e*l*l*o*p*r*i*n*t*f*\!'
 	#check = 'H**e**l**l**o**p**r**i**n**t**f**\!'
 	kernel.send_command("p /testbin/printchar")
-	out = kernel.basic_read_test(check)
-	if out is True:
-		print "PASS"
-	else:
-		print "FAIL"
-
+	kernel.basic_read_test_and_print(check)
 
 def main():
 	path = str(sys.argv[1])

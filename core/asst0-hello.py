@@ -5,17 +5,12 @@ import sys
 
 def testHelloWorld(path_to_kernel):
 	kernel = core.TestUnit(path_to_kernel, "Testing Hello World")
-	ret = kernel.basic_read_test("Hello World")
-	kernel.send_command("q")
-	return ret
+	kernel.basic_read_test_and_print("Hello World")
+	# kernel.send_command("q")
 
 def main():
 	path = str(sys.argv[1])
-	a = testHelloWorld(path)
-	if a is True:
-		print "PASS"
-	else:
-		print "FAIL"
+	testHelloWorld(path)
 
 if __name__ == "__main__":
 	main()

@@ -6,11 +6,7 @@ import sys
 def checkDBValue(res):
 	check = 'Current value of dbflags is ' + res
 	kernel.send_command("dbflags")
-	out = kernel.basic_read_test(check)
-	if out is True:
-		print "PASS"
-	else:
-		print "FAIL"
+	kernel.basic_read_test_and_print(check)
 
 def setDBValue(value, on):
 	path = "df " + str(value) + " " + on
@@ -20,11 +16,7 @@ def failDBValue(value, on):
 	print "Turning " + on + " dbflags value " + str(value)
 	check = 'Usage: df nr on\/off'
 	setDBValue(value, on)
-	out = kernel.basic_read_test(check)
-	if out is True:
-		print "PASS"
-	else:
-		print "FAIL"
+	kernel.basic_read_test_and_print(check)
 
 def testDBValue(value, on, res):
 	print "Turning " + on + " dbflags value " + str(value)
@@ -36,12 +28,7 @@ def testDBFlags(path_to_kernel):
 	kernel = core.TestUnit(path_to_kernel, "Testing dbflags")
 	#Check if we have the dbflags menu option
 	kernel.send_command("?o")
-	res = kernel.basic_read_test('\[dbflags\] Debug flags')
-	#res = kernel.basic_test_unit("?o", '\[dbflags\] Debug flags')
-	if res is True:
-		print "PASS"
-	else:
-		print "FAIL"
+	kernel.basic_read_test_and_print('\[dbflags\] Debug flags')
 
 def main():
 	on = "on"
