@@ -40,13 +40,13 @@ class TestUnit:
                                 print "EXPECTING: " + str(result)
 			index = kernel.expect(result)
                 except pexpect.TIMEOUT, e:
-                        print "Timeout occurred"
+                        print "TIMEOUT ERROR"
 			return -1
                 except pexpect.EOF:
-                        print "End of file error"
+                        print "END OF FILE ERROR"
 			return -1
                 except Exception:
-                        print "Unexpected error", sys.exc_info()[0]
+                        print "UNEXPECTED ERROR", sys.exc_info()[0]
 			return -1
 		return index
 

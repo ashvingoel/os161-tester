@@ -3,12 +3,9 @@
 import core
 import sys
 
-def main():
-	global test
+def catmouse(test, cmd):
         result = 0
-	kernel_name = str(sys.argv[1])
-	test = core.TestUnit(kernel_name, "Testing cat and mouse")
-	test.send_command("1a")
+	test.send_command(cmd)
 
         bowls = [ -1, -1]
         mouse_cat = 0
@@ -107,8 +104,21 @@ def main():
                 if empty == 1:
                     mouse_cat = 0
 
-        test.print_result(result)
+        return result
 
+def main():
+	global test
+        result = 0
+
+        # try cat with semaphores
+	kernel_name = str(sys.argv[1])
+	test = core.TestUnit(kernel_name, "Testing cat/mouse using semaphores")
+        result = catmouse(test, '1a')
+        if result < 0:
+            # try cat with locks
+            test = core.TestUnit(kernel_name, "Testing cat/mouse using locks")
+            result = catmouse(test, '1b')
+        test.print_result(result)
 
 if __name__ == "__main__":
 	main()
