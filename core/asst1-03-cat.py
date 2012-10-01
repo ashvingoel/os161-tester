@@ -28,9 +28,6 @@ def catmouse(test, cmd):
                 result = -1 # no match failure
                 break
 
-            # show output
-            print str(i) + ': ' + test.kernel().match.group(0)
-
             nr, bowl, iteration = test.kernel().match.groups()
             nr = int(nr)
             bowl = int(bowl)
@@ -39,7 +36,6 @@ def catmouse(test, cmd):
             # sanity check
             if bowl < 1 or bowl > 2:
                 print 'bowl nr should be 1 or 2'
-                print bowl
                 result = -1
                 break
 

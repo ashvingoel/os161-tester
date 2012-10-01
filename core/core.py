@@ -39,6 +39,8 @@ class TestUnit:
                         if verbose != 0:
                                 print "EXPECTING: " + str(result)
 			index = kernel.expect(result)
+                        if verbose != 0:
+                                print "FOUND: " + kernel.match.group(0)
                 except pexpect.TIMEOUT, e:
                         print "TIMEOUT ERROR"
 			return -1
