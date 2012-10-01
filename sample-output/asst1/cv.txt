@@ -1,0 +1,283 @@
+Before:
+-------
+
+OS/161 kernel [? for menu]: sy3
+sy3
+Starting CV test...
+Threads should print out in reverse order.
+cccccccccvccccccccccccccccccccccv_wait took only 10360 ns
+That's too fast... you must be busy-looping
+Thread 31
+cv_wait took only 10360 ns
+That's too fast... you must be busy-looping
+_wait took only 10360 ns
+That's too fast... you must be busy-looping
+vv_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fv_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_waiv_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only v10360 ns
+That's too fast... you must be busy-looping
+_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must bev_wait took only 10360 ns
+That's too fast... you must be busy-looping
+v_wait took only 10360 ns
+That's too fast... you must be busy-looping
+fast... you must be busy-looping
+fast... you must be busy-looping
+ busy-looping
+CV test done
+Operation took 1.889564520 seconds
+
+
+After:
+------
+
+OS/161 kernel [? for menu]: sy3
+Starting CV test...
+Threads should print out in reverse order.
+Thread 31
+Thread 30
+Thread 29
+Thread 28
+Thread 27
+Thread 26
+Thread 25
+Thread 24
+Thread 23
+Thread 22
+Thread 21
+Thread 20
+Thread 19
+Thread 18
+Thread 17
+Thread 16
+Thread 15
+Thread 14
+Thread 13
+Thread 12
+Thread 11
+Thread 10
+Thread 9
+Thread 8
+Thread 7
+Thread 6
+Thread 5
+Thread 4
+Thread 3
+Thread 2
+Thread 1
+Thread 0
+Thread 31
+Thread 30
+Thread 29
+Thread 28
+Thread 27
+Thread 26
+Thread 25
+Thread 24
+Thread 23
+Thread 22
+Thread 21
+Thread 20
+Thread 19
+Thread 18
+Thread 17
+Thread 16
+Thread 15
+Thread 14
+Thread 13
+Thread 12
+Thread 11
+Thread 10
+Thread 9
+Thread 8
+Thread 7
+Thread 6
+Thread 5
+Thread 4
+Thread 3
+Thread 2
+Thread 1
+Thread 0
+Thread 31
+Thread 30
+Thread 29
+Thread 28
+Thread 27
+Thread 26
+Thread 25
+Thread 24
+Thread 23
+Thread 22
+Thread 21
+Thread 20
+Thread 19
+Thread 18
+Thread 17
+Thread 16
+Thread 15
+Thread 14
+Thread 13
+Thread 12
+Thread 11
+Thread 10
+Thread 9
+Thread 8
+Thread 7
+Thread 6
+Thread 5
+Thread 4
+Thread 3
+Thread 2
+Thread 1
+Thread 0
+Thread 31
+Thread 30
+Thread 29
+Thread 28
+Thread 27
+Thread 26
+Thread 25
+Thread 24
+Thread 23
+Thread 22
+Thread 21
+Thread 20
+Thread 19
+Thread 18
+Thread 17
+Thread 16
+Thread 15
+Thread 14
+Thread 13
+Thread 12
+Thread 11
+Thread 10
+Thread 9
+Thread 8
+Thread 7
+Thread 6
+Thread 5
+Thread 4
+Thread 3
+Thread 2
+Thread 1
+Thread 0
+Thread 31
+Thread 30
+Thread 29
+Thread 28
+Thread 27
+Thread 26
+Thread 25
+Thread 24
+Thread 23
+Thread 22
+Thread 21
+Thread 20
+Thread 19
+Thread 18
+Thread 17
+Thread 16
+Thread 15
+Thread 14
+Thread 13
+Thread 12
+Thread 11
+Thread 10
+Thread 9
+Thread 8
+Thread 7
+Thread 6
+Thread 5
+Thread 4
+Thread 3
+Thread 2
+Thread 1
+Thread 0
+CV test done
+Operation took 4.896549760 seconds
