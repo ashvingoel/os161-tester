@@ -3,12 +3,18 @@
 import core
 import sys
 
+# TODO: we are not checking iteration number.
+# TODO: should make the code work for arbitrary number of animals, bowls, etc.
+
 def catmouse(test, cmd):
         result = 0
 	test.send_command(cmd)
 
-        bowls = [ -1, -1]
-        mouse_cat = 0
+        bowls = [ -1, -1] # cat or mouse nr who is eating
+        mouse_cat = 0     # 1 when cats are eating, 2 when mouse are eating
+        nr_eating = 0     # 0, 1, 2: depending on how may bowls are in use
+        max_cats_eating = 0
+        max_mice_eating = 0
 
         # look for 64 outputs = 
         # 8 (6 cats + 2 mouse) * 2 (start, end) * 4 iterations
@@ -21,7 +27,8 @@ def catmouse(test, cmd):
             if out < 0:
                 result = -1 # no match failure
                 break
-            # go to show output
+
+            # show output
             print str(i) + ': ' + test.kernel().match.group(0)
 
             nr, bowl, iteration = test.kernel().match.groups()
@@ -54,6 +61,7 @@ def catmouse(test, cmd):
 
             # now check that the cat/mouse consistency is met
             bowl = bowl - 1
+
             if out == 0:
                 if mouse_cat == 2:
                     print 'mouse is already eating'
@@ -65,6 +73,12 @@ def catmouse(test, cmd):
                     result = -1
                     break
                 bowls[bowl] = nr
+                nr_eating = nr_eating + 1
+                if nr_eating > 2:
+                    print 'weird: too many cats eating' # shouldn't happen
+                    result = -1
+                    break
+                max_cats_eating = max(max_cats_eating, nr_eating)
 
             elif out == 1:
                 if bowls[bowl] != nr:
@@ -72,11 +86,12 @@ def catmouse(test, cmd):
                     result = -1
                     break
                 bowls[bowl] = -1
-                empty = 1
-                for i in range(2):
-                    if bowls[i] != -1:
-                        empty = 0
-                if empty == 1:
+                nr_eating = nr_eating - 1
+                if nr_eating < 0:
+                    print 'weird: too few cats eating' # shouldn't happen
+                    result = -1
+                    break
+                if nr_eating == 0:
                     mouse_cat = 0
 
             elif out == 2:
@@ -90,6 +105,12 @@ def catmouse(test, cmd):
                     result = -1
                     break
                 bowls[bowl] = nr
+                nr_eating = nr_eating + 1
+                if nr_eating > 2:
+                    print 'weird: too many mouse eating' # shouldn't happen
+                    result = -1
+                    break
+                max_mice_eating = max(max_mice_eating, nr_eating)
 
             elif out == 3:
                 if bowls[bowl] != nr:
@@ -97,17 +118,23 @@ def catmouse(test, cmd):
                     result = -1
                     break
                 bowls[bowl] = -1
-                empty = 1
-                for i in range(2):
-                    if bowls[i] != -1:
-                        empty = 0
-                if empty == 1:
+                nr_eating = nr_eating - 1
+                if nr_eating < 0:
+                    print 'weird: too few mouse eating' # shouldn't happen
+                    result = -1
+                    break
+                if nr_eating == 0:
                     mouse_cat = 0
 
+        if result >= 0:
+            if max_cats_eating < 2:
+                print 'Maximum number of cats eating at a time = ' \
+                    + str(max_cats_eating) + ' < 2'
+            if max_mice_eating < 2:
+                print 'Maximum number of mice eating at a time = ' \
+                    + str(max_mice_eating) + ' < 2'
+
         return result
-
-
-# TODO: need to check that both bowls are used
 
 def main():
 	global test
