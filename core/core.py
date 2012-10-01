@@ -14,9 +14,11 @@ class TestUnit:
                 except KeyError:
                         verbose = 0
 		path = 'sys161 ' + str(path_to_kernel)
-		kernel = pexpect.spawn(path)
-		#kernel.logfile = sys.stdout
+		kernel = pexpect.spawn(path, timeout = 10)
                 print message
+
+        def kernel(self):
+                return kernel
 
 	#We need to wait before we can actually send a command.
 	def send_command(self, cmd):
@@ -32,19 +34,29 @@ class TestUnit:
 		kernel.send('\n')
 		return
 
-	def basic_read_test(self, result):
+	def look_for(self, result):
 		try:
                         if verbose != 0:
-                                print "EXPECTING: " + result
-			kernel.expect(result)
-		except pexpect.TIMEOUT, e:
-			return False
-		return True
+                                print "EXPECTING: " + str(result)
+			index = kernel.expect(result)
+                except pexpect.TIMEOUT, e:
+                        print "Timeout occurred"
+			return -1
+                except pexpect.EOF:
+                        print "End of file error"
+			return -1
+                except Exception:
+                        print "Unexpected error", sys.exc_info()[0]
+			return -1
+		return index
 
-	def basic_read_test_and_print(self, result):
-                out = self.basic_read_test(result)
-                if out is True:
+        def print_result(self, out):
+                if out >= 0:
                         print "PASS"
                 else:
                         print "FAIL"
+
+	def look_for_and_print_result(self, result):
+                out = self.look_for(result)
+                self.print_result(out)
 

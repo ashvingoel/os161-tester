@@ -5,30 +5,30 @@ import sys
 
 def checkDBValue(res):
 	check = 'Current value of dbflags is ' + res
-	kernel.send_command("dbflags")
-	kernel.basic_read_test_and_print(check)
+	test.send_command("dbflags")
+	test.look_for_and_print_result(check)
 
 def setDBValue(value, on):
 	path = "df " + str(value) + " " + on
-	kernel.send_command(path)
+	test.send_command(path)
 
 def failDBValue(value, on):
 	print "Turning " + on + " dbflags value " + str(value)
 	check = 'Usage: df nr on\/off'
 	setDBValue(value, on)
-	kernel.basic_read_test_and_print(check)
+	test.look_for_and_print_result(check)
 
 def testDBValue(value, on, res):
 	print "Turning " + on + " dbflags value " + str(value)
 	setDBValue(value, on)
 	return checkDBValue(res)
 
-def testDBFlags(path_to_kernel):
-	global kernel
-	kernel = core.TestUnit(path_to_kernel, "Testing dbflags")
+def testDBFlags(kernel_name):
+	global test
+	test = core.TestUnit(kernel_name, "Testing dbflags")
 	#Check if we have the dbflags menu option
-	kernel.send_command("?o")
-	kernel.basic_read_test_and_print('\[dbflags\] Debug flags')
+	test.send_command("?o")
+	test.look_for_and_print_result('\[dbflags\] Debug flags')
 
 def main():
 	on = "on"

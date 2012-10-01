@@ -3,10 +3,11 @@
 import core
 import sys
 
-def testHelloWorld(path_to_kernel):
-	kernel = core.TestUnit(path_to_kernel, "Testing Hello World")
-	kernel.basic_read_test_and_print("Hello World")
-	# kernel.send_command("q")
+def testHelloWorld(kernel_name):
+	test = core.TestUnit(kernel_name, "Testing Hello World")
+	test.look_for_and_print_result("Hello World")
+        # why do we need to send the quit command? -Ashvin
+	# test.send_command("q")
 
 def main():
 	path = str(sys.argv[1])
