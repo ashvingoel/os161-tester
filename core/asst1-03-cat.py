@@ -106,6 +106,9 @@ def catmouse(test, cmd):
 
         return result
 
+
+# TODO: need to check that both bowls are used
+
 def main():
 	global test
         result = 0
