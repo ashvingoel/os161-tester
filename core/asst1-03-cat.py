@@ -3,7 +3,6 @@
 import core
 import sys
 
-# TODO: we are not checking iteration number.
 # TODO: should make the code work for arbitrary number of animals, bowls, etc.
 
 def catmouse(test, cmd):
@@ -15,14 +14,17 @@ def catmouse(test, cmd):
         nr_eating = 0     # 0, 1, 2: depending on how may bowls are in use
         max_cats_eating = 0
         max_mice_eating = 0
+        
+        cat_iterations = [ -1 ] * 6   # current iteration nr for each cat
+        mouse_iterations = [ -1 ] * 2 # current iteration nr for each mouse
 
         # look for 64 outputs = 
         # 8 (6 cats + 2 mouse) * 2 (start, end) * 4 iterations
         for i in range(64):
             out = test.look_for( \
                 ['cat: (\d) starts eating: bowl (\d), iteration (\d)', \
-                     'cat: (\d) ends eating: bowl (\d), iteration (\d)', \
                      'mouse: (\d) starts eating: bowl (\d), iteration (\d)', \
+                     'cat: (\d) ends eating: bowl (\d), iteration (\d)', \
                      'mouse: (\d) ends eating: bowl (\d), iteration (\d)'])
             if out < 0:
                 result = -1 # no match failure
@@ -44,7 +46,7 @@ def catmouse(test, cmd):
                 result = -1
                 break
             
-            if out == 0 or out == 1:
+            if out == 0 or out == 2:
                 if nr < 0 or nr > 6:
                     print 'cat nr should be 1-6'
                     result = -1
@@ -63,62 +65,76 @@ def catmouse(test, cmd):
                     print 'mouse is already eating'
                     result = -1
                     break
-                mouse_cat = 1
                 if bowls[bowl] != -1:
                     print 'bowl = ' + str(bowl) + 'is already in use'
                     result = -1
                     break
-                bowls[bowl] = nr
-                nr_eating = nr_eating + 1
-                if nr_eating > 2:
+                if nr_eating >= 2:
                     print 'weird: too many cats eating' # shouldn't happen
                     result = -1
                     break
+                if cat_iterations[nr] != iteration - 1:
+                    print 'cat iteration ' + str(iteration) + 'is not correct'
+                    result = -1
+                    break
+
+                mouse_cat = 1
+                bowls[bowl] = nr
+                nr_eating = nr_eating + 1
+                cat_iterations[nr] = iteration
                 max_cats_eating = max(max_cats_eating, nr_eating)
 
             elif out == 1:
-                if bowls[bowl] != nr:
-                    print 'cat = ' + str(nr) + 'exiting without entering'
-                    result = -1
-                    break
-                bowls[bowl] = -1
-                nr_eating = nr_eating - 1
-                if nr_eating < 0:
-                    print 'weird: too few cats eating' # shouldn't happen
-                    result = -1
-                    break
-                if nr_eating == 0:
-                    mouse_cat = 0
-
-            elif out == 2:
                 if mouse_cat == 1:
                     print 'cat is already eating'
                     result = -1
                     break
-                mouse_cat = 2
                 if bowls[bowl] != -1:
                     print 'bowl = ' + str(bowl) + 'is already in use'
                     result = -1
                     break
-                bowls[bowl] = nr
-                nr_eating = nr_eating + 1
-                if nr_eating > 2:
+                if nr_eating >= 2:
                     print 'weird: too many mouse eating' # shouldn't happen
                     result = -1
                     break
+                if mouse_iterations[nr] != iteration - 1:
+                    print 'mouse iteration ' + str(iteration) + 'is not correct'
+                    result = -1
+                    break
+
+                mouse_cat = 2
+                bowls[bowl] = nr
+                nr_eating = nr_eating + 1
+                mouse_iterations[nr] = iteration
                 max_mice_eating = max(max_mice_eating, nr_eating)
+
+            elif out == 2:
+                if bowls[bowl] != nr:
+                    print 'cat = ' + str(nr) + 'exiting without entering'
+                    result = -1
+                    break
+                if nr_eating <= 0:
+                    print 'weird: too few cats eating' # shouldn't happen
+                    result = -1
+                    break
+
+                bowls[bowl] = -1
+                nr_eating = nr_eating - 1
+                if nr_eating == 0:
+                    mouse_cat = 0
 
             elif out == 3:
                 if bowls[bowl] != nr:
                     print 'mouse = ' + str(nr) + 'exiting without entering'
                     result = -1
                     break
-                bowls[bowl] = -1
-                nr_eating = nr_eating - 1
-                if nr_eating < 0:
+                if nr_eating <= 0:
                     print 'weird: too few mouse eating' # shouldn't happen
                     result = -1
                     break
+
+                bowls[bowl] = -1
+                nr_eating = nr_eating - 1
                 if nr_eating == 0:
                     mouse_cat = 0
 
