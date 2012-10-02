@@ -120,12 +120,13 @@ def catmouse(test, cmd):
             if nr_eating == 0:
                 mouse_cat = 0
 
-    if max_cats_eating < 2:
-        print 'Maximum number of cats eating at a time = ' \
-            + str(max_cats_eating) + ' < 2'
-    if max_mice_eating < 2:
-        print 'Maximum number of mice eating at a time = ' \
-            + str(max_mice_eating) + ' < 2'
+    if test.verbose():
+        if max_cats_eating < 2:
+            print 'Maximum number of cats eating at a time = ' \
+                + str(max_cats_eating) + ' < 2'
+        if max_mice_eating < 2:
+            print 'Maximum number of mice eating at a time = ' \
+                + str(max_mice_eating) + ' < 2'
     return 0
 
 def main():
@@ -136,11 +137,13 @@ def main():
     kernel_name = str(sys.argv[1])
     test = core.TestUnit(kernel_name, "Testing cat/mouse using semaphores")
     result = catmouse(test, '1a')
+
     if result < 0:
         # try cat with locks
         test = core.TestUnit(kernel_name, "Testing cat/mouse using locks")
         result = catmouse(test, '1b')
-        test.print_result(result)
+
+    test.print_result(result)
 
 if __name__ == "__main__":
     main()
