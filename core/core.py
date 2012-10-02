@@ -13,6 +13,10 @@ class TestUnit:
                         verbose = os.environ['OS161_TESTER_VERBOSE']
                 except KeyError:
                         verbose = 0
+                try:
+                        verbose = int(verbose)
+                except ValueError:
+                        verbose = 0
 		path = 'sys161 ' + str(path_to_kernel)
 		kernel = pexpect.spawn(path, timeout = 10)
                 print message
@@ -20,13 +24,16 @@ class TestUnit:
         def kernel(self):
                 return kernel
 
+        def verbose(self):
+                return verbose
+
 	#We need to wait before we can actually send a command.
 	def send_command(self, cmd):
 		kernel.expect('OS\/161 kernel \[\? for menu\]\: ')
 		#The fun bit is, we need to send the command character by
 		#character to the simulator, otherwise we are going to have
 		#a lot of fun ;-)
-                if verbose != 0:
+                if verbose > 1:
                         print "SENDING: " + cmd
 		cmd_char = list(cmd)
 		for i in cmd_char:
@@ -36,10 +43,10 @@ class TestUnit:
 
 	def look_for(self, result):
 		try:
-                        if verbose != 0:
+                        if verbose > 1:
                                 print "EXPECTING: " + str(result)
 			index = kernel.expect(result)
-                        if verbose != 0:
+                        if verbose > 0:
                                 print "FOUND: " + kernel.match.group(0)
                 except pexpect.TIMEOUT, e:
                         print "TIMEOUT ERROR"
