@@ -17,9 +17,10 @@ export PATH=$BIN_PATH:$PATH
 PROG=$(basename $0)
 
 function usage() {
-    echo "Usage: $PROG [-hv] [assignment_nr]" 1>&2;
+    echo "Usage: $PROG [-hvV] [assignment_nr]" 1>&2;
     echo "           -h: show this message" 1>&2;
     echo "           -v: verbose" 1>&2;
+    echo "           -V: very verbose" 1>&2;
     echo "assignment_nr: If not specified, then all tests are run" 1>&2
     echo "               Otherwise, it must be 0, 1, 2 or 3" 1>&2;
     exit 1;
@@ -37,15 +38,21 @@ if [ ! -x kernel ]; then
 fi
 
 # getopts processing
-while getopts "vh" ARG ; do
+while getopts "vhV" ARG ; do
     if [ ${ARG} = 'v' ]; then
-        export OS161_TESTER_VERBOSE=1
+        if [ -z "$VERBOSE" ]; then
+            VERBOSE=1;
+        fi
+    elif [ ${ARG} = 'V' ]; then
+        VERBOSE=2
     elif [ ${ARG} = 'h' ]; then
         usage;
     else
         usage;
     fi
 done
+
+export OS161_TESTER_VERBOSE=$VERBOSE
 
 shift $((OPTIND-1))
 
@@ -68,7 +75,7 @@ for i in $ASSIGNMENTS; do
     echo "Running tests for Assignment $i";
     for test in $TEST_PATH/core/asst${i}*.py; do
         if [ -x $test ]; then
-            # echo $test;
+            echo "Running: $test kernel";
             $test kernel;
         fi
     done
