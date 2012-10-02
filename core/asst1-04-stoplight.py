@@ -128,12 +128,11 @@ def stoplight(test, nr_cars):
                     print 'number of cars in each direction = ' + str(cars_per_direction)
                 return 0
 
-
 def main():
-	kernel_name = str(sys.argv[1])
-	test = core.TestUnit(kernel_name, "Testing stoplight")
-        result = stoplight(test, 20)
-        test.print_result(result)
+    kernel_name = str(sys.argv[1])
+    test = core.TestUnit(kernel_name, "Testing stoplight")
+    result = stoplight(test, 20)
+    test.print_result(result)
 
 if __name__ == "__main__":
-	main()
+    main()
