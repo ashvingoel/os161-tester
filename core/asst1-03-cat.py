@@ -6,7 +6,7 @@ import sys
 # TODO: should make the code work for arbitrary number of animals, bowls, etc.
 
 def catmouse(test, cmd):
-	test.send_command(cmd)
+    test.send_command(cmd)
 
     bowls = [ -1, -1] # cat or mouse nr who is eating
     mouse_cat = 0     # 1 when cats are eating, 2 when mouse are eating
