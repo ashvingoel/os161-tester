@@ -17,8 +17,9 @@ export PATH=$BIN_PATH:$PATH
 PROG=$(basename $0)
 
 function usage() {
-    echo "Usage: $PROG [-hvV] [assignment_nr]" 1>&2;
+    echo "Usage: $PROG [-hmvV] [assignment_nr]" 1>&2;
     echo "           -h: show this message" 1>&2;
+    echo "           -m: run marker" 1>&2;
     echo "           -v: verbose" 1>&2;
     echo "           -V: very verbose" 1>&2;
     echo "assignment_nr: If not specified, then all tests are run" 1>&2
@@ -26,25 +27,16 @@ function usage() {
     exit 1;
 }
 
-# make sure that we are in the correct OS161 root directory
-if [ ! -f kernel ]; then
-    echo "$PROG: The os161 kernel executable does not exist in this directory. Run this script from the OS161 root directory." 1>&2;
-    exit 1;
-fi
-
-if [ ! -x kernel ]; then
-    echo "$PROG: The os161 kernel executable in this directory is not executable. Run this script from the OS161 root directory." 1>&2;
-    exit 1;
-fi
-
 # getopts processing
-while getopts "vhV" ARG ; do
+while getopts "hmvV" ARG ; do
     if [ ${ARG} = 'v' ]; then
         if [ -z "$VERBOSE" ]; then
             VERBOSE=1;
         fi
     elif [ ${ARG} = 'V' ]; then
         VERBOSE=2
+    elif [ ${ARG} = 'm' ]; then
+        MARKER=1;
     elif [ ${ARG} = 'h' ]; then
         usage;
     else
@@ -71,14 +63,98 @@ if [ $# -eq 1 ]; then
     ASSIGNMENTS=$1
 fi
 
-for i in $ASSIGNMENTS; do
+SVN_REP=svn+ssh://ug131.eecg.utoronto.ca/svn
+NR_REPS=2
+
+# run tests for a given assignment
+os161_tester() {
+    ASSIGNMENT="$1"
+    # make sure that we are in the correct OS161 root directory
+    if [ ! -f kernel ]; then
+        echo "$PROG: The os161 kernel executable does not exist in this directory. Run this script from the OS161 root directory." 1>&2;
+        exit 1;
+    fi
+    if [ ! -x kernel ]; then
+        echo "$PROG: The os161 kernel executable in this directory is not executable. Run this script from the OS161 root directory." 1>&2;
+        exit 1;
+    fi
+
     echo "Running tests for Assignment $i";
-    for test in $TEST_PATH/core/asst${i}*.py; do
+    for test in $TEST_PATH/testing-scripts/asst${ASSIGNMENT}*.py; do
         if [ -x $test ]; then
             echo "Running: $test kernel";
             $test kernel;
         fi
     done
+    # if marker is set
+    if [ -n "$MARKER" ]; then
+        # if marking-scripts directory is owned by effective group ID
+        if [ -G "$TEST_PATH/marking-scripts" ]; then
+            for test in $TEST_PATH/marking-scripts/asst${ASSIGNMENT}*.py; do
+                if [ -x $test ]; then
+                    echo "Running: $test kernel";
+                    $test kernel;
+                fi
+            done
+        fi
+    fi
     echo
+}
+
+# for students, this will dry run the marker, i.e., it will run the svn
+# checkout, build, but then it will not run the marking scripts
+os161_marker() {
+    ASSIGNMENT="$1"
+    # checkout each svn repo
+    for i in $(seq -f "%03g" 1 ${NR_REPS}); do
+        # do we have access to the repository? students will have access to only their repository
+        if expr "$(groups)" : ".*os-$i" > /dev/null; then
+
+    	    echo "Checking out repo for os-$i"
+            # remember current dir
+            pushd .
+    
+            # checkout repository
+    	    SVN_PATH=$SVN_REP/os-$i/svn/tags/asst${ASSIGNMENT}-end
+            rm -rf os-$i
+    	    mkdir -p os-$i
+    	    cd os-$i
+    	    svn co $SVN_PATH
+    
+            # compile os161
+            BUILD_PATH=$(pwd)/root
+            cd asst${ASSIGNMENT}-end
+            ./configure --ostree=$BUILD_PATH
+            make -s
+    
+            # configure the kernel
+            pushd kern/conf
+            ./config ASST${ASSIGNMENT}
+            popd
+    
+            # build the kernel
+            cd kern/compile/ASST${ASSIGNMENT}
+            make -s depend && make -s && make -s install
+            cd $BUILD_PATH && cp /cad2/ece344f/cs161/bin/sys161.conf.sample sys161.conf
+    
+            # run the tester
+            os161_tester ${ASSIGNMENT} > ../marker.out
+            # pop back to top dir
+            popd
+        fi
+    done
+}
+
+for i in "$ASSIGNMENTS"; do
+    if [ -z "$MARKER" ]; then
+        # run tester directly
+        os161_tester $i
+    else
+        # run the marker
+        os161_marker $i
+    fi
 done
+
+exit 0
+
 

@@ -2,10 +2,14 @@ TARGET_DIR=/cad2/ece344f/os161-tester
 TARGET_BIN_DIR=/cad2/ece344f/cs161/bin
 
 BIN_FILES=os161-tester
-PYTHON_FILES:=$(wildcard core/*.py)
+PYTHON_FILES:=$(wildcard core/*.py) $(wildcard testing-scripts/*.py) $(wildcard marking-scripts/*.py)
 
 
-all: bin core
+all: marking bin core
+
+marking:
+	mkdir -p ($TARGET_DIR)/marking-scripts
+	chmod 770 ($TARGET_DIR)/marking-scripts
 
 bin:
 	rsync -avRC $(BIN_FILES) $(TARGET_BIN_DIR)
