@@ -64,7 +64,7 @@ if [ $# -eq 1 ]; then
 fi
 
 SVN_REP=svn+ssh://ug131.eecg.utoronto.ca/svn
-NR_REPS=2
+NR_REPS=39
 
 # run tests for a given assignment
 os161_tester() {

@@ -13,6 +13,6 @@ core:
 	mkdir -p $(TARGET_DIR) && \
 	rsync -avRC --delete $(PYTHON_FILES) $(TARGET_DIR) && \
 	chmod 770 $(TARGET_DIR)/marking-scripts && \
-	chgrp e344F12 $(TARGET_DIR)/marking-scripts
+	chgrp -R e344F12 $(TARGET_DIR)
 
 .PHONY: bin core
