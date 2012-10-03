@@ -12,7 +12,7 @@ if [ $BIN_PATH_CANON != $CUR_PATH_CANON ]; then
 fi
 
 #setup the path, making sure that our path is first
-export PATH=$BIN_PATH:$PATH
+export PATH=$BIN_PATH:/usr/local/bin:/local/bin:/usr/bin:/bin
 
 PROG=$(basename $0)
 
@@ -72,14 +72,14 @@ os161_tester() {
     # make sure that we are in the correct OS161 root directory
     if [ ! -f kernel ]; then
         echo "$PROG: The os161 kernel executable does not exist in this directory. Run this script from the OS161 root directory." 1>&2;
-        exit 1;
+        return 1;
     fi
     if [ ! -x kernel ]; then
         echo "$PROG: The os161 kernel executable in this directory is not executable. Run this script from the OS161 root directory." 1>&2;
-        exit 1;
+        return 1;
     fi
 
-    echo "Running tests for Assignment $i";
+    echo "Running tests for Assignment $ASSIGNMENT";
     for test in $TEST_PATH/testing-scripts/asst${ASSIGNMENT}*.py; do
         if [ -x $test ]; then
             echo "Running: $test kernel";
@@ -116,10 +116,7 @@ os161_marker() {
     
             # checkout repository
     	    SVN_PATH=$SVN_REP/os-$i/svn/tags/asst${ASSIGNMENT}-end
-            rm -rf os-$i
-    	    mkdir -p os-$i
-    	    cd os-$i
-    	    svn co $SVN_PATH
+            /bin/rm -rf os-$i && mkdir -p os-$i && cd os-$i && svn co $SVN_PATH
     
             # make sure that the checkout is successful
             if [ $? -eq 0 ] ; then
@@ -138,11 +135,11 @@ os161_marker() {
                 cd $BUILD_PATH && cp /cad2/ece344f/cs161/bin/sys161.conf.sample sys161.conf
     
                 # run the tester
-                os161_tester ${ASSIGNMENT} > ../marker.out
+                os161_tester ${ASSIGNMENT} > ../../tester-${i}.out
             fi
-
             # pop back to top dir
             popd
+            /bin/rm -rf os-$i
         fi
     done
 }
@@ -153,7 +150,7 @@ for i in "$ASSIGNMENTS"; do
         os161_tester $i
     else
         # run the marker
-        os161_marker $i
+        os161_marker $i > marker.out 2>&1
     fi
 done
 
