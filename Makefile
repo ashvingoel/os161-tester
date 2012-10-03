@@ -5,15 +5,14 @@ BIN_FILES=os161-tester
 PYTHON_FILES:=$(wildcard core/*.py) $(wildcard testing-scripts/*.py) $(wildcard marking-scripts/*.py)
 
 
-all: marking bin core
-
-marking:
-	mkdir -p ($TARGET_DIR)/marking-scripts
-	chmod 770 ($TARGET_DIR)/marking-scripts
+all: bin core
 
 bin:
 	rsync -avRC $(BIN_FILES) $(TARGET_BIN_DIR)
 core:
-	mkdir -p $(TARGET_DIR) && rsync -avRC --delete $(PYTHON_FILES) $(TARGET_DIR)
+	mkdir -p $(TARGET_DIR) && \
+	rsync -avRC --delete $(PYTHON_FILES) $(TARGET_DIR) && \
+	chmod 770 $(TARGET_DIR)/marking-scripts && \
+	chgrp e344F12 $(TARGET_DIR)/marking-scripts
 
 .PHONY: bin core
