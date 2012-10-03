@@ -121,24 +121,26 @@ os161_marker() {
     	    cd os-$i
     	    svn co $SVN_PATH
     
-            # compile os161
-            BUILD_PATH=$(pwd)/root
-            cd asst${ASSIGNMENT}-end
-            ./configure --ostree=$BUILD_PATH
-            make -s
+            # make sure that the checkout is successful
+            if [ $? -eq 0 ] ; then
+                # compile os161
+                BUILD_PATH=$(pwd)/root
+                cd asst${ASSIGNMENT}-end
+                ./configure --ostree=$BUILD_PATH && make -s
     
-            # configure the kernel
-            pushd kern/conf
-            ./config ASST${ASSIGNMENT}
-            popd
+                # configure the kernel
+                pushd kern/conf
+                ./config ASST${ASSIGNMENT}
+                popd
     
-            # build the kernel
-            cd kern/compile/ASST${ASSIGNMENT}
-            make -s depend && make -s && make -s install
-            cd $BUILD_PATH && cp /cad2/ece344f/cs161/bin/sys161.conf.sample sys161.conf
+                # build the kernel
+                cd kern/compile/ASST${ASSIGNMENT} && make -s depend && make -s && make -s install
+                cd $BUILD_PATH && cp /cad2/ece344f/cs161/bin/sys161.conf.sample sys161.conf
     
-            # run the tester
-            os161_tester ${ASSIGNMENT} > ../marker.out
+                # run the tester
+                os161_tester ${ASSIGNMENT} > ../marker.out
+            fi
+
             # pop back to top dir
             popd
         fi
