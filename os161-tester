@@ -86,18 +86,24 @@ os161_tester() {
             $test kernel;
         fi
     done
-    # if marker is set
-    if [ -n "$MARKER" ]; then
-        # if marking-scripts directory is owned by effective group ID
-        if [ -G "$TEST_PATH/marking-scripts" ]; then
-            for test in $TEST_PATH/marking-scripts/asst${ASSIGNMENT}*.py; do
-                if [ -x $test ]; then
-                    echo "Running: $test kernel";
-                    $test kernel;
-                fi
-            done
-        fi
+
+    # if marker is not set
+    if [ -z "$MARKER" ]; then
+        return
     fi
+
+    # if marking-scripts directory is not owned by effective group ID
+    if [ ! -G "$TEST_PATH/marking-scripts" ]; then
+        return
+    fi
+
+    # run the marking scripts
+    for test in $TEST_PATH/marking-scripts/asst${ASSIGNMENT}*.py; do
+        if [ -x $test ]; then
+            echo "Running: $test kernel";
+            $test kernel;
+        fi
+    done
     echo
 }
 
@@ -105,43 +111,39 @@ os161_tester() {
 # checkout, build, but then it will not run the marking scripts
 os161_marker() {
     ASSIGNMENT="$1"
-    # checkout each svn repo
-    for i in $(seq -f "%03g" 1 ${NR_REPS}); do
-        # do we have access to the repository? students will have access to only their repository
-        if expr "$(groups)" : ".*os-$i" > /dev/null; then
+    GROUP="$2"
 
-    	    echo "Checking out repo for os-$i"
-            # remember current dir
-            pushd .
+    echo "Checking out repo for os-${GROUP}"
+    # remember current dir
+    pushd .
     
-            # checkout repository
-    	    SVN_PATH=$SVN_REP/os-$i/svn/tags/asst${ASSIGNMENT}-end
-            /bin/rm -rf os-$i && mkdir -p os-$i && cd os-$i && svn co $SVN_PATH
+    # checkout repository
+    SVN_PATH=$SVN_REP/os-${GROUP}/svn/tags/asst${ASSIGNMENT}-end
+    /bin/rm -rf os-${GROUP} && mkdir -p os-${GROUP} && cd os-${GROUP} && svn co $SVN_PATH
     
-            # make sure that the checkout is successful
-            if [ $? -eq 0 ] ; then
-                # compile os161
-                BUILD_PATH=$(pwd)/root
-                cd asst${ASSIGNMENT}-end
-                ./configure --ostree=$BUILD_PATH && make -s
+    # make sure that the checkout is successful
+    if [ $? -eq 0 ] ; then
+        # compile os161
+        BUILD_PATH=$(pwd)/root
+        cd asst${ASSIGNMENT}-end
+        ./configure --ostree=$BUILD_PATH && make -s
     
-                # configure the kernel
-                pushd kern/conf
-                ./config ASST${ASSIGNMENT}
-                popd
+        # configure the kernel
+        pushd kern/conf
+        ./config ASST${ASSIGNMENT}
+        popd
     
-                # build the kernel
-                cd kern/compile/ASST${ASSIGNMENT} && make -s depend && make -s && make -s install
-                cd $BUILD_PATH && cp /cad2/ece344f/cs161/bin/sys161.conf.sample sys161.conf
+        # build the kernel
+        cd kern/compile/ASST${ASSIGNMENT} && make -s depend && make -s && make -s install
+        cd $BUILD_PATH && cp /cad2/ece344f/cs161/bin/sys161.conf.sample sys161.conf
     
-                # run the tester
-                os161_tester ${ASSIGNMENT} > ../../tester-${i}.out
-            fi
-            # pop back to top dir
-            popd
-            /bin/rm -rf os-$i
-        fi
-    done
+        # run the tester
+        os161_tester ${ASSIGNMENT} > ../../tester-${GROUP}.out
+    fi
+
+    # pop back to top dir
+    popd
+    /bin/rm -rf os-${GROUP}
 }
 
 for i in "$ASSIGNMENTS"; do
@@ -149,8 +151,14 @@ for i in "$ASSIGNMENTS"; do
         # run tester directly
         os161_tester $i
     else
-        # run the marker
-        os161_marker $i > marker.out 2>&1
+        # run the marker for each group
+        for GROUP in $(seq -f "%03g" 1 ${NR_REPS}); do
+            # do we have access to the repository? students will have access to only their repository
+            if expr "$(groups)" : ".*os-${GROUP}" > /dev/null; then
+                echo "Output being sent to marker-${GROUP}.out and tester-${GROUP}.out"
+                os161_marker $i $GROUP > marker-${GROUP}.out 2>&1
+            fi
+        done
     fi
 done
 
