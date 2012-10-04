@@ -2,6 +2,13 @@
 
 BIN_PATH=/cad2/ece344f/cs161/bin
 TEST_PATH=/cad2/ece344f/os161-tester
+# svn repo path
+SVN_REP=svn+ssh://ug131.eecg.utoronto.ca/svn
+# number of repositories, starting from 1
+NR_REPS=39
+# by default, check all assignments
+ASSIGNMENTS="0 1 2 3"
+
 
 # Set up the TEST_PATH for a non-install location.
 BIN_PATH_CANON=$(readlink -f $BIN_PATH)
@@ -17,18 +24,20 @@ export PATH=$BIN_PATH:/usr/local/bin:/local/bin:/usr/bin:/bin
 PROG=$(basename $0)
 
 function usage() {
-    echo "Usage: $PROG [-hmvV] [assignment_nr]" 1>&2;
+    echo "Usage: $PROG [-hvVm] [-s start] [-e end] [assignment_nr]" 1>&2;
     echo "           -h: show this message" 1>&2;
-    echo "           -m: run marker" 1>&2;
     echo "           -v: verbose" 1>&2;
     echo "           -V: very verbose" 1>&2;
+    echo "           -m: run marker" 1>&2;
+    echo "     -s start: run marker starting from group 'start'" 1>&2;
+    echo "       -e end: run marker until group 'end'" 1>&2;
     echo "assignment_nr: If not specified, then all tests are run" 1>&2
     echo "               Otherwise, it must be 0, 1, 2 or 3" 1>&2;
     exit 1;
 }
 
 # getopts processing
-while getopts "hmvV" ARG ; do
+while getopts "hvVms:e:" ARG ; do
     if [ ${ARG} = 'v' ]; then
         if [ -z "$VERBOSE" ]; then
             VERBOSE=1;
@@ -37,6 +46,22 @@ while getopts "hmvV" ARG ; do
         VERBOSE=2
     elif [ ${ARG} = 'm' ]; then
         MARKER=1;
+    elif [ ${ARG} = 's' ]; then
+        if [ -z "$MARKER" ]; then
+            usage;
+        fi
+        START=$OPTARG;
+        if ! [[ "$START" =~ ^[0-9]+$ ]] ; then
+            usage;
+        fi
+    elif [ ${ARG} = 'e' ]; then
+        if [ -z "$MARKER" ]; then
+            usage;
+        fi
+        END=$OPTARG;
+        if ! [[ "$END" =~ ^[0-9]+$ ]] ; then
+            usage;
+        fi
     elif [ ${ARG} = 'h' ]; then
         usage;
     else
@@ -47,9 +72,6 @@ done
 export OS161_TESTER_VERBOSE=$VERBOSE
 
 shift $((OPTIND-1))
-
-# by default, check all assignments
-ASSIGNMENTS="0 1 2 3"
 
 if [ $# -gt 1 ]; then
     usage;
@@ -63,9 +85,14 @@ if [ $# -eq 1 ]; then
     ASSIGNMENTS=$1
 fi
 
-SVN_REP=svn+ssh://ug131.eecg.utoronto.ca/svn
-NR_REPS=39
+if [ -z "$START" ]; then
+    START=1
+fi
 
+if [ -z "$END" ]; then
+    END=$NR_REPS
+fi
+    
 # run tests for a given assignment
 os161_tester() {
     ASSIGNMENT="$1"
@@ -152,7 +179,7 @@ for i in "$ASSIGNMENTS"; do
         os161_tester $i
     else
         # run the marker for each group
-        for GROUP in $(seq -f "%03g" 1 ${NR_REPS}); do
+        for GROUP in $(seq -f "%03g" ${START} ${END}); do
             # do we have access to the repository? students will have access to only their repository
             if expr "$(groups)" : ".*os-${GROUP}" > /dev/null; then
                 echo "Output being sent to marker-${GROUP}.out and tester-${GROUP}.out"
@@ -161,7 +188,6 @@ for i in "$ASSIGNMENTS"; do
         done
     fi
 done
-
 exit 0
 
 
