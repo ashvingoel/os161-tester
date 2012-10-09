@@ -8,7 +8,9 @@ PYTHON_FILES:=$(wildcard core/*.py) $(wildcard testing-scripts/*.py) $(wildcard 
 all: bin core
 
 bin:
-	rsync -avRC $(BIN_FILES) $(TARGET_BIN_DIR)
+	rsync --chmod=g+w -avRC $(BIN_FILES) $(TARGET_BIN_DIR) && \
+	chgrp -R e344F12 $(TARGET_BIN_DIR)
+
 core:
 	mkdir -p $(TARGET_DIR) && \
 	rsync -avRC --delete $(PYTHON_FILES) $(TARGET_DIR) && \
