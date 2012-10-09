@@ -25,17 +25,17 @@ def testDBValue(value, on, res):
 
 def testDBFlags(kernel_name):
 	global test
-	test = core.TestUnit(kernel_name, "Testing dbflags")
+	test = core.TestUnit(kernel_name, "Testing dbflags", True)
 	#Check if we have the dbflags menu option
 	test.send_command("?o")
-	test.look_for_and_print_result('\[dbflags\] Debug flags')
+	test.look_for_and_return_mark('\[dbflags\] Debug flags', 1)
 
 def main():
 	mark = 0
 	on = "on"
 	off = "off"
 	path = str(sys.argv[1])
-	testDBFlags(path)
+	mark += testDBFlags(path)
 	mark += checkDBValue("0x0")
 	mark += testDBValue(1, on, "0x1")
 	mark += testDBValue(1, off, "0x0")
@@ -46,6 +46,13 @@ def main():
 	mark += testDBValue(3, on, "0x94")
 	mark += testDBValue(11, on, "0x494")
 	mark += failDBValue(str(23), on)
+	mark += testDBValue(11, off, "0x94")
+	mark += testDBValue(8, off, "0x14")
+	mark += testDBValue(5, off, "0x4")
+	mark += testDBValue(3, off, "0x0")
+	mark += testDBValue(str(45), off)
+	
+	test.clean_kernel()
 
 	print mark
 
