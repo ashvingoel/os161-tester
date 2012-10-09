@@ -6,7 +6,13 @@ import os
 
 class TestUnit:
 	#Implicit assumptions, sys161 is in path
-	def __init__(self, path_to_kernel, message):
+
+	def set_log_file(self):
+		logfile = open('os161-marker.txt', 'a')
+		kernel.logfile = logfile
+
+
+	def __init__(self, path_to_kernel, message, grade=False):
 		global kernel
                 global verbose
                 try:
@@ -19,7 +25,13 @@ class TestUnit:
                         verbose = 0
 		path = 'sys161 ' + str(path_to_kernel)
 		kernel = pexpect.spawn(path, timeout = 10)
+		#kernel.logfile = sys.stdout
                 print message
+		if grade == True:
+			self.set_log_file()
+
+	def clean_kernel(self):
+		kernel.logfile.close()
 
         def kernel(self):
                 return kernel
@@ -68,4 +80,10 @@ class TestUnit:
 	def look_for_and_print_result(self, result):
                 out = self.look_for(result)
                 self.print_result(out)
+
+	def look_for_and_return_mark(self, result, mark):
+		out = self.look_for(result)
+		if out >= 0:
+			return mark
+		return 0
 
