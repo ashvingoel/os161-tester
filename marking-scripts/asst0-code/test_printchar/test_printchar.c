@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
-int test_printchar()
+void test_printchar()
 {
 	printchar('$');
 	printchar('#');
@@ -12,7 +12,7 @@ int test_printchar()
 	printchar('\n');
 }
 
-int test_printf()
+void test_printf()
 {
 	printf("SYS161 OS TESTER FOR PRINTF\n");
 }
