@@ -28,7 +28,7 @@ def testDBFlags(kernel_name):
 	test = core.TestUnit(kernel_name, "Testing dbflags", True)
 	#Check if we have the dbflags menu option
 	test.send_command("?o")
-	test.look_for_and_return_mark('\[dbflags\] Debug flags', 1)
+	return test.look_for_and_return_mark('\[dbflags\] Debug flags', 1)
 
 def main():
 	mark = 0
