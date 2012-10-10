@@ -24,4 +24,5 @@ int main(void)
 	 */
 	test_printchar();
 	test_printf();
+	return 0;
 }
