@@ -124,6 +124,7 @@ os161_tester() {
         return
     fi
 
+    echo "About to run marking scripts"
     # run the marking scripts
     for test in $TEST_PATH/marking-scripts/asst${ASSIGNMENT}*.py; do
         if [ -x $test ]; then
@@ -171,7 +172,7 @@ os161_marker() {
     
         # run the tester
         os161_tester ${ASSIGNMENT} > ../../tester-${GROUP}.out
-	/bin/cp ${BUILD_PATH}/os161-marker.txt ../../os161-marker-${GROUP}.txt
+	/bin/cp os161-marker.txt ../../os161-marker-${GROUP}.txt
     fi
 
     # pop back to top dir
