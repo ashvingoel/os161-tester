@@ -50,11 +50,15 @@ def main():
 	mark += testDBValue(8, off, "0x14")
 	mark += testDBValue(5, off, "0x4")
 	mark += testDBValue(3, off, "0x0")
-	mark += testDBValue(str(45), off)
+	mark += failDBValue(str(45), off)
+	mark += failDBValue(str(32), on)
+	mark += failDBValue(str(18), off)
+	mark += failDBValue(str(52), on)
+	mark += failDBValue(str(28), off)
 	
 	test.clean_kernel()
 
-	print mark
+	print "DB Flags mark is " + str(mark)
 
 
 
