@@ -116,13 +116,11 @@ os161_tester() {
 
     # if marker is not set
     if [ -z "$MARKER" ]; then
-	echo "FAILED MARKER TEST"
         return
     fi
 
     # if marking-scripts directory is not owned by effective group ID
     if [ ! -G "$TEST_PATH/marking-scripts" ]; then
-	echo "FAILED GID TEST"
         return
     fi
 
