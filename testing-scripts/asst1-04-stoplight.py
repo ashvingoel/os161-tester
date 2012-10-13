@@ -62,7 +62,7 @@ def stoplight(test, nr_cars):
             for car in queue[direction]:
                 if car[0] != nr: # all cars ahead, coming from same direction
                     if car[4] <= state: # queue invariant
-                        print 'car ' + str(nr) + ' has overtaken ' + str(car[0])
+                        print 'car ' + str(nr) + ' has crashed into or overtaken ' + str(car[0])
                         return -1
                 else:
                     if car[1] != direction:
@@ -80,7 +80,7 @@ def stoplight(test, nr_cars):
 
                     reg = (direction - state + 1) % 4 # the region in the intersection
                     if regions[reg] != -1: # crash invariant
-                        print 'car ' + str(n) + ' crashes with car ' + str(regions[reg])
+                        print 'car ' + str(nr) + ' crashes with car ' + str(regions[reg])
                         return -1
                     car[4] = state           # update state of car
                     regions[reg] = nr        # update region with this car
