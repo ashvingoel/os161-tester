@@ -164,8 +164,10 @@ os161_marker() {
         cd kern/compile/ASST${ASSIGNMENT} && make -s depend && make -s && make -s install
 
 	# copy our own printchar tester and build/install it
-	/bin/cp -r $TEST_PATH/marking-scripts/asst0-code/test_printchar ../../../testbin/
-	cd ../../../testbin/test_printchar && make -s && make -s install
+        if [  -G "$TEST_PATH/marking-scripts" ]; then
+	    /bin/cp -r $TEST_PATH/marking-scripts/asst0-code/test_printchar ../../../testbin/
+	    cd ../../../testbin/test_printchar && make -s && make -s install
+	fi
 
         cd $BUILD_PATH && cp /cad2/ece344f/cs161/bin/sys161.conf.sample sys161.conf
     
