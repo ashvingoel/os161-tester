@@ -15,6 +15,7 @@ class TestUnit:
 	def __init__(self, path_to_kernel, message, grade=False):
 		global kernel
                 global verbose
+		global total_mark
                 try:
                         verbose = os.environ['OS161_TESTER_VERBOSE']
                 except KeyError:
@@ -25,6 +26,7 @@ class TestUnit:
                         verbose = 0
 		path = 'sys161 ' + str(path_to_kernel)
 		kernel = pexpect.spawn(path, timeout = 10)
+		total_mark = 0
 		#kernel.logfile = sys.stdout
                 print message
 		if grade == True:
@@ -32,6 +34,7 @@ class TestUnit:
 
 	def clean_kernel(self):
 		kernel.logfile.close()
+		print 'Mark for test is ' + str(self.total_mark)
 
         def kernel(self):
                 return kernel
@@ -77,9 +80,10 @@ class TestUnit:
                 else:
                         print "FAIL"
 
-	def look_for_and_print_result(self, result):
+	def look_for_and_print_result(self, result, mark=0):
                 out = self.look_for(result)
                 self.print_result(out)
+		self.total_mark += mark
 
 	def look_for_and_return_mark(self, result, mark):
 		out = self.look_for(result)
