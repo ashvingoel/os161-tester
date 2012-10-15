@@ -125,7 +125,10 @@ os161_tester() {
     fi
 
     # Run all the post install hooks
-    $TEST_PATH/marking-scripts/asst$ASSIGNMENT-post.sh
+    if [ -x $TEST_PATH/marking-scripts/asst$ASSIGNMENT-post.sh ]; then
+	    echo "Running post install hooks"
+	    $TEST_PATH/marking-scripts/asst$ASSIGNMENT-post.sh
+    fi
 
     # run the marking scripts
     for test in $TEST_PATH/marking-scripts/asst${ASSIGNMENT}*.py; do
@@ -156,6 +159,13 @@ os161_marker() {
         # compile os161
         BUILD_PATH=$(pwd)/root
         cd asst${ASSIGNMENT}-end
+
+	# run the pre-install hooks
+	if [ -x $TEST_PATH/marking-scripts/asst$ASSIGNMENT-pre.sh]; then
+		echo "Running pre install hooks"
+		$TEST_PATH/marking-scripts/asst$ASSIGNMENT-pre.sh
+	fi
+
         ./configure --ostree=$BUILD_PATH && make -s
     
         # configure the kernel
