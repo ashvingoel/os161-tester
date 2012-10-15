@@ -124,6 +124,9 @@ os161_tester() {
         return
     fi
 
+    # Run all the post install hooks
+    $TEST_PATH/marking-scripts/asst$ASSIGNMENT-post.sh
+
     # run the marking scripts
     for test in $TEST_PATH/marking-scripts/asst${ASSIGNMENT}*.py; do
         if [ -x $test ]; then
@@ -162,12 +165,6 @@ os161_marker() {
     
         # build the kernel
         cd kern/compile/ASST${ASSIGNMENT} && make -s depend && make -s && make -s install
-
-	# copy our own printchar tester and build/install it
-        if [  -G "$TEST_PATH/marking-scripts" ]; then
-	    /bin/cp -r $TEST_PATH/marking-scripts/asst0-code/test_printchar ../../../testbin/
-	    cd ../../../testbin/test_printchar && make -s && make -s install
-	fi
 
         cd $BUILD_PATH && cp /cad2/ece344f/cs161/bin/sys161.conf.sample sys161.conf
     
