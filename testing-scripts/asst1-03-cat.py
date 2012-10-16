@@ -59,7 +59,7 @@ def catmouse(test, cmd):
                 print 'mouse is already eating'
                 return -1
             if bowls[bowl] != -1:
-                print 'bowl = ' + str(bowl) + 'is already in use'
+                print 'bowl = ' + str(bowl+1) + ' is already in use'
                 return -1
             if nr_eating >= 2:
                 print 'weird: too many cats eating' # shouldn't happen
@@ -79,13 +79,13 @@ def catmouse(test, cmd):
                 print 'cat is already eating'
                 return -1
             if bowls[bowl] != -1:
-                print 'bowl = ' + str(bowl) + 'is already in use'
+                print 'bowl = ' + str(bowl+1) + 'is already in use'
                 return -1
             if nr_eating >= 2:
                 print 'weird: too many mouse eating' # shouldn't happen
                 return -1
             if mouse_iterations[nr] != iteration - 1:
-                print 'mouse iteration ' + str(iteration) + 'is not correct'
+                print 'mouse iteration ' + str(iteration) + ' is not correct'
                 return -1
 
             mouse_cat = 2
@@ -96,7 +96,7 @@ def catmouse(test, cmd):
 
         elif out == 2:
             if bowls[bowl] != nr:
-                print 'cat = ' + str(nr) + 'exiting without entering'
+                print 'cat = ' + str(nr) + ' exiting without entering'
                 return -1
             if nr_eating <= 0:
                 print 'weird: too few cats eating' # shouldn't happen
@@ -109,7 +109,7 @@ def catmouse(test, cmd):
 
         elif out == 3:
             if bowls[bowl] != nr:
-                print 'mouse = ' + str(nr) + 'exiting without entering'
+                print 'mouse = ' + str(nr) + ' exiting without entering'
                 return -1
             if nr_eating <= 0:
                 print 'weird: too few mouse eating' # shouldn't happen
