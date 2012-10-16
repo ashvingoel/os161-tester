@@ -22,7 +22,7 @@ def stoplight(test, nr_cars):
     for i in range(len(directions)):
         queue.append([])
 
-    if test.verbose():
+    if test.verbose:
         print 'car never seen = -1, approaching car = 0, leaving car = 1'
     while True:
         state = test.look_for( \
@@ -34,7 +34,7 @@ def stoplight(test, nr_cars):
         if state < 0:
             return -1 # no match failure
 
-        nr, direction, destination = test.kernel().match.groups()
+        nr, direction, destination = test.kernel.match.groups()
 
         # convert to integers
         nr = int(nr)
@@ -53,7 +53,7 @@ def stoplight(test, nr_cars):
                 print 'car was already approaching or had left previously'
                 return -1
             all_cars[nr] = 0 # mark car as approaching
-            if test.verbose():
+            if test.verbose:
                 print 'car ' + str(nr) + ' approaching: ' + str(all_cars)
             cars_per_direction[direction] = cars_per_direction[direction] + 1
             queue[direction].append([nr, direction, destination, \
@@ -116,14 +116,14 @@ def stoplight(test, nr_cars):
                     found_car = True
                     queue[direction].remove(car)
                     all_cars[nr] = 1 # mark car as leaving
-                    if test.verbose():
+                    if test.verbose:
                         print 'car ' + str(nr) + ' leaving: ' + str(all_cars)
                     break
             if not found_car:
                 print 'car ' + str(nr) + ' never approached the intersection before leaving'
                 return -1
             if sum(all_cars) == nr_cars: # all cars have left, end of processing
-                if test.verbose():
+                if test.verbose:
                     print 'maximum regions that were occupied = ' + str(max_occupied_regions)
                     print 'number of cars in each direction = ' + str(cars_per_direction)
                 return 0

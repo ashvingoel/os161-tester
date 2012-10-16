@@ -28,7 +28,7 @@ def catmouse(test, cmd):
         if out < 0:
             return -1 # no match failure
 
-        nr, bowl, iteration = test.kernel().match.groups()
+        nr, bowl, iteration = test.kernel.match.groups()
         nr = int(nr)
         bowl = int(bowl)
         iteration = int(iteration)
@@ -120,7 +120,7 @@ def catmouse(test, cmd):
             if nr_eating == 0:
                 mouse_cat = 0
 
-    if test.verbose():
+    if test.verbose:
         if max_cats_eating < 2:
             print 'Maximum number of cats eating at a time = ' \
                 + str(max_cats_eating) + ' < 2'

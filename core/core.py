@@ -8,61 +8,55 @@ class TestUnit:
 	#Implicit assumptions, sys161 is in path
 
 	def set_log_file(self):
-		logfile = open('os161-marker.txt', 'a')
-		kernel.logfile = logfile
-
+		self.kernel.logfile = open('os161-marker.txt', 'a')
 
 	def __init__(self, path_to_kernel, message, grade=False):
-		global kernel
-                global verbose
-		global total_mark
                 try:
-                        verbose = os.environ['OS161_TESTER_VERBOSE']
+                        self.verbose = os.environ['OS161_TESTER_VERBOSE']
                 except KeyError:
-                        verbose = 0
+                        self.verbose = 0
                 try:
-                        verbose = int(verbose)
+                        self.verbose = int(self.verbose)
                 except ValueError:
-                        verbose = 0
+                        self.verbose = 0
 		path = 'sys161 ' + str(path_to_kernel)
-		kernel = pexpect.spawn(path, timeout = 10)
-		total_mark = 0
-		#kernel.logfile = sys.stdout
+		self.kernel = pexpect.spawn(path, timeout = 10)
+		self.total_mark = 0
                 print message
 		if grade == True:
 			self.set_log_file()
 
 	def clean_kernel(self):
-		kernel.logfile.close()
+		self.kernel.logfile.close()
 		print 'Mark for test is ' + str(self.total_mark)
 
-        def kernel(self):
-                return kernel
+        # def kernel(self):
+        #         return self.kernel
 
-        def verbose(self):
-                return verbose
+        # def verbose(self):
+        #         return self.verbose
 
 	#We need to wait before we can actually send a command.
 	def send_command(self, cmd):
-		kernel.expect('OS\/161 kernel \[\? for menu\]\: ')
+		self.kernel.expect('OS\/161 kernel \[\? for menu\]\: ')
 		#The fun bit is, we need to send the command character by
 		#character to the simulator, otherwise we are going to have
 		#a lot of fun ;-)
-                if verbose > 1:
+                if self.verbose > 1:
                         print "SENDING: " + cmd
 		cmd_char = list(cmd)
 		for i in cmd_char:
-			kernel.send(i)
-		kernel.send('\n')
+			self.kernel.send(i)
+		self.kernel.send('\n')
 		return
 
 	def look_for(self, result):
 		try:
-                        if verbose > 1:
+                        if self.verbose > 1:
                                 print "EXPECTING: " + str(result)
-			index = kernel.expect(result)
-                        if verbose > 0:
-                                print "FOUND: " + kernel.match.group(0)
+			index = self.kernel.expect(result)
+                        if self.verbose > 0:
+                                print "FOUND: " + self.kernel.match.group(0)
                 except pexpect.TIMEOUT, e:
                         print "TIMEOUT ERROR"
 			return -1

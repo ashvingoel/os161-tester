@@ -125,9 +125,9 @@ os161_tester() {
     fi
 
     # Run all the post install hooks
-    if [ -x $TEST_PATH/marking-scripts/asst$ASSIGNMENT-post.sh ]; then
+    if [ -x $TEST_PATH/marking-scripts/asst${ASSIGNMENT}-post.sh ]; then
 	    echo "Running post install hooks"
-	    $TEST_PATH/marking-scripts/asst$ASSIGNMENT-post.sh
+	    $TEST_PATH/marking-scripts/asst${ASSIGNMENT}-post.sh
     fi
 
     # run the marking scripts
@@ -161,9 +161,9 @@ os161_marker() {
         cd asst${ASSIGNMENT}-end
 
 	# run the pre-install hooks
-	if [ -x $TEST_PATH/marking-scripts/asst$ASSIGNMENT-pre.sh]; then
+	if [ -x $TEST_PATH/marking-scripts/asst${ASSIGNMENT}-pre.sh]; then
 		echo "Running pre install hooks"
-		$TEST_PATH/marking-scripts/asst$ASSIGNMENT-pre.sh
+		$TEST_PATH/marking-scripts/asst${ASSIGNMENT}-pre.sh
 	fi
 
         ./configure --ostree=$BUILD_PATH && make -s
