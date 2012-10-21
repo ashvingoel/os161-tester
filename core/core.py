@@ -10,7 +10,7 @@ class TestUnit:
 	def set_log_file(self):
 		self.kernel.logfile = open('os161-marker.txt', 'a')
 
-	def __init__(self, path_to_kernel, message, grade=False):
+	def __init__(self, path_to_kernel, message):
                 try:
                         self.verbose = os.environ['OS161_TESTER_VERBOSE']
                 except KeyError:
@@ -23,8 +23,7 @@ class TestUnit:
 		self.kernel = pexpect.spawn(path, timeout = 10)
 		self.total_mark = 0
                 print message
-		if grade == True:
-			self.set_log_file()
+		self.set_log_file()
 
 	def clean_kernel(self):
 		self.kernel.logfile.close()
@@ -68,16 +67,16 @@ class TestUnit:
 			return -1
 		return index
 
-        def print_result(self, out):
+        def print_result(self, out, mark=0):
                 if out >= 0:
                         print "PASS"
+			self.total_mark += mark
                 else:
                         print "FAIL"
 
 	def look_for_and_print_result(self, result, mark=0):
-                out = self.look_for(result)
+                out = self.look_for(result, mark)
                 self.print_result(out)
-		self.total_mark += mark
 
 	def look_for_and_return_mark(self, result, mark):
 		out = self.look_for(result)
