@@ -5,7 +5,7 @@ import sys
 
 def testHelloWorld(kernel_name):
 	test = core.TestUnit(kernel_name, "Testing Hello World")
-	test.look_for_and_print_result("Hello World")
+	test.look_for_and_print_result("Hello World", 5)
         # why do we need to send the quit command? -Ashvin
 	# test.send_command("q")
 

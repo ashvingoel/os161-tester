@@ -11,7 +11,7 @@ def testPrintChar(kernel_name):
 	#check = 'H*e*l*l*o*p*r*i*n*t*f*\!'
 	#check = 'H**e**l**l**o**p**r**i**n**t**f**\!'
 	test.send_command("p /testbin/printchar")
-	test.look_for_and_print_result(check)
+	test.look_for_and_print_result(check, 10)
 
 def main():
 	path = str(sys.argv[1])
