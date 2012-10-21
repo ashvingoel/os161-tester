@@ -4,7 +4,7 @@ TESTER_DIR=$(TOP_DIR)/os161-tester
 BIN_DIR=$(TOP_DIR)/cs161/bin
 RESULTS_DIR=$(TOP_DIR)/results
 
-BIN_FILES=os161-tester
+BIN_FILES=bin/os161-tester
 RSYNC_FILES:=$(wildcard core/*.py) $(wildcard testing-scripts/*.py)
 MARKING_DIR= marking-scripts
 
