@@ -111,7 +111,7 @@ os161_tester() {
 	    /bin/rm os161.log
     fi
 
-    if [-e os161-mark.txt ]; then
+    if [ -e os161-mark.txt ]; then
 	    /bin/rm os161-mark.txt
     fi
 
