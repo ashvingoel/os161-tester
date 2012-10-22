@@ -8,7 +8,7 @@ class TestUnit:
 	#Implicit assumptions, sys161 is in path
 
 	def set_log_file(self):
-		self.kernel.logfile = open('os161-marker.txt', 'a')
+		self.kernel.logfile = open('os161.log', 'a')
 
 	def __init__(self, path_to_kernel, message):
                 try:
@@ -30,8 +30,8 @@ class TestUnit:
 	def clean_kernel(self):
 		self.kernel.logfile.close()
 		print 'Mark for test is ' + str(self.total_mark)
-		marker = open('total-marks.txt', 'a')
-		marker.write(self.message + ', ' + str(self.total) + ', ' + str(self.total_mark))
+		marker = open('os161-mark.txt', 'a')
+		marker.write(self.message + ', ' + str(self.total) + ', ' + str(self.total_mark) + '\n')
 		marker.close()
 
         # def kernel(self):
