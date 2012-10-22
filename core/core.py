@@ -81,8 +81,8 @@ class TestUnit:
 
 	def look_for_and_print_result(self, result, mark=0):
 		self.total += mark
-                out = self.look_for(result, mark)
-                self.print_result(out)
+                out = self.look_for(result)
+                self.print_result(out, mark)
 
 	def look_for_and_return_mark(self, result, mark):
 		out = self.look_for(result)
