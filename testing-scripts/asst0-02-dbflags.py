@@ -40,6 +40,7 @@ def main():
 	testDBValue(1, off, "0x0")
 	testDBValue(5, on, "0x10")
 	failDBValue(13, on)
+	test.clean_kernel()
 
 
 

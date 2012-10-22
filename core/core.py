@@ -22,12 +22,17 @@ class TestUnit:
 		path = 'sys161 ' + str(path_to_kernel)
 		self.kernel = pexpect.spawn(path, timeout = 10)
 		self.total_mark = 0
+		self.total = 0
+		self.message = message
                 print message
 		self.set_log_file()
 
 	def clean_kernel(self):
 		self.kernel.logfile.close()
 		print 'Mark for test is ' + str(self.total_mark)
+		marker = open('mark-out.txt', 'a')
+		marker.write(self.message + ', ' + str(self.total) + ', ' + str(self.total_mark))
+		marker.close()
 
         # def kernel(self):
         #         return self.kernel
@@ -75,6 +80,7 @@ class TestUnit:
                         print "FAIL"
 
 	def look_for_and_print_result(self, result, mark=0):
+		self.total += mark
                 out = self.look_for(result, mark)
                 self.print_result(out)
 
