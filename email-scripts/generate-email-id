@@ -61,10 +61,10 @@ while (<GROUP>) {
                 die "grep returned error";
             }
         }
-        print "nr = $nr, members = @{$group_members[$nr]}: ";
+        print "nr = $nr, ";
         for ($i = 0; $i <= $#{$email[$nr]}; $i++) {
-	    print $group_members[$nr][$i], ",";
-            print $email[$nr][$i], " ";
+	    print $group_members[$nr][$i], ", ";
+            print $email[$nr][$i], ", ";
         }
         print "\n";
     }
