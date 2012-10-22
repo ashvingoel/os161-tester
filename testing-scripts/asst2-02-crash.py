@@ -7,7 +7,7 @@ def testCrash(kernel_name):
 	global test
 	test = core.TestUnit(kernel_name, "Testing crash")
 	#Please check this and the correct value
-	check = ''
+	check = 'We must fail this'
 	test.send_command("p /testbin/crash")
 	test.look_for_and_print_result(check)
 

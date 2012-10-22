@@ -6,7 +6,7 @@ import sys
 def testPrintChar(kernel_name):
 	global test
 	test = core.TestUnit(kernel_name, "Testing arg")
-	check1 = 'argc: 1'
+	check1 = 'argc: 2'
 	check2 = 'argv\[0\]: \/testbin\/argtest'
 	check3 = 'argv\[1\]: test'
 	test.send_command("p /testbin/argtest test")
