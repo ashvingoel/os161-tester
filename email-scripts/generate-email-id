@@ -67,7 +67,7 @@ while (<GROUP>) {
 	    print $group_members[$nr][$i], ", ";
             print $email[$nr][$i], ", ";
         }
-	#print "\n";
+	print "\n";
     }
 }
 close(GROUP);
