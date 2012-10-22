@@ -107,6 +107,14 @@ os161_tester() {
         return 1;
     fi
 
+    if [ -e os161.log ]; then
+	    /bin/rm os161.log
+    fi
+
+    if [-e os161-mark.txt ]; then
+	    /bin/rm os161-mark.txt
+    fi
+
     echo "Running tests for Assignment $ASSIGNMENT";
     for test in $TEST_PATH/testing-scripts/asst${ASSIGNMENT}*.py; do
         if [ -x $test ]; then
@@ -180,8 +188,9 @@ os161_marker() {
         cd $BUILD_PATH && cp /cad2/ece344f/cs161/bin/sys161.conf.sample sys161.conf
     
         # run the tester
-        os161_tester ${ASSIGNMENT} > ../../tester-${GROUP}.out
-	/bin/cp os161-marker.txt ../../os161-marker-${GROUP}.txt
+        os161_tester ${ASSIGNMENT} > ../../os161-tester-${GROUP}.log
+	/bin/cp os161-marker.log ../../os161-${GROUP}.log
+	/bin/cp os161-mark.txt ../../os161-mark-${GROUP}.txt
     fi
 
     # pop back to top dir
@@ -199,7 +208,7 @@ for i in "$ASSIGNMENTS"; do
             # do we have access to the repository? students will have access to only their repository
             if expr "$(groups)" : ".*os-${GROUP}" > /dev/null; then
                 echo "Output being sent to marker-${GROUP}.out and tester-${GROUP}.out"
-                os161_marker $i $GROUP > marker-${GROUP}.out 2>&1
+                os161_marker $i $GROUP > os161-marker-${GROUP}.log 2>&1
             fi
         done
     fi
