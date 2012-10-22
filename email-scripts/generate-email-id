@@ -62,11 +62,10 @@ while (<GROUP>) {
             }
         }
 	#print "nr = $nr, ";
+	print $nr, ", ";
         for ($i = 0; $i <= $#{$email[$nr]}; $i++) {
-	    print $nr, ", ";
 	    print $group_members[$nr][$i], ", ";
             print $email[$nr][$i], ", ";
-            print "\n";
         }
 	#print "\n";
     }
