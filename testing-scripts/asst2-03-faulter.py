@@ -6,7 +6,6 @@ import sys
 def testFaulter(kernel_name):
 	global test
 	test = core.TestUnit(kernel_name, "Testing faulter")
-	#Please check this and the correct value
 	check = 'Entering the faulter program - I should die immediately'
 	test.send_command("p /testbin/faulter")
 	test.look_for_and_print_result(check)
