@@ -30,7 +30,7 @@ class TestUnit:
 	def clean_kernel(self):
 		self.kernel.logfile.close()
 		print 'Mark for test is ' + str(self.total_mark)
-		marker = open('mark-out.txt', 'a')
+		marker = open('total-marks.txt', 'a')
 		marker.write(self.message + ', ' + str(self.total) + ', ' + str(self.total_mark))
 		marker.close()
 
