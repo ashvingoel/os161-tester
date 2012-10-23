@@ -19,8 +19,8 @@ def generateBody(grp, asst, marks):
 	total = 0
 	mark = 0
 	for i in marks:
-		total += i[total]
-		mark += i[mark]
+		total += i['total']
+		mark += i['mark']
 
 	b_line += 'You have scored ' + str(mark) + ' out of a possible '+ str(total) + ' marks.\n\n'
 	b_line += 'You have scored: \n\n'
