@@ -17,7 +17,7 @@ def generateSalutation(utorid):
 	return d_line
 
 def generateBody(grp, asst, marks):
-	b_line ='Your submission for Assignment ' + str(asst) + 'has been automarked\n\n'
+	b_line ='Your submission for Assignment ' + str(asst) + ' has been automarked\n\n'
 	total = 0
 	mark = 0
 	for i in marks:
@@ -41,8 +41,7 @@ def generateBye(TA):
 	return l_line
 
 def parseMarkFile(grp):
-	#filename = 'os161-mark-'+ grp +'.txt'
-	filename = 'os161-mark.txt'
+	filename = 'os161-mark-'+ grp +'.txt'
 	f = open(filename, 'r')
 	mark = []
 	for l in f.readlines():
