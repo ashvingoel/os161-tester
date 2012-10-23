@@ -48,11 +48,11 @@ def parseMarkFile(grp):
 	return mark
 
 def parseEmailFile(grp):
-	filename = '../emails.txt'
+	filename = 'emails.txt'
 	f = open(filename, 'r')
 	utorid = []
 	email = []
-	for line in f:
+	for line in f.readlines():
 		if grp in line:
 			l = line.split(',')
 			i = 0
@@ -61,19 +61,20 @@ def parseEmailFile(grp):
 					continue
 				elif i % 2 == 1:
 					#Must be utorid
-					utorid[i/2] = i
+					utorid.append(i)
 				else:
 					#Must be email id
-					email[i/2 - 1] = i
+					email.append(i)
+				i += 1
 	return (utorid, email)
 
 def main():
 	asst = str(sys.argv[1])
-	mark = parseMarkFile("000")
-	for m in mark:
-		print "m['name'] = " + m['name'] + "\n"
-		print "m['total'] = " + m['total'] + "\n"
-		print "m['mark'] = " + m['mark'] + "\n"
+	(utor, em) = parseEmailFile('001')
+	for i in utor:
+		print i
+	for i in email:
+		print i
 
 if __name__ == "__main__":
 	main()
