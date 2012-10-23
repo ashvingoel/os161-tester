@@ -12,6 +12,8 @@ def generateSalutation(utorid):
 	d_line = 'Dear'
 	for i in utorid:
 		d_line+= " " + i
+
+	d_line += '\n\n'
 	return d_line
 
 def generateBody(grp, asst, marks):
