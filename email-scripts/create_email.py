@@ -8,13 +8,13 @@
 import sys
 
 
-def generateSalutation(self, utorid):
+def generateSalutation(utorid):
 	d_line = 'Dear'
 	for i in utorid:
 		d_line+= " " + i
 	return d_line
 
-def generateBody(self, grp, asst, marks):
+def generateBody(grp, asst, marks):
 	b_line ='Your submission for Assignment ' + str(asst) + 'has been automarked\n\n'
 	total = 0
 	mark = 0
@@ -30,13 +30,13 @@ def generateBody(self, grp, asst, marks):
 
 	return b_line
 
-def generateBye(self, TA):
+def generateBye(TA):
 	l_line = 'Please contact ' + TA + ' if you have further questions regarding your marks.\n\n'
 	l_line += 'Best of luck for the next assignment.\n\n'
 	l_line += 'ECE 344 TAs\n'
 	return l_line
 
-def parseMarkFile(self, grp):
+def parseMarkFile(grp):
 	#filename = 'os161-mark-'+ grp +'.txt'
 	filename = 'os161-mark.txt'
 	f = open(filename, 'r')
@@ -50,7 +50,7 @@ def parseMarkFile(self, grp):
 	f.close()
 	return mark
 
-def parseEmailFile(self, grp):
+def parseEmailFile(grp):
 	filename = '../emails.txt'
 	f = open(filename, 'r')
 	utorid = []
