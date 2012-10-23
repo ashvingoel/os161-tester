@@ -59,6 +59,7 @@ def parseEmailFile(grp):
 			for value in l:
 				if i == 0:
 					continue
+					i += 1
 				elif i % 2 == 1:
 					#Must be utorid
 					utorid.append(value)
