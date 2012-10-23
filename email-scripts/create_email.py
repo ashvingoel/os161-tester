@@ -73,7 +73,7 @@ def main():
 	(utor, em) = parseEmailFile('001')
 	for i in utor:
 		print i
-	for i in email:
+	for i in em:
 		print i
 
 if __name__ == "__main__":
