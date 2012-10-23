@@ -54,7 +54,8 @@ class TestUnit:
 		self.kernel.send('\n')
 		return
 
-	def look_for(self, result):
+	def look_for(self, result, mark = 0):
+		self.total += mark
 		try:
                         if self.verbose > 1:
                                 print "EXPECTING: " + str(result)
@@ -80,8 +81,7 @@ class TestUnit:
                         print "FAIL"
 
 	def look_for_and_print_result(self, result, mark=0):
-		self.total += mark
-                out = self.look_for(result)
+                out = self.look_for(result, mark)
                 self.print_result(out, mark)
 
 	def look_for_and_return_mark(self, result, mark):
