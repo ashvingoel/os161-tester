@@ -35,7 +35,8 @@ def generateBye(self, TA):
 	return l_line
 
 def parseMarkFile(self, grp):
-	filename = 'os161-mark-'+ grp +'.txt'
+	#filename = 'os161-mark-'+ grp +'.txt'
+	filename = 'os161-mark.txt'
 	f = open(filename, 'r')
 	i = 0
 	for l in f:
@@ -66,3 +67,14 @@ def parseEmailFile(self, grp):
 					#Must be email id
 					email[i/2 - 1] = i
 	return (utorid, email)
+
+def main(self):
+	asst = str(sys.argv[1])
+	mark = parseMarkFile("000")
+	for m in mark:
+		print "m['name'] = " + m['name'] + "\n"
+		print "m['total'] = " + m['total'] + "\n"
+		print "m['mark'] = " + m['mark'] + "\n"
+
+if __name__ == "__main__":
+	main()
