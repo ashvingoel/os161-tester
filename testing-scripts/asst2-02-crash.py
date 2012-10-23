@@ -2,6 +2,7 @@
 
 import core
 import sys
+import pexpect
 
 def testCrash(kernel_name):
 	global test
