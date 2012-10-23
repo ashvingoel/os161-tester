@@ -10,10 +10,9 @@ def testCrash(kernel_name):
 	check = 'Fatal user mode trap'
 	commands = 'a b c d e g h i j k l m n o'
 	for i in commands:
-		print i
-	
-	test.send_command("p /testbin/crash")
-	test.look_for_and_print_result(check, 5)
+		test.send_command("p /testbin/crash " + i)
+		test.look_for_and_print_result(check, 5)
+
 	test.clean_kernel()
 
 def main():
