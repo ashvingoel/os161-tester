@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/Usr/bin/python
 
 import pexpect
 import sys
@@ -21,7 +21,7 @@ class TestUnit:
                         self.verbose = 0
 		path = 'sys161 ' + str(path_to_kernel)
 		self.kernel = pexpect.spawn(path, timeout = 10)
-		self.total_mark = 0
+		self.mark = 0
 		self.total = 0
 		self.message = message
                 print message
@@ -29,9 +29,11 @@ class TestUnit:
 
 	def clean_kernel(self):
 		self.kernel.logfile.close()
-		print 'Mark for test is ' + str(self.total_mark)
+		print 'Mark for test is ' + str(self.mark) + ' out of ' + \
+		    str(self.total)
 		marker = open('os161-mark.txt', 'a')
-		marker.write(self.message + ', ' + str(self.total) + ', ' + str(self.total_mark) + '\n')
+		marker.write(self.message + ', ' + str(self.total) + ', ' + \
+				     str(self.mark) + '\n')
 		marker.close()
 
         # def kernel(self):
@@ -54,8 +56,7 @@ class TestUnit:
 		self.kernel.send('\n')
 		return
 
-	def look_for(self, result, mark = 0):
-		self.total += mark
+	def look_for(self, result):
 		try:
                         if self.verbose > 1:
                                 print "EXPECTING: " + str(result)
@@ -73,20 +74,25 @@ class TestUnit:
 			return -1
 		return index
 
-        def print_result(self, out, mark=0):
-                if out >= 0:
+        def print_result(self, mark_obtained, mark):
+		self.total += mark
+		self.mark += mark_obtained
+                if mark_obtained == mark:
                         print "PASS"
-			self.total_mark += mark
                 else:
                         print "FAIL"
 
-	def look_for_and_print_result(self, result, mark=0):
-                out = self.look_for(result, mark)
-                self.print_result(out, mark)
+        def print_result(self, mark_obtained, mark):
+		self.total += mark
+		self.mark += mark_obtained
+                if mark_obtained == mark:
+                        print "PASS"
+                else:
+                        print "FAIL"
 
-	def look_for_and_return_mark(self, result, mark):
-		out = self.look_for(result)
-		if out >= 0:
-			return mark
-		return 0
-
+	def look_for_and_print_result(self, result, mark):
+                out = self.look_for(result)
+		if (out >= 0):
+			self.print_result(mark, mark)
+		else:
+			self.print_result(0, mark)

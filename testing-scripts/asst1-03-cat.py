@@ -5,7 +5,7 @@ import sys
 
 # TODO: should make the code work for arbitrary number of animals, bowls, etc.
 
-def catmouse(test, cmd):
+def catmouse(test, cmd, max_iterations):
     test.send_command(cmd)
 
     bowls = [ -1, -1] # cat or mouse nr who is eating
@@ -17,16 +17,16 @@ def catmouse(test, cmd):
     cat_iterations = [ -1 ] * 6   # current iteration nr for each cat
     mouse_iterations = [ -1 ] * 2 # current iteration nr for each mouse
 
-    # look for 64 outputs = 
+    # look for max_iterations outputs = 
     # 8 (6 cats + 2 mouse) * 2 (start, end) * 4 iterations
-    for i in range(64):
+    for i in range(max_iterations):
         out = test.look_for( \
             ['cat: (\d) starts eating: bowl (\d), iteration (\d)', \
                  'mouse: (\d) starts eating: bowl (\d), iteration (\d)', \
                  'cat: (\d) ends eating: bowl (\d), iteration (\d)', \
                  'mouse: (\d) ends eating: bowl (\d), iteration (\d)'])
         if out < 0:
-            return -1 # no match failure
+            return i # no match failure
 
         nr, bowl, iteration = test.kernel.match.groups()
         nr = int(nr)
@@ -36,20 +36,20 @@ def catmouse(test, cmd):
         # sanity check
         if bowl < 1 or bowl > 2:
             print 'bowl nr should be 1 or 2'
-            return -1
+            return i
 
         if iteration < 0 or iteration > 3:
             print 'iteration should be 0, 1, 2 or 3'
-            return -1
+            return i
         
         if out == 0 or out == 2:
             if nr < 0 or nr > 6:
                 print 'cat nr should be 1-6'
-                return -1
+                return i
         else:
             if nr < 0 or nr > 1:
                 print 'mouse nr should be 1-6'
-                return -1
+                return i
 
         # now check that the cat/mouse consistency is met
         bowl = bowl - 1
@@ -57,16 +57,16 @@ def catmouse(test, cmd):
         if out == 0:
             if mouse_cat == 2:
                 print 'mouse is already eating'
-                return -1
+                return i
             if bowls[bowl] != -1:
                 print 'bowl = ' + str(bowl+1) + ' is already in use'
-                return -1
+                return i
             if nr_eating >= 2:
                 print 'weird: too many cats eating' # shouldn't happen
-                return -1
+                return i
             if cat_iterations[nr] != iteration - 1:
                 print 'cat iteration ' + str(iteration) + 'is not correct'
-                return -1
+                return i
 
             mouse_cat = 1
             bowls[bowl] = nr
@@ -77,16 +77,16 @@ def catmouse(test, cmd):
         elif out == 1:
             if mouse_cat == 1:
                 print 'cat is already eating'
-                return -1
+                return i
             if bowls[bowl] != -1:
                 print 'bowl = ' + str(bowl+1) + 'is already in use'
-                return -1
+                return i
             if nr_eating >= 2:
                 print 'weird: too many mouse eating' # shouldn't happen
-                return -1
+                return i
             if mouse_iterations[nr] != iteration - 1:
                 print 'mouse iteration ' + str(iteration) + ' is not correct'
-                return -1
+                return i
 
             mouse_cat = 2
             bowls[bowl] = nr
@@ -97,10 +97,10 @@ def catmouse(test, cmd):
         elif out == 2:
             if bowls[bowl] != nr:
                 print 'cat = ' + str(nr) + ' exiting without entering'
-                return -1
+                return i
             if nr_eating <= 0:
                 print 'weird: too few cats eating' # shouldn't happen
-                return -1
+                return i
 
             bowls[bowl] = -1
             nr_eating = nr_eating - 1
@@ -110,10 +110,10 @@ def catmouse(test, cmd):
         elif out == 3:
             if bowls[bowl] != nr:
                 print 'mouse = ' + str(nr) + ' exiting without entering'
-                return -1
+                return i
             if nr_eating <= 0:
                 print 'weird: too few mouse eating' # shouldn't happen
-                return -1
+                return i
 
             bowls[bowl] = -1
             nr_eating = nr_eating - 1
@@ -127,23 +127,29 @@ def catmouse(test, cmd):
         if max_mice_eating < 2:
             print 'Maximum number of mice eating at a time = ' \
                 + str(max_mice_eating) + ' < 2'
-    return 0
+    # success
+    return max_iterations
 
 def main():
     global test
+    max_iter = 64
     result = 0
 
     # try cat with semaphores
     kernel_name = str(sys.argv[1])
     test = core.TestUnit(kernel_name, "Testing cat/mouse using semaphores")
-    result = catmouse(test, '1a')
+    result = catmouse(test, '1a', max_iter)
 
-    if result < 0:
+    if result < max_iter: # if failure
         # try cat with locks
         test = core.TestUnit(kernel_name, "Testing cat/mouse using locks")
-        result = catmouse(test, '1b')
+        result = catmouse(test, '1b', max_iter)
 
-    test.print_result(result)
+    total_mark = 25;
+    # give a scaled mark based on number of successful iterations
+    mark = int(round((result * total_mark) / max_iter));
+    test.print_result(mark, total_mark)
+    test.clean_kernel()
 
 if __name__ == "__main__":
     main()

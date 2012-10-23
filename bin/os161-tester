@@ -15,7 +15,7 @@ TESTER_BIN_PATH=/cad2/ece344f/os161-tester/bin
 TESTER_BIN_PATH_CANON=$(readlink -f $TESTER_BIN_PATH)
 CUR_PATH_CANON=$(dirname $(readlink -f $BASH_SOURCE))
 if [ $TESTER_BIN_PATH_CANON != $CUR_PATH_CANON ]; then
-    TEST_PATH=$CUR_PATH_CANON
+    TEST_PATH=$CUR_PATH_CANON/..
     echo "Tester path is $TEST_PATH"
 fi
 

@@ -18,9 +18,11 @@ def main():
             if result == -1: # get out of outer loop on failure
                 break
         if result == 0:
-            test.look_for_and_print_result('CV test done')
-        else:
-            test.print_result(result)
+            test.look_for_and_print_result('CV test done', 10)
+        else: # no partial mark
+            test.print_result(0, 10)
+
+	test.clean_kernel()
 
 
 if __name__ == "__main__":

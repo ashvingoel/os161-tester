@@ -10,7 +10,7 @@ import sys
 # 3. crash: no region has multiple cars
 
 
-def stoplight(test, nr_cars):
+def stoplight(test, nr_cars, all_cars):
     test.send_command('1c')
     directions = {'N': 0, 'E': 1, 'S': 2, 'W': 3}
     regions = [ -1, -1, -1, -1 ]; # NW, NE, SE, SW
@@ -18,7 +18,6 @@ def stoplight(test, nr_cars):
     occupied_regions = 0
     queue = []
     cars_per_direction = [ 0 ] * len(directions) # for statistics
-    all_cars = [ -1 ] * nr_cars
     for i in range(len(directions)):
         queue.append([])
 
@@ -129,10 +128,23 @@ def stoplight(test, nr_cars):
                 return 0
 
 def main():
+    nr_cars = 20
+    all_cars = [ -1 ] * nr_cars
+
     kernel_name = str(sys.argv[1])
     test = core.TestUnit(kernel_name, "Testing stoplight")
-    result = stoplight(test, 20)
-    test.print_result(result)
+    result = stoplight(test, nr_cars, all_cars)
+    # count the number of cars that left the intersection successfully
+    result = 0
+    for i in range(nr_cars):
+        if (all_cars[i] == 1):
+            result = result + 1
+
+    # give a scaled mark based on result calculated above
+    total_mark = 50
+    mark = int(round((result * total_mark) / nr_cars))
+    test.print_result(mark, total_mark)
+    test.clean_kernel()
 
 if __name__ == "__main__":
     main()

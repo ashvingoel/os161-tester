@@ -8,7 +8,7 @@ def testlock(i):
 	kernel_name = str(sys.argv[1])
 	test = core.TestUnit(kernel_name, "Testing locks: " + str(i))
 	test.send_command("sy2")
-        return test.look_for(['Test failed', 'Lock test done.'], 10)
+        return test.look_for(['Test failed', 'Lock test done.'])
 
 def main():
         # run the test several times because the test can succeed 
@@ -19,7 +19,10 @@ def main():
             if index <= 0:
                 result = -1 # failure
                 break
-        test.print_result(result, 10)
+	if (result == 0):
+		test.print_result(10, 10)
+	else: # no partial mark
+		test.print_result(0, 10)
 	test.clean_kernel()
 
 if __name__ == "__main__":
