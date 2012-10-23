@@ -8,7 +8,7 @@ def testCrash(kernel_name):
 	test = core.TestUnit(kernel_name, "Testing crash")
 	#Please check this and the correct value
 	check = 'Fatal user mode trap'
-	commands = 'a b c d e g h i j k l m n o'
+	commands = 'abcdeghijklmno'
 	for i in commands:
 		test.send_command("p /testbin/crash " + i)
 		test.look_for_and_print_result(check, 5)
