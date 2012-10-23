@@ -134,7 +134,7 @@ os161_tester() {
     fi
 
     # Run all the post install hooks
-    if [ -x $TEST_PATH/marking-scripts/asst${ASSIGNMENT}-post.sh ]; then
+    if [ -x "$TEST_PATH/marking-scripts/asst${ASSIGNMENT}-post.sh" ]; then
 	    echo "Running post install hooks"
 	    $TEST_PATH/marking-scripts/asst${ASSIGNMENT}-post.sh
     fi
@@ -170,7 +170,7 @@ os161_marker() {
         cd asst${ASSIGNMENT}-end
 
 	# run the pre-install hooks
-	if [ -x $TEST_PATH/marking-scripts/asst${ASSIGNMENT}-pre.sh]; then
+	if [ -x "$TEST_PATH/marking-scripts/asst${ASSIGNMENT}-pre.sh" ]; then
 		echo "Running pre install hooks"
 		$TEST_PATH/marking-scripts/asst${ASSIGNMENT}-pre.sh
 	fi
@@ -192,7 +192,7 @@ os161_marker() {
 	if [ -e os161.log ]; then
 		/bin/cp os161.log ../../os161-${GROUP}.log
 	fi
-	if [ -e os161-mark.txt]; then
+	if [ -e os161-mark.txt ]; then
 		/bin/cp os161-mark.txt ../../os161-mark-${GROUP}.txt
 	fi
     fi
@@ -211,7 +211,7 @@ for i in "$ASSIGNMENTS"; do
         for GROUP in $(seq -f "%03g" ${START} ${END}); do
             # do we have access to the repository? students will have access to only their repository
             if expr "$(groups)" : ".*os-${GROUP}" > /dev/null; then
-                echo "Output being sent to marker-${GROUP}.out and tester-${GROUP}.out"
+                echo "Output being sent to os161-marker-${GROUP}.log, os161-tester-${GROUP}.log, os161-${GROUP}.log and os161-mark-${GROUP}.txt"
                 os161_marker $i $GROUP > os161-marker-${GROUP}.log 2>&1
             fi
         done
