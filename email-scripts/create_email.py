@@ -28,6 +28,8 @@ def generateBody(grp, asst, marks):
 	for i in marks:
 		b_line += i['name'] + ': ' + str(i['mark']) + ' out of ' + str(i['total']) + '\n'
 
+	b_line += '\n'
+
 	return b_line
 
 def generateBye(TA):
