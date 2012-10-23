@@ -41,7 +41,7 @@ def parseMarkFile(grp):
 	filename = 'os161-mark.txt'
 	f = open(filename, 'r')
 	mark = []
-	for l in f:
+	for l in f.readlines():
 		line = l.split(',')
 		mark.append({'name': l[0], 'total': l[1], 'mark': l[2]})
 	f.close()
