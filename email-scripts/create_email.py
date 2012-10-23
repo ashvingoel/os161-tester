@@ -41,6 +41,7 @@ def parseMarkFile(grp):
 	filename = 'os161-mark.txt'
 	f = open(filename, 'r')
 	i = 0
+	mark = []
 	for l in f:
 		line = l.split(',')
 		mark[i]['name'] = l[0]
