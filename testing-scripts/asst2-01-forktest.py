@@ -8,7 +8,8 @@ def testForkTest(kernel_name):
 	test = core.TestUnit(kernel_name, "Testing forktest")
 	check = '001111222222223333333333333333'
 	test.send_command("p /testbin/forktest")
-	test.look_for_and_print_result(check)
+	test.look_for_and_print_result(check, 5)
+	test.clean_kernel()
 
 def main():
 	path = str(sys.argv[1])

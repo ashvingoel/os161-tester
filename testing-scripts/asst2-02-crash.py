@@ -9,7 +9,8 @@ def testCrash(kernel_name):
 	#Please check this and the correct value
 	check = 'We must fail this'
 	test.send_command("p /testbin/crash")
-	test.look_for_and_print_result(check)
+	test.look_for_and_print_result(check, 5)
+	test.clean_kernel()
 
 def main():
 	path = str(sys.argv[1])
