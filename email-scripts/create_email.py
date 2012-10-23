@@ -44,6 +44,7 @@ def parseMarkFile(grp):
 	mark = []
 	for l in f:
 		line = l.split(',')
+		mark[i] = []
 		mark[i]['name'] = l[0]
 		mark[i]['total'] = l[1]
 		mark[i]['mark'] = l[2]
