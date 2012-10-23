@@ -56,15 +56,15 @@ def parseEmailFile(grp):
 		if grp in line:
 			l = line.split(',')
 			i = 0
-			for i in l:
+			for value in l:
 				if i == 0:
 					continue
 				elif i % 2 == 1:
 					#Must be utorid
-					utorid.append(i)
+					utorid.append(value)
 				else:
 					#Must be email id
-					email.append(i)
+					email.append(value)
 				i += 1
 	return (utorid, email)
 
