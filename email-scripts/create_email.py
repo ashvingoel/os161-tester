@@ -71,11 +71,12 @@ def parseEmailFile(grp):
 
 def main():
 	asst = str(sys.argv[1])
-	(utor, em) = parseEmailFile('001')
-	for i in utor:
-		print i
-	for i in em:
-		print i
+	marks = parseMarkFile('000')
+	utor = ['gianidha', 'shariali']
+	top = generateSalutation(utor)
+	body = generateBody('000', '1', marks)
+	bye = generateBye('Dhaval Giani <dhaval@eecg.toronto.edu>')
+	print top + body + bye
 
 if __name__ == "__main__":
 	main()
