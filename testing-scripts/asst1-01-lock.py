@@ -6,7 +6,7 @@ import sys
 def testlock(i):
 	global test
 	kernel_name = str(sys.argv[1])
-	test = core.TestUnit(kernel_name, "Testing locks: " + str(i))
+	test = core.TestUnit(kernel_name, "Testing locks")
 	test.send_command("sy2")
         return test.look_for(['Test failed', 'Lock test done.'])
 
