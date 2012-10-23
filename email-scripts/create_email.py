@@ -5,6 +5,8 @@
 #Generate an mbox of all the emails
 #use bash script to send the mbox using sendmail
 
+import sys
+
 
 def generateSalutation(self, utorid):
 	d_line = 'Dear'
@@ -68,7 +70,7 @@ def parseEmailFile(self, grp):
 					email[i/2 - 1] = i
 	return (utorid, email)
 
-def main(self):
+def main():
 	asst = str(sys.argv[1])
 	mark = parseMarkFile("000")
 	for m in mark:
