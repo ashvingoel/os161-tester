@@ -9,7 +9,7 @@
 def generateSalutation(self, utorid):
 	d_line = 'Dear'
 	for i in utorid:
-		d_line+= " " $i
+		d_line+= " " + i
 	return d_line
 
 def generateBody(self, grp, asst, marks):
