@@ -43,7 +43,7 @@ def parseMarkFile(grp):
 	mark = []
 	for l in f.readlines():
 		line = l.split(',')
-		mark.append({'name': l[0], 'total': l[1], 'mark': l[2]})
+		mark.append({'name': line[0], 'total': line[1], 'mark': line[2]})
 	f.close()
 	return mark
 
