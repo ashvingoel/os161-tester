@@ -68,6 +68,7 @@ def parseMarkFile(grp):
 		f.close()
 	except IOError:
 		print 'Failure Path'
+		return None
 	return mark
 
 def parseDesignMark(grp):
