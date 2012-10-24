@@ -66,6 +66,7 @@ def parseEmailFile(grp):
 	email = []
 	for line in f.readlines():
 		if grp in line:
+			print "Found group"
 			l = line.split(',')
 			i = 0
 			for value in l:
@@ -100,7 +101,6 @@ def generateMail(email, text, asst, grp):
 	return msg
 
 def generateEmail(grp, asst):
-	print "paring email for "+grp
 	(utorid, email) = parseEmailFile(grp)
 	mark = parseMarkFile(grp)
 	hello = generateSalutation(utorid)
