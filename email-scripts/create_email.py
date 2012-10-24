@@ -147,8 +147,10 @@ def generateMbox(asst):
 		for i in range(1,11):
 			grp = u'%03d' % i
 			email = generateEmail(grp, asst)
+			print "Email for os-" + grp + " generated"
 			mbox.add(email)
 			mbox.flush()
+			print "Email for os-" + grp + " added"
 	finally:
 		mbox.unlock()
 	return
