@@ -37,6 +37,8 @@ def generateBody(grp, asst, marks):
 	b_line += 'You have scored: \n\n'
 
 	for i in marks:
+		if int(i['total']) == 0:
+			continue
 		b_line += i['name'] + ': ' + str(i['mark']) + ' out of ' + str(i['total']) + '\n'
 
 	b_line += '\n'
