@@ -48,7 +48,8 @@ def generateBody(grp, asst, marks):
 def generateFail(grp, asst, mark):
 	b_line ='Your submission for Assignment ' + str(asst) + ' has been automarked\n\n'
 	b_line += 'Your submission failed. Please check attachment for the reasons\n\n'
-	b_line += 'Your design score is ' + str(mark['mark']) + ' out of ' + str(mark['total']) + '\n\n'
+	if mark:
+		b_line += 'Your design score is ' + str(mark['mark']) + ' out of ' + str(mark['total']) + '\n\n'
 	return b_line
 
 def generateBye(TA):
@@ -67,18 +68,22 @@ def parseMarkFile(grp):
 			mark.append({'name': line[0], 'total': line[1], 'mark': line[2][:-1]})
 		f.close()
 	except IOError:
+		print 'Failed to find the mark file, group ' + grp + 'Assignment failed to build'
 	return mark
 
 def parseDesignMark(grp):
-	filename = 'designs.csv'
-	f = open(filename, 'r')
 	mark = {}
-	for l in f.readlines():
-		if grp in l:
-			mark['name'] = 'Design'
-			line = l.split(',')
-			mark['total'] = line[1]
-			mark['mark'] = line[2][:-1]
+	filename = 'designs.csv'
+	try:
+		f = open(filename, 'r')
+		for l in f.readlines():
+			if grp in l:
+				mark['name'] = 'Design'
+				line = l.split(',')
+				mark['total'] = line[1]
+				mark['mark'] = line[2][:-1]
+	except IOError:
+		print 'No design in this assignment'
 	return mark
 
 
