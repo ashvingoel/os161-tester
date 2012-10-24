@@ -101,13 +101,8 @@ class TestUnit:
 		else:
 			self.print_result(0, mark)
 
-	#This is a special case for cases when we crash the OS.
-	#We deduct "deduct" from the total and set the total
-	#marks as set by test. This might actually cause the
-	#student to lose mark. We however ensure that it doesn't
-	#go below zero
-	def set_failure(self, mark, deduct):
+	#This is a special case for cases when we crash the simulator.
+	#Students get a zero for that, and all mark needs to be reset
+	def set_failure(self, mark):
 		self.total = mark
-		self.mark -= deduct
-		if self.mark < 0:
-			self.mark = 0
+		self.mark =0

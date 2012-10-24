@@ -10,7 +10,7 @@ def testFaulter(kernel_name):
 	test.send_command("p /testbin/faulter")
 	test.look_for_and_print_result(check, 5)
 	if test.send_command("p /testbin/faulter") is not True:
-		test.set_failure(5, 5)
+		test.set_failure(5)
 	test.clean_kernel()
 
 def main():
