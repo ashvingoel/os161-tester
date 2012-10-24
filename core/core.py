@@ -44,17 +44,21 @@ class TestUnit:
 
 	#We need to wait before we can actually send a command.
 	def send_command(self, cmd):
-		self.kernel.expect('OS\/161 kernel \[\? for menu\]\: ')
-		#The fun bit is, we need to send the command character by
-		#character to the simulator, otherwise we are going to have
-		#a lot of fun ;-)
+                try:
+	            self.kernel.expect('OS\/161 kernel \[\? for menu\]\: ')
+                except Exception:
+                    print "UNEXPECTED CRASH ERROR"
+                    return
+                #The fun bit is, we need to send the command character by
+                #character to the simulator, otherwise we are going to have
+                #a lot of fun ;-)
                 if self.verbose > 1:
                         print "SENDING: " + cmd
-		cmd_char = list(cmd)
-		for i in cmd_char:
-			self.kernel.send(i)
-		self.kernel.send('\n')
-		return
+                cmd_char = list(cmd)
+                for i in cmd_char:
+                        self.kernel.send(i)
+                self.kernel.send('\n')
+                return
 
 	def look_for(self, result):
 		try:
