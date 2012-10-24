@@ -13,6 +13,7 @@ def testCrash(kernel_name):
 	for i in commands:
 		res = test.send_command("p /testbin/crash " + i)
 		if res is not True:
+			test.set_failure(70)
 			break
 		test.look_for_and_print_result(check, 5)
 		if test.look_for(pexpect.EOF >= 0):
