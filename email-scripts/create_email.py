@@ -68,7 +68,6 @@ def parseMarkFile(grp):
 		f.close()
 	except IOError:
 		print 'Failure Path'
-		return None
 	return mark
 
 def parseDesignMark(grp):
@@ -128,7 +127,7 @@ def generateEmail(grp, asst):
 	(utorid, email) = parseEmailFile(grp)
 	mark = parseMarkFile(grp)
 	design = parseDesignMark(grp)
-	if mark is None:
+	if not mark:
 		mark.append(design)
 		files = ["os161-marker-" + grp + ".log"]
 		body = generateFail(grp, asst)
