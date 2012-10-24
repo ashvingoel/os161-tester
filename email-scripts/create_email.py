@@ -11,6 +11,7 @@ from email.MIMEBase import MIMEBase
 from email.MIMEText import MIMEText
 from email.Utils import COMMASPACE, formatdate
 from email import Encoders
+from subprocess import Popen, PIPE
 #We will remove these once everything is tested
 import mailbox
 import email.utils
@@ -83,7 +84,7 @@ def parseEmailFile(grp):
 
 def generateMail(email, text, asst, grp):
 	msg = MIMEMultipart()
-	msg['From'] = "dhaval@eecg.utoronto.ca"
+	msg['From'] = "dhaval@eecg.toronto.edu"
 	msg['To'] = COMMASPACE.join(email)
 	#msg['Date'] = format(localtime=True)
 	msg['Subject'] = 'Automarker results for Assignment ' + asst
@@ -123,9 +124,20 @@ def generateMbox(asst):
 		mbox.unlock()
 	return
 
+def sendEmail(asst):
+	p = Popen(["/usr/sbin/sendmail", "-t"], stdin=PIPE)
+	for i in range(1, 39):
+		grp = u'%03d' % i
+		email = generateEmail(grp, asst)
+		print "Email for os-" + grp + " generated"
+		p.communicate(email.as_string())
+		print "Email for os-" + grp + " sent"
+
+
 def main():
 	asst = str(sys.argv[1])
 	generateMbox(asst)
+	#sendEmail(asst)
 
 if __name__ == "__main__":
 	main()
