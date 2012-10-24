@@ -43,6 +43,12 @@ def generateBody(grp, asst, marks):
 
 	return b_line
 
+def generateFail(grp, asst, mark):
+	b_line ='Your submission for Assignment ' + str(asst) + ' has been automarked\n\n'
+	b_line += 'Your submission failed. Please check attachment for the reasons\n\n'
+	b_line += 'Your design score is ' + str(mark['mark']) + ' out of ' + str(mark['total'])i + '\n\n'
+	return b_line
+
 def generateBye(TA):
 	l_line = 'Please contact ' + TA + ' if you have further questions regarding your marks.\n\n'
 	l_line += 'Best of luck for the next assignment.\n\n'
@@ -50,14 +56,30 @@ def generateBye(TA):
 	return l_line
 
 def parseMarkFile(grp):
-	filename = 'os161-mark-'+ grp +'.txt'
-	f = open(filename, 'r')
 	mark = []
-	for l in f.readlines():
-		line = l.split(',')
-		mark.append({'name': line[0], 'total': line[1], 'mark': line[2][:-1]})
-	f.close()
+	try:
+		filename = 'os161-mark-'+ grp +'.txt'
+		f = open(filename, 'r')
+		for l in f.readlines():
+			line = l.split(',')
+			mark.append({'name': line[0], 'total': line[1], 'mark': line[2][:-1]})
+		f.close()
+	except IOError:
+		print 'Failure Path'
 	return mark
+
+def parseDesignMark(grp):
+	filename = 'designs.csv'
+	f = open(filename, 'r')
+	mark = {}
+	for l in f.readlines():
+		if grp in l:
+			mark['name'] = 'Design'
+			line = l.split(,)
+			mark['total'] = line[1]
+			mark['mark'] = line[2][:-1]
+	return mark
+
 
 def parseEmailFile(grp):
 	#filename = '../emails.txt'
@@ -82,14 +104,13 @@ def parseEmailFile(grp):
 				i += 1
 	return (utorid, email)
 
-def generateMail(email, text, asst, grp):
+def generateMail(email, text, asst, grp, files):
 	msg = MIMEMultipart()
 	msg['From'] = "dhaval@eecg.toronto.edu"
 	msg['To'] = COMMASPACE.join(email)
 	#msg['Date'] = format(localtime=True)
 	msg['Subject'] = 'Automarker results for Assignment ' + asst
 	msg.attach(MIMEText(text))
-	files = ["os161-" + grp + ".log", "os161-marker-" + grp + ".log", "os161-tester-" + grp + ".log"]
 
 	for f in files:
 		part = MIMEBase('application', "octet-stream")
@@ -103,19 +124,27 @@ def generateMail(email, text, asst, grp):
 def generateEmail(grp, asst):
 	(utorid, email) = parseEmailFile(grp)
 	mark = parseMarkFile(grp)
+	design = parseDesignMark(grp)
+	if mark is None:
+		mark.append(design)
+		files = ["os161-marker-"i + grp + ".log"]
+		body = generateFail(grp, asst)
+	else:
+		mark.append(design)
+		files = ["os161-" + grp + ".log", "os161-marker-" + grp + ".log", "os161-tester-" + grp + ".log"]
+		body = generateBody(grp, asst, mark)
 	hello = generateSalutation(utorid)
-	body = generateBody(grp, asst, mark)
 	bye = generateBye("Ali Shariat <shariat@gmail.com>")
 	email.append("dhaval@eecg.toronto.edu")
 	email.append("shariat@gmail.com")
 	message = hello + body + bye
-	return generateMail(email, message, asst, grp)
+	return generateMail(email, message, asst, grp, files)
 
 def generateMbox(asst):
 	mbox = mailbox.mbox('test.mbox')
 	mbox.lock()
 	try:
-		for i in range(1,10):
+		for i in range(1,11):
 			grp = u'%03d' % i
 			email = generateEmail(grp, asst)
 			mbox.add(email)
