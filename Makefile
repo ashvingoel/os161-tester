@@ -3,6 +3,7 @@ TOP_DIR=/cad2/ece344f
 TESTER_DIR=$(TOP_DIR)/os161-tester
 INSTALL_BIN_DIR=$(TOP_DIR)/cs161/bin
 RESULTS_DIR=$(TOP_DIR)/results
+TEMPLATES_DIR=$(TOP_DIR)/templates
 
 RSYNC_FILES:=$(wildcard core/*.py) $(wildcard testing-scripts/*.py)
 MARKING_DIR=marking-scripts
@@ -22,6 +23,7 @@ results:
 			      $(RESULTS_DIR)/asst1 \
 	                      $(RESULTS_DIR)/asst2 \
 			      $(RESULTS_DIR)/asst3
+	cp $(TEMPLATES_DIR)/design-format.csv $(RESULTS_DIR)
 
 # students shouldn't have access to the marking directory, but
 # TAs should have read access to it

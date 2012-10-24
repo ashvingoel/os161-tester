@@ -48,6 +48,7 @@ def generateBody(grp, asst, marks):
 def generateFail(grp, asst, mark):
 	b_line ='Your submission for Assignment ' + str(asst) + ' has been automarked\n\n'
 	b_line += 'Your submission failed. Please check attachment for the reasons\n\n'
+	print mark
 	if  not mark:
 		print "Touch"
 	else:
