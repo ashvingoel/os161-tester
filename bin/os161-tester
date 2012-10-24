@@ -193,8 +193,14 @@ os161_marker() {
 	fi
         # run the tester
         os161_tester ${ASSIGNMENT} > ../../os161-tester-${GROUP}.log
-	/bin/cp os161.log ../../os161-${GROUP}.log
-	/bin/cp os161-mark.txt ../../os161-mark-${GROUP}.txt
+        if [ -e "os161.log" ]; then
+	    /bin/cp os161.log ../../os161-${GROUP}.log
+        fi
+        if [ -e "os161-mark.txt" ]; then
+	    /bin/cp os161-mark.txt ../../os161-mark-${GROUP}.txt
+        else
+            echo "os161-mark.txt not found"
+        fi
     fi
 
     # pop back to top dir
