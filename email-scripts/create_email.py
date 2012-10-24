@@ -101,6 +101,8 @@ def generateMail(email, text, asst, grp):
 
 def generateEmail(grp, asst):
 	(utorid, email) = parseEmailFile(grp)
+	print utorid
+	print email
 	mark = parseMarkFile(grp)
 	hello = generateSalutation(utorid)
 	body = generateBody(grp, asst, mark)
