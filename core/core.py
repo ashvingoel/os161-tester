@@ -27,7 +27,7 @@ class TestUnit:
                 print message
 		self.set_log_file()
 
-	def clean_kernel(self):
+	def __del__(self):
 		self.kernel.logfile.close()
 		print 'Mark for test is ' + str(self.mark) + ' out of ' + \
 		    str(self.total)
