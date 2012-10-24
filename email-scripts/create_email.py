@@ -75,7 +75,7 @@ def parseDesignMark(grp):
 	for l in f.readlines():
 		if grp in l:
 			mark['name'] = 'Design'
-			line = l.split(,)
+			line = l.split(',')
 			mark['total'] = line[1]
 			mark['mark'] = line[2][:-1]
 	return mark
