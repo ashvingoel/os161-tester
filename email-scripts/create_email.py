@@ -70,16 +70,14 @@ def parseEmailFile(grp):
 			i = 0
 			for value in l:
 				if i == 0:
-					continue
 					i += 1
+					continue
 				elif i % 2 == 1:
 					#Must be utorid
 					utorid.append(value)
-					print "appending "+value+" to utorid"
 				else:
 					#Must be email id
 					email.append(value)
-					print "appending "+value+" to email"
 				i += 1
 	return (utorid, email)
 
