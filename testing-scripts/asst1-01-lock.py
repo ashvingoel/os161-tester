@@ -23,7 +23,6 @@ def main():
 		test.print_result(10, 10)
 	else: # no partial mark
 		test.print_result(0, 10)
-	test.clean_kernel()
 
 if __name__ == "__main__":
 	main()

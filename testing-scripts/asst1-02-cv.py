@@ -22,8 +22,6 @@ def main():
         else: # no partial mark
             test.print_result(0, 10)
 
-	test.clean_kernel()
-
 
 if __name__ == "__main__":
 	main()

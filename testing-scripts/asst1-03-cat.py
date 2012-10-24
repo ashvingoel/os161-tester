@@ -149,7 +149,6 @@ def main():
     # give a scaled mark based on number of successful iterations
     mark = int(round((result * total_mark) / max_iter));
     test.print_result(mark, total_mark)
-    test.clean_kernel()
 
 if __name__ == "__main__":
     main()

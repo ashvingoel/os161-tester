@@ -144,7 +144,6 @@ def main():
     total_mark = 50
     mark = int(round((result * total_mark) / nr_cars))
     test.print_result(mark, total_mark)
-    test.clean_kernel()
 
 if __name__ == "__main__":
     main()
