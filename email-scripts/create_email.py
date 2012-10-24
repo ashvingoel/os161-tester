@@ -48,10 +48,7 @@ def generateBody(grp, asst, marks):
 def generateFail(grp, asst, mark):
 	b_line ='Your submission for Assignment ' + str(asst) + ' has been automarked\n\n'
 	b_line += 'Your submission failed. Please check attachment for the reasons\n\n'
-	print mark
-	if  not mark:
-		print "Touch"
-	else:
+	if mark:
 		b_line += 'Your design score is ' + str(mark['mark']) + ' out of ' + str(mark['total']) + '\n\n'
 	return b_line
 
@@ -71,7 +68,7 @@ def parseMarkFile(grp):
 			mark.append({'name': line[0], 'total': line[1], 'mark': line[2][:-1]})
 		f.close()
 	except IOError:
-		print 'Failed to find the mark file, group ' + grp + 'Assignment failed to build'
+		print 'Failed to find the mark file for group ' + grp + '. Assignment failed to build.'
 	return mark
 
 def parseDesignMark(grp):
