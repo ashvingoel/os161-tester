@@ -46,7 +46,7 @@ def generateBody(grp, asst, marks):
 def generateFail(grp, asst, mark):
 	b_line ='Your submission for Assignment ' + str(asst) + ' has been automarked\n\n'
 	b_line += 'Your submission failed. Please check attachment for the reasons\n\n'
-	b_line += 'Your design score is ' + str(mark['mark']) + ' out of ' + str(mark['total'])i + '\n\n'
+	b_line += 'Your design score is ' + str(mark['mark']) + ' out of ' + str(mark['total']) + '\n\n'
 	return b_line
 
 def generateBye(TA):
