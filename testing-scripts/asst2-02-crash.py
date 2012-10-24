@@ -2,6 +2,7 @@
 
 import core
 import sys
+import pexpect
 
 def testCrash(kernel_name):
 	global test
@@ -12,6 +13,8 @@ def testCrash(kernel_name):
 	for i in commands:
 		test.send_command("p /testbin/crash " + i)
 		test.look_for_and_print_result(check, 5)
+		if test.look_for(pexpect.EOF >= 0):
+			continue
 
 	test.clean_kernel()
 
