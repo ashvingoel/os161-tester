@@ -128,9 +128,8 @@ def generateEmail(grp, asst):
 	mark = parseMarkFile(grp)
 	design = parseDesignMark(grp)
 	if not mark:
-		mark.append(design)
 		files = ["os161-marker-" + grp + ".log"]
-		body = generateFail(grp, asst)
+		body = generateFail(grp, asst, design)
 	else:
 		mark.append(design)
 		files = ["os161-" + grp + ".log", "os161-marker-" + grp + ".log", "os161-tester-" + grp + ".log"]
