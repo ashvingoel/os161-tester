@@ -47,7 +47,7 @@ class TestUnit:
 		try:
 			self.kernel.expect('OS\/161 kernel \[\? for menu\]\: ')
 		except Exception:
-			print 'Simulator has crashed'
+			print 'SIMULATOR HAS CRASHED'
 			return False
 		#The fun bit is, we need to send the command character by
 		#character to the simulator, otherwise we are going to have
