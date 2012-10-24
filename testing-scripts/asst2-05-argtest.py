@@ -10,9 +10,9 @@ def testPrintChar(kernel_name):
 	check2 = 'argv\[0\]: \/testbin\/argtest'
 	check3 = 'argv\[1\]: test'
 	test.send_command("p /testbin/argtest test")
-	test.look_for_and_print_result(check1, 2)
-	test.look_for_and_print_result(check2, 2)
-	test.look_for_and_print_result(check3, 1)
+	test.look_for_and_print_result(check1, 4)
+	test.look_for_and_print_result(check2, 4)
+	test.look_for_and_print_result(check3, 4)
 
 def main():
 	path = str(sys.argv[1])

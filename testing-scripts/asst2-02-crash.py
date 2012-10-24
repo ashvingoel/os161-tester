@@ -12,7 +12,7 @@ def testCrash(kernel_name):
 	commands = 'abcdeghijklmno'
 	for i in commands:
 		res = test.send_command("p /testbin/crash " + i)
-		test.look_for_and_print_result(check, 5)
+		test.look_for_and_print_result(check, 2)
 
 def main():
 	path = str(sys.argv[1])
