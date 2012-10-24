@@ -48,7 +48,6 @@ class TestUnit:
 			self.kernel.expect('OS\/161 kernel \[\? for menu\]\: ')
 		except Exception:
 			print 'OS HAS CRASHED'
-			return False
 		#The fun bit is, we need to send the command character by
 		#character to the simulator, otherwise we are going to have
 		#a lot of fun ;-)
@@ -58,7 +57,6 @@ class TestUnit:
 		for i in cmd_char:
 			self.kernel.send(i)
 		self.kernel.send('\n')
-		return True
 
 	def look_for(self, result):
 		try:
