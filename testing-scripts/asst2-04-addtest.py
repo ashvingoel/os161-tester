@@ -9,7 +9,6 @@ def testPrintChar(kernel_name):
 	check = 'Answer: 5'
 	test.send_command("p /testbin/add 2 3")
 	test.look_for_and_print_result(check, 5)
-	test.clean_kernel()
 
 def main():
 	path = str(sys.argv[1])

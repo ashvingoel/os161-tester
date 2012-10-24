@@ -14,8 +14,6 @@ def testCrash(kernel_name):
 		res = test.send_command("p /testbin/crash " + i)
 		test.look_for_and_print_result(check, 5)
 
-	test.clean_kernel()
-
 def main():
 	path = str(sys.argv[1])
 	testCrash(path)
