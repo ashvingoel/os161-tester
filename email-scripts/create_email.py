@@ -5,7 +5,15 @@
 #Generate an mbox of all the emails
 #use bash script to send the mbox using sendmail
 
-import sys
+import sys, os, smtplib
+from email.MIMEMultipart import MIMEMultipart
+from email.MIMEBase import MIMEBase
+from email.MIMEText import MIMEText
+from email.Utils import COMMASPACE, formatdate
+from email import Encoders
+#We will remove these once everything is tested
+import mailbox
+import email.utils
 
 
 def generateSalutation(utorid):
@@ -51,6 +59,7 @@ def parseMarkFile(grp):
 	return mark
 
 def parseEmailFile(grp):
+	#filename = '../emails.txt'
 	filename = 'emails.txt'
 	f = open(filename, 'r')
 	utorid = []
@@ -72,14 +81,51 @@ def parseEmailFile(grp):
 				i += 1
 	return (utorid, email)
 
+def generateMail(email, text, asst, grp):
+	msg = MIMEMultipart()
+	msg['From'] = "dhaval@eecg.utoronto.ca"
+	msg['To'] = COMMASPACE.join(send_to)
+	msg['Date'] = format(localtime=True)
+	msg['Subject'] = 'Automarker results for Assignment ' + asst
+	msg.attach(MIMEText(text))
+	files = ["os161-" + grp + ".log", "os161-marker-" + grp + ".log", "os161-tester-" + grp + ".log"]
+
+	for f in files:
+		part = MIMEBase('application', "octet-stream")
+		part.set_payload( open(f,"rb").read() )
+		Encoders.encode_base64(part)
+		part.add_header('Content-Disposition', 'attachment; filename="%s"' % os.path.basename(f))
+		msg.attach(part)
+
+	return msg
+
+def generateEmail(grp, asst):
+	(utorid, email) = parseEmailFile(grp)
+	mark = parseMarkFile(grp)
+	hello = generateSalutation(utorid)
+	body = generateBody(grp, asst, mark)
+	bye = generateBye("Ali Shariat <shariat@gmail.com>")
+	email.append("dhaval@eecg.toronto.edu")
+	email.append("shariat@gmail.com")
+	message = hello + body + bye
+	return generateMail(email, message, asst, grp)
+
+def generateMbox(asst):
+	mbox = mailbox.mbox('test.mbox')
+	mbox.lock()
+	try:
+		for i in range(10):
+			grp = u'%03d' % i
+			email = generateEmail(grp, asst)
+			mbox.add(email)
+			mbox.flush()
+	finally:
+		mbox.unlock()
+	return
+
 def main():
 	asst = str(sys.argv[1])
-	marks = parseMarkFile('000')
-	utor = ['gianidha', 'shariali']
-	top = generateSalutation(utor)
-	body = generateBody('000', '1', marks)
-	bye = generateBye('Dhaval Giani <dhaval@eecg.toronto.edu>')
-	print top + body + bye
+	generateMbox(asst)
 
 if __name__ == "__main__":
 	main()
