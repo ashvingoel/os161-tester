@@ -114,7 +114,7 @@ def generateMbox(asst):
 	mbox = mailbox.mbox('test.mbox')
 	mbox.lock()
 	try:
-		for i in range(1:10):
+		for i in range(1,10):
 			grp = u'%03d' % i
 			email = generateEmail(grp, asst)
 			mbox.add(email)
