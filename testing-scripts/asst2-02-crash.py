@@ -11,7 +11,9 @@ def testCrash(kernel_name):
 	check = 'Fatal user mode trap'
 	commands = 'abcdeghijklmno'
 	for i in commands:
-		test.send_command("p /testbin/crash " + i)
+		res = test.send_command("p /testbin/crash " + i)
+		if res not True:
+			break
 		test.look_for_and_print_result(check, 5)
 		if test.look_for(pexpect.EOF >= 0):
 			continue
