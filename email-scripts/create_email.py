@@ -85,7 +85,7 @@ def generateMail(email, text, asst, grp):
 	msg = MIMEMultipart()
 	msg['From'] = "dhaval@eecg.utoronto.ca"
 	msg['To'] = COMMASPACE.join(email)
-	msg['Date'] = format(localtime=True)
+	#msg['Date'] = format(localtime=True)
 	msg['Subject'] = 'Automarker results for Assignment ' + asst
 	msg.attach(MIMEText(text))
 	files = ["os161-" + grp + ".log", "os161-marker-" + grp + ".log", "os161-tester-" + grp + ".log"]
