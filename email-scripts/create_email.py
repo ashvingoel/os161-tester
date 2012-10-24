@@ -138,7 +138,8 @@ def generateEmail(grp, asst):
 		files = ["os161-marker-" + grp + ".log"]
 		body = generateFail(grp, asst, design)
 	else:
-		mark.append(design)
+		if design:
+			mark.append(design)
 		files = ["os161-" + grp + ".log", "os161-marker-" + grp + ".log", "os161-tester-" + grp + ".log"]
 		body = generateBody(grp, asst, mark)
 	hello = generateSalutation(utorid)
