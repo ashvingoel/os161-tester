@@ -66,7 +66,6 @@ def parseEmailFile(grp):
 	email = []
 	for line in f.readlines():
 		if grp in line:
-			print "Found group"
 			l = line.split(',')
 			i = 0
 			for value in l:
@@ -76,9 +75,11 @@ def parseEmailFile(grp):
 				elif i % 2 == 1:
 					#Must be utorid
 					utorid.append(value)
+					print "appending "+value+" to utorid"
 				else:
 					#Must be email id
 					email.append(value)
+					print "appending "+value+" to email"
 				i += 1
 	return (utorid, email)
 
