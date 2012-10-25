@@ -29,7 +29,7 @@ def generateSalutation(utorid):
 	return d_line
 
 def storeResults(grp, mark, total):
-	results = fopen('results.txt', 'a')
+	results = open('results.txt', 'a')
 	results.write(grp + ',' + total + ',' + marks + '\n')
 	results.close()
 
