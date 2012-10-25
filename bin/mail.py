@@ -181,8 +181,10 @@ def sendEmail(asst):
 
 
 def main():
-	global check = True
-	global Total = 0
+	global check
+	global Total
+	check = True
+	Total = 0
 	asst = str(sys.argv[1])
 	generateMbox(asst)
 	if check is False:
