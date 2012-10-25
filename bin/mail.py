@@ -74,9 +74,11 @@ def parseMarkFile(grp):
 def parseDesignMark(grp):
 	mark = {}
 	filename = 'designs.csv'
+	print grp
 	try:
 		f = open(filename, 'r')
 		for l in f.readlines():
+			print l
 			if grp in l:
 				mark['name'] = 'Design'
 				line = l.split(',')
@@ -131,7 +133,6 @@ def generateEmail(grp, asst):
 	(utorid, email) = parseEmailFile(grp)
 	mark = parseMarkFile(grp)
 	design = parseDesignMark(grp)
-	print 'parsed design with ' + str(design)
 	if not mark:
 		files = ["os161-marker-" + grp + ".log"]
 		body = generateFail(grp, asst, design)
