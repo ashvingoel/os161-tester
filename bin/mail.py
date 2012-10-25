@@ -30,7 +30,7 @@ def generateSalutation(utorid):
 
 def storeResults(grp, mark, total):
 	results = open('results.txt', 'a')
-	results.write(grp + ',' + total + ',' + marks + '\n')
+	results.write(grp + ',' + total + ',' + mark + '\n')
 	results.close()
 
 def generateBody(grp, asst, marks):
