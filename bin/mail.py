@@ -88,8 +88,8 @@ def parseDesignMark(grp):
 
 
 def parseEmailFile(grp):
-	#filename = '../emails.txt'
-	filename = 'emails.txt'
+	filename = '../emails.txt'
+	#filename = 'emails.txt'
 	f = open(filename, 'r')
 	utorid = []
 	email = []
@@ -150,7 +150,7 @@ def generateMbox(asst):
 	mbox = mailbox.mbox('test.mbox')
 	mbox.lock()
 	try:
-		for i in range(1,11):
+		for i in range(1, 40):
 			grp = u'%03d' % i
 			email = generateEmail(grp, asst)
 			print "Email for os-" + grp + " generated"
@@ -163,7 +163,7 @@ def generateMbox(asst):
 
 def sendEmail(asst):
 	p = Popen(["/usr/sbin/sendmail", "-t"], stdin=PIPE)
-	for i in range(1, 39):
+	for i in range(1, 40):
 		grp = u'%03d' % i
 		email = generateEmail(grp, asst)
 		print "Email for os-" + grp + " generated"
