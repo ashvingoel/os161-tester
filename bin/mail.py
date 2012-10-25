@@ -74,11 +74,9 @@ def parseMarkFile(grp):
 def parseDesignMark(grp):
 	mark = {}
 	filename = 'designs.csv'
-	print grp
 	try:
 		f = open(filename, 'r')
 		for l in f.readlines():
-			print l
 			if grp in l:
 				mark['name'] = 'Design'
 				line = l.split(',')
