@@ -78,7 +78,6 @@ def parseDesignMark(grp):
 		f = open(filename, 'r')
 		for l in f.readlines():
 			if grp in l:
-				print l
 				mark['name'] = 'Design'
 				line = l.split(',')
 				mark['total'] = line[1]
@@ -132,6 +131,7 @@ def generateEmail(grp, asst):
 	(utorid, email) = parseEmailFile(grp)
 	mark = parseMarkFile(grp)
 	design = parseDesignMark(grp)
+	print 'parsed design with ' + str(design)
 	if not mark:
 		files = ["os161-marker-" + grp + ".log"]
 		body = generateFail(grp, asst, design)
