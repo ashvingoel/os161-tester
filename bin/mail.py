@@ -28,6 +28,11 @@ def generateSalutation(utorid):
 	d_line += '\n\n'
 	return d_line
 
+def storeResults(grp, mark, total):
+	results = fopen('results.txt', 'a')
+	results.write(grp + ',' + total + ',' + marks + '\n')
+	results.close()
+
 def generateBody(grp, asst, marks):
 	global check
 	global Total
@@ -52,6 +57,7 @@ def generateBody(grp, asst, marks):
 		b_line += i['name'] + ': ' + str(i['mark']) + ' out of ' + str(i['total']) + '\n'
 
 	b_line += '\n'
+	storeResults(grp, str(mark), str(total))
 
 	return b_line
 
@@ -60,6 +66,7 @@ def generateFail(grp, asst, mark):
 	b_line += 'Your submission failed. Please check attachment for the reasons\n\n'
 	if mark:
 		b_line += 'Your design score is ' + str(mark['mark']) + ' out of ' + str(mark['total']) + '\n\n'
+		storeResults(grp, str(mark['mark'], str(mark['total']))
 	return b_line
 
 def generateBye(TA):
