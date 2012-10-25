@@ -34,10 +34,10 @@ def generateBody(grp, asst, marks):
 		total += int(i['total'])
 		mark += int(i['mark'])
 
-	if self.Total == 0:
-		self.Total = total
-	elif self.total != total:
-		self.check = False
+	if Total == 0:
+		Total = total
+	elif total != total:
+		check = False
 
 	b_line += 'You have scored ' + str(mark) + ' out of a possible '+ str(total) + ' marks.\n\n'
 	b_line += 'You have scored: \n\n'
