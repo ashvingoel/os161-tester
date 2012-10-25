@@ -15,6 +15,7 @@ from subprocess import Popen, PIPE
 #We will remove these once everything is tested
 import mailbox
 import email.utils
+import os.path
 
 
 def generateSalutation(utorid):
@@ -32,6 +33,11 @@ def generateBody(grp, asst, marks):
 	for i in marks:
 		total += int(i['total'])
 		mark += int(i['mark'])
+
+	if self.Total == 0:
+		self.Total = total
+	elif self.total != total:
+		self.check = False
 
 	b_line += 'You have scored ' + str(mark) + ' out of a possible '+ str(total) + ' marks.\n\n'
 	b_line += 'You have scored: \n\n'
@@ -153,6 +159,9 @@ def generateMbox(asst):
 		for i in range(1, 40):
 			grp = u'%03d' % i
 			email = generateEmail(grp, asst)
+			#The group doesn't  exist
+			if email is None:
+				continue
 			print "Email for os-" + grp + " generated"
 			mbox.add(email)
 			mbox.flush()
@@ -172,8 +181,12 @@ def sendEmail(asst):
 
 
 def main():
+	global check = True
+	global Total = 0
 	asst = str(sys.argv[1])
 	generateMbox(asst)
+	if check is False:
+		print "Totals don't match. Please check before sending emails"
 	#sendEmail(asst)
 
 if __name__ == "__main__":
