@@ -17,6 +17,8 @@ import mailbox
 import email.utils
 import os.path
 
+Total = 0
+check = True
 
 def generateSalutation(utorid):
 	d_line = 'Dear'
@@ -27,6 +29,8 @@ def generateSalutation(utorid):
 	return d_line
 
 def generateBody(grp, asst, marks):
+	global check
+	global Total
 	b_line ='Your submission for Assignment ' + str(asst) + ' has been automarked\n\n'
 	total = 0
 	mark = 0
