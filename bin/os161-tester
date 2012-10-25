@@ -186,11 +186,6 @@ os161_marker() {
         cd kern/compile/ASST${ASSIGNMENT} && make -s depend && make -s && make -s install
 
         cd $BUILD_PATH && cp /cad2/ece344f/cs161/bin/sys161.conf.sample sys161.conf
-	if [[ $? == 0 ]]; then 
-		echo "Build Test, 5, 5" > os161-mark.txt
-	else
-		echo "Build Test, 5, 0" > os161-mark.txt
-	fi
         # run the tester
         os161_tester ${ASSIGNMENT} > ../../os161-tester-${GROUP}.log
         if [ -e "os161.log" ]; then
