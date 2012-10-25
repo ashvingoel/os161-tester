@@ -9,10 +9,10 @@ TESTER_DIR=${TOP_DIR}/os161-tester
 BINDIR=${TESTER_DIR}/bin
 
 pushd .
-cd ASST_DIR
+cd ${ASST_DIR}
 ${BINDIR}/mail.py ${ASST}
 popd
 
-#This can be removed after testing
-cp ${ASST_DIR}/test.mbox .
-mutt -f test.mbox
+##This can be removed after testing
+#cp ${ASST_DIR}/test.mbox .
+#mutt -f test.mbox
