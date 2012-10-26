@@ -19,25 +19,29 @@ make results
 
 make
 
-- Run the following command to get emails for students. This command will put
-  the email information in /cad2/ece344f/os161-tester/results/emails.txt
+- From now onwards, all commands below are run in the /cad2/ece344f/os161-tester
+  directory.
 
-/cad2/ece344f/os161-tester/bin/get-email.sh
+
+- Run the following command to get emails for students. This command will put
+  the email information in results/emails.txt
+
+bin/get-email.sh
 
 - Run the following command for marking. This command will generate results in
-  /cad2/ece344f/os161-tester/results/asst_nr
+  results/asst_nr
 
-/cad2/ece344f/os161-tester/os161-tester -m asst_nr
+cd results/asst_nr
+bin/os161-tester -m asst_nr
 
 - Run the following command to get the design documents of students. This
-  command will create the design documents in /cad2/ece344f/os161-tester/results/asst_nr/designs
+  command will create the design documents in results/asst_nr/design
 
-/cad2/ece344f/os161-tester/bin/get-design-doc asst_nn
+bin/get-design-doc asst_nn
 
-- TA should update the design marks in
-  /cad2/ece344f/os161-tester/results/asst_nr/design-marks.csv based on the template
-  found in /cad2/ece344f/os161-tester/results/design-marks-format.csv
+- TA should update the design marks in results/asst_nr/design-marks.csv based on
+  the template found in results/design-marks-format.csv
 
 - Run the following command to send emails to students
 
-/cad2/ece344f/os161-tester/bin/send-mail asst_nr
+bin/send-mail asst_nr
