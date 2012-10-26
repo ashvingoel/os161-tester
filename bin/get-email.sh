@@ -6,7 +6,6 @@ RESULTS_DIR=${TOP_DIR}/results
 TESTER_DIR=${TOP_DIR}/os161-tester
 BINDIR=${TESTER_DIR}/bin
 
-pushd .
 #Check if the roster file exists or not, if not, then barf
 
 if [ ! -f ${RESULTS_DIR}/roster.csv ]; then
@@ -16,5 +15,6 @@ if [ ! -f ${RESULTS_DIR}/roster.csv ]; then
 	return
 fi
 
+echo "generating ${RESULTS_DIR}/emails.txt"
 ${BINDIR}/generate-email-id > ${RESULTS_DIR}/emails.txt
-popd
+
