@@ -8,7 +8,7 @@ RESULTS_DIR=${TOP_DIR}/results
 ASST_DIR=${RESULTS_DIR}/asst${ASST_NR}
 TESTER_DIR=${TOP_DIR}/os161-tester
 BINDIR=${TESTER_DIR}/bin
-DESIGN_DIR=${ASST_DIR}/designs
+DESIGN_DIR=${ASST_DIR}/designs1
 
 pushd .
 #Become the right group
