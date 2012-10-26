@@ -1,0 +1,43 @@
+Instructions for using os161-tester
+-----------------------------------
+
+- Get the roster file from UofT portal and save it in the templates directory as
+  roster.csv file.
+
+- From Control Panel >> Course Tools > UT Manage Groups
+- Click View/Download Selected Roster
+- Check "Student ID" box.
+- Check "Email" box.
+
+- Run the following command in this directory to setup the
+  /cad2/ece344f/os161-tester/results directory and copy various files into this
+  directory.
+
+make results 
+
+- Run the following command to install os161-tester.
+
+make
+
+- Run the following command to get emails for students. This command will put
+  the email information in /cad2/ece344f/os161-tester/results/emails.txt
+
+/cad2/ece344f/os161-tester/bin/get-email.sh
+
+- Run the following command for marking. This command will generate results in
+  /cad2/ece344f/os161-tester/results/asst_nr
+
+/cad2/ece344f/os161-tester/os161-tester -m asst_nr
+
+- Run the following command to get the design documents of students. This
+  command will create the design documents in /cad2/ece344f/os161-tester/results/asst_nr/designs
+
+/cad2/ece344f/os161-tester/bin/get-design-doc asst_nn
+
+- TA should update the design marks in
+  /cad2/ece344f/os161-tester/results/asst_nr/design-marks.csv based on the template
+  found in /cad2/ece344f/os161-tester/results/design-marks-format.csv
+
+- Run the following command to send emails to students
+
+/cad2/ece344f/os161-tester/bin/send-mail asst_nr

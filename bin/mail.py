@@ -90,7 +90,7 @@ def parseMarkFile(grp):
 
 def parseDesignMark(grp):
 	mark = {}
-	filename = 'designs.csv'
+	filename = 'design-marks.csv'
 	try:
 		f = open(filename, 'r')
 		for l in f.readlines():

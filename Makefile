@@ -22,7 +22,7 @@ results:
 			      $(RESULTS_DIR)/asst1 \
 	                      $(RESULTS_DIR)/asst2 \
 			      $(RESULTS_DIR)/asst3 && \
-	cp templates/design-format.csv $(RESULTS_DIR)
+	cp templates/design-marks-format.csv templates/roster.csv $(RESULTS_DIR)
 
 # students shouldn't have access to the marking directory, but
 # TAs should have read access to it
