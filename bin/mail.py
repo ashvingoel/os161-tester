@@ -200,7 +200,7 @@ def main():
 	generateMbox(asst)
 	if check is False:
 		print "Totals don't match. Please check before sending emails"
-	#sendEmail(asst)
+	sendEmail(asst)
 
 if __name__ == "__main__":
 	main()
