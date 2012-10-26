@@ -182,13 +182,14 @@ def generateMbox(asst):
 	return
 
 def sendEmail(asst):
-	p = Popen(["/usr/sbin/sendmail", "-t"], stdin=PIPE)
 	for i in range(1, 40):
+		p = Popen(["/usr/sbin/sendmail", "-t"], stdin=PIPE)
 		grp = u'%03d' % i
 		email = generateEmail(grp, asst)
 		print "Email for os-" + grp + " generated"
 		p.communicate(email.as_string())
 		print "Email for os-" + grp + " sent"
+		p.terminate()
 
 
 def main():
