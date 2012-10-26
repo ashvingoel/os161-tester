@@ -189,7 +189,6 @@ def sendEmail(asst):
 		print "Email for os-" + grp + " generated"
 		p.communicate(email.as_string())
 		print "Email for os-" + grp + " sent"
-		p.terminate()
 
 
 def main():
