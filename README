@@ -29,7 +29,8 @@ make
 bin/get-email.sh
 
 - Run the following command for marking. This command will generate results in
-  results/asst_nr
+  results/asst_nr. Note that this command generates results in the current
+  directory.
 
 cd results/asst_nr
 bin/os161-tester -m asst_nr
@@ -37,7 +38,7 @@ bin/os161-tester -m asst_nr
 - Run the following command to get the design documents of students. This
   command will create the design documents in results/asst_nr/design
 
-bin/get-design-doc asst_nn
+bin/get-design-doc asst_nr
 
 - TA should update the design marks in results/asst_nr/design-marks.csv based on
   the template found in results/design-marks-format.csv
