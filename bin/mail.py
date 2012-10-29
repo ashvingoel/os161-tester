@@ -32,6 +32,8 @@ def generateSalutation(utorid):
 def storeResults(utorid, mark, total):
 	results = open('results.csv', 'a')
 	for i in utorid:
+		if i is None:
+			continue
 		print i
 		results.write(i + ',' + total + ',' + mark + '\n')
 	results.close()
