@@ -125,10 +125,10 @@ def parseEmailFile(grp):
 					continue
 				elif i % 2 == 1:
 					#Must be utorid
-					utorid.append(value)
+					utorid.append(value.strip())
 				else:
 					#Must be email id
-					email.append(value)
+					email.append(value.strip())
 				i += 1
 	return (utorid, email)
 
