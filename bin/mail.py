@@ -59,7 +59,7 @@ def generateBody(grp, asst, marks, utorid):
 		b_line += i['name'] + ': ' + str(i['mark']) + ' out of ' + str(i['total']) + '\n'
 
 	b_line += '\n'
-	storeResults(grp, str(mark), str(total))
+	storeResults(utorid, str(mark), str(total))
 
 	return b_line
 
