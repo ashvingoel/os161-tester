@@ -157,7 +157,7 @@ def generateEmail(grp, asst, TA):
 		if design:
 			mark.append(design)
 		files = ["os161-" + grp + ".log", "os161-marker-" + grp + ".log", "os161-tester-" + grp + ".log"]
-		body = generateBody(grp, asst, mark)
+		body = generateBody(grp, asst, mark, utorid)
 	hello = generateSalutation(utorid)
 	bye = generateBye(TA)
 	email.append("dhaval@eecg.toronto.edu")
