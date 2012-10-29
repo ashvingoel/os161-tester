@@ -16,6 +16,7 @@ from subprocess import Popen, PIPE
 import mailbox
 import email.utils
 import os.path
+from optparse import OptionParser
 
 Total = 0
 check = True
@@ -28,12 +29,13 @@ def generateSalutation(utorid):
 	d_line += '\n\n'
 	return d_line
 
-def storeResults(grp, mark, total):
-	results = open('results.txt', 'a')
-	results.write(grp + ',' + total + ',' + mark + '\n')
+def storeResults(utorid, mark, total):
+	results = open('results.csv', 'a')
+	for i in utorid:
+		results.write(i + ',' + total + ',' + mark + '\n')
 	results.close()
 
-def generateBody(grp, asst, marks):
+def generateBody(grp, asst, marks, utorid):
 	global check
 	global Total
 	b_line ='Your submission for Assignment ' + str(asst) + ' has been automarked\n\n'
@@ -127,9 +129,9 @@ def parseEmailFile(grp):
 				i += 1
 	return (utorid, email)
 
-def generateMail(email, text, asst, grp, files):
+def generateMail(email, text, asst, grp, files, TA):
 	msg = MIMEMultipart()
-	msg['From'] = "dhaval@eecg.toronto.edu"
+	msg['From'] = TA
 	msg['To'] = COMMASPACE.join(email)
 	#msg['Date'] = format(localtime=True)
 	msg['Subject'] = 'Automarker results for Assignment ' + asst
@@ -144,7 +146,7 @@ def generateMail(email, text, asst, grp, files):
 
 	return msg
 
-def generateEmail(grp, asst):
+def generateEmail(grp, asst, TA):
 	(utorid, email) = parseEmailFile(grp)
 	mark = parseMarkFile(grp)
 	design = parseDesignMark(grp)
@@ -157,19 +159,19 @@ def generateEmail(grp, asst):
 		files = ["os161-" + grp + ".log", "os161-marker-" + grp + ".log", "os161-tester-" + grp + ".log"]
 		body = generateBody(grp, asst, mark)
 	hello = generateSalutation(utorid)
-	bye = generateBye("Ali Shariat <shariat@gmail.com>")
+	bye = generateBye(TA)
 	email.append("dhaval@eecg.toronto.edu")
-	email.append("shariat@gmail.com")
+	email.append(TA)
 	message = hello + body + bye
-	return generateMail(email, message, asst, grp, files)
+	return generateMail(email, message, asst, grp, files, TA)
 
-def generateMbox(asst):
+def generateMbox(asst,start, stop, TA):
 	mbox = mailbox.mbox('test.mbox')
 	mbox.lock()
 	try:
-		for i in range(1, 40):
+		for i in range(start, stop+1):
 			grp = u'%03d' % i
-			email = generateEmail(grp, asst)
+			email = generateEmail(grp, asst, TA)
 			#The group doesn't  exist
 			if email is None:
 				continue
@@ -181,11 +183,11 @@ def generateMbox(asst):
 		mbox.unlock()
 	return
 
-def sendEmail(asst):
-	for i in range(1, 40):
+def sendEmail(asst, start, stop, TA):
+	for i in range(start, stop+1):
 		p = Popen(["/usr/sbin/sendmail", "-t"], stdin=PIPE)
 		grp = u'%03d' % i
-		email = generateEmail(grp, asst)
+		email = generateEmail(grp, asst, TA)
 		print "Email for os-" + grp + " generated"
 		p.communicate(email.as_string())
 		print "Email for os-" + grp + " sent"
@@ -194,13 +196,28 @@ def sendEmail(asst):
 def main():
 	global check
 	global Total
+	parser = OptionParser()
+	parser.add_option("-t", "--TA", action = "store", type = "string", dest = "TA", help = "Set the TA for the current assignment. This information is used to populate the email address in the from field")
+	parser.add_option("-s", "--start", action = "store", type = "int", dest = "start", default = 1, help = "Set the group from which the mailer runs")
+	parser.add_option("-e", "--end", action = "store", type = "int", dest = "end", default = 39, help = "Set the group till which the mailer runs")
+	parser.add_option("-r", "--real", action = "store_false", dest = "dry", default = True, help = "Set this option once you are convinced that all the mboxes look right. The mailer will run and actually send the email then")
+	parser.add_option("-a", "--assignment", action = "store", type = "string", dest = "asst", help = "Set the assignment number")
+
+	(options, args) = parser.parse_args(sys.argv)
+	if options.TA is None:
+		print "Please provide TA details using the -t/--TA option"
+		exit()
+	if options.asst is None:
+		print "Please provide the assignement number using -a/--assignment option"
+		exit()
 	check = True
 	Total = 0
-	asst = str(sys.argv[1])
-	generateMbox(asst)
+	asst = options.asst
+	generateMbox(asst, options.start, options.end, options.TA)
 	if check is False:
 		print "Totals don't match. Please check before sending emails"
-	#sendEmail(asst)
+	if options.dry is False:
+		sendEmail(asst, options.start, options.end, options.TA)
 
 if __name__ == "__main__":
 	main()
