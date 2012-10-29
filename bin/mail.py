@@ -217,7 +217,7 @@ def main():
 	if check is False:
 		print "Totals don't match. Please check before sending emails"
 	if options.dry is False:
-		print"Sending Emails\n")
+		print("Sending Emails\n")
 		#sendEmail(asst, options.start, options.end, options.TA)
 
 if __name__ == "__main__":
