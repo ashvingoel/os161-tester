@@ -20,6 +20,8 @@ from optparse import OptionParser
 
 Total = 0
 check = True
+emailfile = "../emails.txt"
+designfile = "design-marks.csv"
 
 def generateSalutation(utorid):
 	d_line = 'Dear'
@@ -92,7 +94,8 @@ def parseMarkFile(grp):
 
 def parseDesignMark(grp):
 	mark = {}
-	filename = 'design-marks.csv'
+	global designfile
+	filename = designfile
 	try:
 		f = open(filename, 'r')
 		for l in f.readlines():
@@ -107,9 +110,9 @@ def parseDesignMark(grp):
 
 
 def parseEmailFile(grp):
-	filename = '../emails.txt'
 	#filename = 'emails.txt'
-	f = open(filename, 'r')
+	global emailfile
+	f = open(emailfile, 'r')
 	utorid = []
 	email = []
 	for line in f.readlines():
@@ -127,6 +130,7 @@ def parseEmailFile(grp):
 					#Must be email id
 					email.append(value.strip())
 				i += 1
+	f.close()
 	return (utorid, email)
 
 def generateMail(email, text, asst, grp, files, TA):
@@ -146,8 +150,8 @@ def generateMail(email, text, asst, grp, files, TA):
 
 	return msg
 
-def generateEmail(grp, asst, TA):
-	(utorid, email) = parseEmailFile(grp)
+def generateEmail(grp, asst, TA, mailfile):
+	(utorid, email) = parseEmailFile(mailfile, grp)
 	mark = parseMarkFile(grp)
 	design = parseDesignMark(grp)
 	if not mark:
@@ -196,12 +200,16 @@ def sendEmail(asst, start, stop, TA):
 def main():
 	global check
 	global Total
+	global emailfile
+	global designfile
 	parser = OptionParser()
 	parser.add_option("-t", "--TA", action = "store", type = "string", dest = "TA", help = "Set the TA for the current assignment. This information is used to populate the email address in the from field")
 	parser.add_option("-s", "--start", action = "store", type = "int", dest = "start", default = 1, help = "Set the group from which the mailer runs")
 	parser.add_option("-e", "--end", action = "store", type = "int", dest = "end", default = 39, help = "Set the group till which the mailer runs")
 	parser.add_option("-r", "--real", action = "store_false", dest = "dry", default = True, help = "Set this option once you are convinced that all the mboxes look right. The mailer will run and actually send the email then")
 	parser.add_option("-a", "--assignment", action = "store", type = "string", dest = "asst", help = "Set the assignment number")
+	parser.add_option("-m", "--email-file", action = "store", type = "string", dest = "email", help = "Set the file having the email ids")
+	parser.add_option("-d", "--design-file", action = "store", type = "string", dest = "design", help = "Set the file having the design marks")
 
 	(options, args) = parser.parse_args(sys.argv)
 	if options.TA is None:
@@ -210,15 +218,20 @@ def main():
 	if options.asst is None:
 		print "Please provide the assignement number using -a/--assignment option"
 		exit()
+	if options.design is not None:
+		designfile = options.design
+	if options.email is not None:
+		emailfile = options.email
 	check = True
 	Total = 0
 	asst = options.asst
 	generateMbox(asst, options.start, options.end, options.TA)
 	if check is False:
 		print "Totals don't match. Please check before sending emails"
+		exit()
 	if options.dry is False:
 		print("Sending Emails\n")
-		#sendEmail(asst, options.start, options.end, options.TA)
+		sendEmail(asst, options.start, options.end, options.TA)
 
 if __name__ == "__main__":
 	main()
