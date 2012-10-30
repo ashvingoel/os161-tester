@@ -20,7 +20,7 @@ from optparse import OptionParser
 
 Total = 0
 check = True
-emailfile = "../emails.txt"
+mailfile = "../emails.txt"
 designfile = "design-marks.csv"
 
 def generateSalutation(utorid):
@@ -150,7 +150,8 @@ def generateMail(email, text, asst, grp, files, TA):
 
 	return msg
 
-def generateEmail(grp, asst, TA, mailfile):
+def generateEmail(grp, asst, TA):
+	global mailfile
 	(utorid, email) = parseEmailFile(mailfile, grp)
 	mark = parseMarkFile(grp)
 	design = parseDesignMark(grp)
@@ -200,7 +201,7 @@ def sendEmail(asst, start, stop, TA):
 def main():
 	global check
 	global Total
-	global emailfile
+	global mailfile
 	global designfile
 	parser = OptionParser()
 	parser.add_option("-t", "--TA", action = "store", type = "string", dest = "TA", help = "Set the TA for the current assignment. This information is used to populate the email address in the from field")
@@ -221,7 +222,7 @@ def main():
 	if options.design is not None:
 		designfile = options.design
 	if options.email is not None:
-		emailfile = options.email
+		mailfile = options.email
 	check = True
 	Total = 0
 	asst = options.asst
