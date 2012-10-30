@@ -1,10 +1,9 @@
-
 #!/usr/bin/python
 
 import core
 import sys
 
-def testForkTest(kernel_name):
+def testForkBomb(kernel_name):
 	global test
 	test = core.TestUnit(kernel_name, "Testing forkbomb")
 	check = 'OS\/161 kernel \[\? for menu\]\: '
@@ -13,12 +12,12 @@ def testForkTest(kernel_name):
 
 	if result != -1:
 		test.print_result(0, 10)
-	else
-		test.print_result(10. 10)
+	else:
+		test.print_result(10, 10)
 
 def main():
 	path = str(sys.argv[1])
-	testForkTest(path)
+	testForkBomb(path)
 
 
 
