@@ -4,9 +4,9 @@ TESTER_DIR=$(TOP_DIR)/os161-tester
 INSTALL_BIN_DIR=$(TOP_DIR)/cs161/bin
 RESULTS_DIR=$(TOP_DIR)/results
 
-RSYNC_FILES:=$(wildcard core/*.py) $(wildcard testing-scripts/*.py)
-MARKING_DIR=marking-scripts
 BIN_DIR=bin
+MARKING_DIR=marking-scripts
+OTHER_DIRS=core testing-scripts
 TESTER_SCRIPT=$(TESTER_DIR)/$(BIN_DIR)/os161-tester
 
 all: core bin
@@ -28,7 +28,7 @@ results:
 # TAs should have read access to it
 core:
 	mkdir -p $(TESTER_DIR) && \
-	rsync -avRC --delete $(RSYNC_FILES) $(BIN_DIR) $(MARKING_DIR) $(TESTER_DIR) && \
+	rsync -avRC --delete $(BIN_DIR) $(MARKING_DIR) $(OTHER_DIRS) $(TESTER_DIR) && \
 	chgrp e344F12 $(TESTER_DIR)/$(MARKING_DIR) && \
 	chmod o-rwx $(TESTER_DIR)/$(MARKING_DIR)
 
