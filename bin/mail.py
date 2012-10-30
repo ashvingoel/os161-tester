@@ -192,6 +192,8 @@ def sendEmail(asst, start, stop, TA):
 		p = Popen(["/usr/sbin/sendmail", "-t"], stdin=PIPE)
 		grp = u'%03d' % i
 		email = generateEmail(grp, asst, TA)
+		if email is None:
+			continue
 		print "Email for os-" + grp + " generated"
 		p.communicate(email.as_string())
 		print "Email for os-" + grp + " sent"
