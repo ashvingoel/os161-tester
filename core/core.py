@@ -71,10 +71,11 @@ class TestUnit:
 			return -1
                 except pexpect.EOF:
                         print "END OF FILE ERROR"
-			return -1
-                except Exception:
+			return -2
+                except Exception, e:
                         print "UNEXPECTED ERROR", sys.exc_info()[0]
-			return -1
+			print "\nPLEASE REPORT THIS TO THE INSTRUCTOR OR A TA\n"
+			return -3
 		return index
 
         def print_result(self, mark_obtained, mark):
