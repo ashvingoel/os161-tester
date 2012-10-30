@@ -86,13 +86,6 @@ class TestUnit:
                 else:
                         print "FAIL"
 
-        def print_result(self, mark_obtained, mark):
-		self.total += mark
-		self.mark += mark_obtained
-                if mark_obtained == mark:
-                        print "PASS"
-                else:
-                        print "FAIL"
 
 	def look_for_and_print_result(self, result, mark):
                 out = self.look_for(result)
