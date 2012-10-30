@@ -218,7 +218,7 @@ def main():
 		print "Please provide TA details using the -t/--TA option"
 		exit()
 	if options.asst is None:
-		print "Please provide the assignement number using -a/--assignment option"
+		print "Please provide the assignment number using -a/--assignment option"
 		exit()
 	if options.design is not None:
 		designfile = options.design
