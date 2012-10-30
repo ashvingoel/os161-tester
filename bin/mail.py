@@ -111,8 +111,8 @@ def parseDesignMark(grp):
 
 def parseEmailFile(grp):
 	#filename = 'emails.txt'
-	global emailfile
-	f = open(emailfile, 'r')
+	global mailfile
+	f = open(mailfile, 'r')
 	utorid = []
 	email = []
 	for line in f.readlines():
@@ -151,8 +151,7 @@ def generateMail(email, text, asst, grp, files, TA):
 	return msg
 
 def generateEmail(grp, asst, TA):
-	global mailfile
-	(utorid, email) = parseEmailFile(mailfile, grp)
+	(utorid, email) = parseEmailFile(grp)
 	mark = parseMarkFile(grp)
 	design = parseDesignMark(grp)
 	if not mark:
