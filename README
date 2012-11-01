@@ -43,6 +43,18 @@ bin/get-design-doc asst_nr
 - TA should update the design marks in results/asst_nr/design-marks.csv based on
   the template found in results/design-marks-format.csv
 
-- Run the following command to send emails to students
+- Run the following command to generate an mbox that you can review
 
-bin/send-mail asst_nr
+bin/mail.py -t "ta_name <ta_email_address>" -a asst_nr -d design_marks -m emails-list
+
+- To understand this comand in detail, please run
+
+bin/mail.py --help
+
+- Use mutt (or your preferred mail client) to sanity check the emails
+
+mutt -f test.mbox
+
+- If everything looks good, go ahead and email the results to the students
+
+bin/mail.py -t "ta_name <ta_email_address>" -a asst_nr -d design_marks -m emails-list -r
