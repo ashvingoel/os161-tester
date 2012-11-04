@@ -185,7 +185,8 @@ os161_marker() {
         # build the kernel
         cd kern/compile/ASST${ASSIGNMENT} && make -s depend && make -s && make -s install
 
-        cd $BUILD_PATH && cp /cad2/ece344f/cs161/bin/sys161.conf.sample sys161.conf
+	#copy the correct config
+        cd $BUILD_PATH && cp ${TEST_PATH}/sysconfig/sys161-asst${ASSIGNMENT}.conf sys161.conf
         # run the tester
         os161_tester ${ASSIGNMENT} > ../../os161-tester-${GROUP}.log
         if [ -e "os161.log" ]; then
