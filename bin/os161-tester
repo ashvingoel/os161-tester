@@ -187,6 +187,7 @@ os161_marker() {
 
 	#copy the correct config
         cd $BUILD_PATH && cp ${TEST_PATH}/sysconfig/sys161-asst${ASSIGNMENT}.conf sys161.conf
+	echo "Setup ${TEST_PATH}/sysconfig/sys161-asst${ASSIGNMENT}.conf as the configuration"
         # run the tester
         os161_tester ${ASSIGNMENT} > ../../os161-tester-${GROUP}.log
         if [ -e "os161.log" ]; then
