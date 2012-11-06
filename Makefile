@@ -6,10 +6,20 @@ RESULTS_DIR=$(TOP_DIR)/results
 
 BIN_DIR=bin
 MARKING_DIR=marking-scripts
-OTHER_DIRS=core testing-scripts
+OTHER_DIRS=core testing-scripts sysconfig
 TESTER_SCRIPT=$(TESTER_DIR)/$(BIN_DIR)/os161-tester
 
-all: core bin
+# students shouldn't have access to the marking directory, but
+# TAs should have read access to it
+all: bin
+	mkdir -p $(TESTER_DIR) && \
+	rsync -avR --delete $(BIN_DIR) $(MARKING_DIR) $(OTHER_DIRS) $(TESTER_DIR) && \
+	chgrp e344F12 $(TESTER_DIR)/$(MARKING_DIR) && \
+	chmod o-rwx $(TESTER_DIR)/$(MARKING_DIR)
+
+bin:
+	ln -sf  $(TESTER_SCRIPT) $(INSTALL_BIN_DIR)
+
 
 # run this once
 # students shouldn't have access to the results directory, but
@@ -24,15 +34,5 @@ results:
 			      $(RESULTS_DIR)/asst3 && \
 	cp templates/design-marks-format.csv templates/roster.csv $(RESULTS_DIR)
 
-# students shouldn't have access to the marking directory, but
-# TAs should have read access to it
-core:
-	mkdir -p $(TESTER_DIR) && \
-	rsync -avRC --delete $(BIN_DIR) $(MARKING_DIR) $(OTHER_DIRS) $(TESTER_DIR) && \
-	chgrp e344F12 $(TESTER_DIR)/$(MARKING_DIR) && \
-	chmod o-rwx $(TESTER_DIR)/$(MARKING_DIR)
 
-bin:
-	ln -sf  $(TESTER_SCRIPT) $(INSTALL_BIN_DIR)
-
-.PHONY: bin core results
+.PHONY: all bin results

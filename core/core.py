@@ -1,4 +1,4 @@
-#!/Usr/bin/python
+#!/usr/bin/python
 
 import pexpect
 import sys
@@ -43,11 +43,13 @@ class TestUnit:
         # def verbose(self):
         #         return self.verbose
 
-	#We need to wait before we can actually send a command.
-	def send_command(self, cmd):
-		try:
+	# By default, we wait before we send a command.
+        # However, if wait is set to 0, then we don't wait.
+	def send_command(self, cmd, wait=1):
+                if wait:
+                    try:
 			self.kernel.expect('OS\/161 kernel \[\? for menu\]\: ')
-		except Exception:
+                    except Exception:
 			print 'OS HAS CRASHED'
 		#The fun bit is, we need to send the command character by
 		#character to the simulator, otherwise we are going to have
