@@ -1,7 +1,7 @@
 # Makefile for forktest
 
-SRCS=test02-02-multiply.c
-PROG=test02-02-multiply
+SRCS=multiply.c
+PROG=multiply
 BINDIR=/testbin
 
 include ../../defs.mk
