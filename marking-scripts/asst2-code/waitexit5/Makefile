@@ -1,7 +1,7 @@
 # Makefile for forktest
 
-SRCS=test02-03-waitexit-5.c
-PROG=test02-03-waitexit-5
+SRCS=waitexit5.c
+PROG=waitexit5
 BINDIR=/testbin
 
 include ../../defs.mk
