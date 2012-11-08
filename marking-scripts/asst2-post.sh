@@ -3,6 +3,9 @@
 BUILD_PATH=$1
 TEST_PATH=$2
 
+echo "BUILD_PATH is $BUILD_PATH"
+echo "TEST_PATH is $TEST_PATH"
+
 pushd .
 
 cd ${BUILD_PATH}/asst2-end/
