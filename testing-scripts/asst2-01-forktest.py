@@ -25,10 +25,10 @@ def testForkTest(kernel_name):
                     (output_array[1] == 4) and \
                     (output_array[2] == 8) and \
                     (output_array[3] == 16):
-                test.print_result(20, 20)
+                test.print_result(8,8)
             else:
                 print "Output didn't match"
-                test.print_result(0, 20)
+                test.print_result(0, 8)
 
 def main():
 	path = str(sys.argv[1])

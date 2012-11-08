@@ -8,7 +8,7 @@ def testPrintChar(kernel_name):
 	test = core.TestUnit(kernel_name, "Testing add")
 	check = 'Answer: 5'
 	test.send_command("p /testbin/add 2 3")
-	test.look_for_and_print_result(check, 12)
+	test.look_for_and_print_result(check, 5)
 
 def main():
 	path = str(sys.argv[1])

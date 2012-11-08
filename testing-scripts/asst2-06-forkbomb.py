@@ -11,9 +11,9 @@ def testForkBomb(kernel_name):
 	result = test.look_for(check)
 
 	if result != -1:
-		test.print_result(0, 10)
+		test.print_result(0, 8)
 	else:
-		test.print_result(10, 10)
+		test.print_result(8, 8)
 
 def main():
 	path = str(sys.argv[1])
