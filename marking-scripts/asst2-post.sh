@@ -11,4 +11,4 @@ do
 	/bin/cp -r $TEST_PATH/marking-scripts/asst0-code/$i testbin/
 	cd testbin/$i && make -s && make -s install
 	popd
-popd
+done
