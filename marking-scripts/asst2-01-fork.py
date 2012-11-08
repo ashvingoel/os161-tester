@@ -7,7 +7,8 @@ def testPrintChar(kernel_name):
 	global test
 	test = core.TestUnit(kernel_name, "Testing fork")
 	#check = '00aa111b1bbb2222c22c2cc2cccc'
-	check = '00aa1111bbbb222222c2ccc2cccc'
+	#check = '00aa1111bbbb222222c2ccc2cccc'
+	check = '00aa1111bbbb22222222'
 	test.send_command("p /testbin/fork")
 	test.look_for_and_print_result(check, 8)
 

@@ -88,7 +88,7 @@ int main()
 	pid2 = dofork();
 	putchar('2');
 	check();
-	putchar('c');
+	//putchar('c');
 
 	dowait(pid2);
 	dowait(pid1);
