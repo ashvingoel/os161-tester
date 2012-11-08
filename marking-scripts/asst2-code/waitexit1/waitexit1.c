@@ -90,7 +90,7 @@ int main()
     if (getpid() == pid_p)
         putchar('p');
     else 
-        printf("wrong\n", getpid());
+        printf("wrong %d\n", getpid());
 
     putchar('\n');
 
