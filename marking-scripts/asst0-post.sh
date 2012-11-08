@@ -1,5 +1,8 @@
 #!/bin/bash
 
+BUILD_PATH=$1
+TEST_PATH=$2
+
 pushd .
 
 cd ${BUILD_PATH}../asst0-end/

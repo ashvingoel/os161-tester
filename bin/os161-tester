@@ -136,7 +136,7 @@ os161_tester() {
     # Run all the post install hooks
     if [ -x "$TEST_PATH/marking-scripts/asst${ASSIGNMENT}-post.sh" ]; then
 	    echo "Running post install hooks"
-	    $TEST_PATH/marking-scripts/asst${ASSIGNMENT}-post.sh
+	    $TEST_PATH/marking-scripts/asst${ASSIGNMENT}-post.sh ${BUILD_PATH} ${TEST_PATH}
     fi
 
     # run the marking scripts
