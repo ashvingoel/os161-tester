@@ -15,7 +15,7 @@ for i in `ls ${TEST_PATH}/marking-scripts/asst2-code/`
 do
 	pushd .
 	echo $i
-	/bin/cp -r $TEST_PATH/marking-scripts/asst0-code/$i testbin/
+	/bin/cp -r $TEST_PATH/marking-scripts/asst2-code/$i testbin/
 	cd testbin/$i && make -s && make -s install
 	popd
 done
