@@ -19,3 +19,5 @@ do
 	cd testbin/$i && make -s && make -s install
 	popd
 done
+
+popd
