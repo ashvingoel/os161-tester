@@ -22,7 +22,7 @@ def testCrash(kernel_name):
             test.look_for("Choose:")
             # the second argument is 0, so don't wait for menu prompt
             res = test.send_command(i, 0)
-            test.look_for_and_print_result(check + str(outputs[i]), 2)
+            test.look_for_and_print_result(check + str(outputs[i]), 1)
 
 def main():
 	path = str(sys.argv[1])

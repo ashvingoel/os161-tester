@@ -8,7 +8,7 @@ def testFaulter(kernel_name):
 	test = core.TestUnit(kernel_name, "Testing faulter")
 	check = 'Entering the faulter program - I should die immediately'
 	test.send_command("p /testbin/faulter")
-	test.look_for_and_print_result(check, 2)
+	test.look_for_and_print_result(check, 8)
 
 def main():
 	path = str(sys.argv[1])

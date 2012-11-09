@@ -5,10 +5,10 @@ import sys
 
 def testPrintChar(kernel_name):
 	global test
-	test = core.TestUnit(kernel_name, "Testing add")
-	check = 'Answer: 5'
-	test.send_command("p /testbin/add 2 3")
-	test.look_for_and_print_result(check, 5)
+	test = core.TestUnit(kernel_name, "Testing use of wait and exit I")
+	check = 'wekp'
+	test.send_command("p /testbin/waitexit1")
+	test.look_for_and_print_result(check, 6)
 
 def main():
 	path = str(sys.argv[1])

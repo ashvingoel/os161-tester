@@ -5,9 +5,9 @@ import sys
 
 def testPrintChar(kernel_name):
 	global test
-	test = core.TestUnit(kernel_name, "Testing add")
-	check = 'Answer: 5'
-	test.send_command("p /testbin/add 2 3")
+	test = core.TestUnit(kernel_name, "Testing use of wait and exit III")
+	check = 'acp'
+	test.send_command("p /testbin/waitexit3")
 	test.look_for_and_print_result(check, 5)
 
 def main():
