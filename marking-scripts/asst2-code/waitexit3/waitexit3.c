@@ -71,29 +71,31 @@ static void dowait(int pid)
 		
 }
 
-int main()
-{
 
-    pid_p = getpid();
-    pid_c = dofork();
+int main()                     
+{ 
+
+    pid_p = getpid();          
+    putchar('a');
+    pid_c = dofork();          
 
 
-    if (getpid() == pid_p) {
-        putchar('a');
-        check();
+    if (getpid() == pid_p) {   
+        check();               
     }
 
     if (getpid() == pid_p) {
-        check();
+        dowait(pid_c);
         putchar('p');
-        _exit(0);
+        putchar('\n');
+        _exit(0);              
     } else {
-        putchar('c');
-        _exit(0);
+        putchar('c');          
+        _exit(0);              
     }
 
-    putchar('e');
-    putchar('\n');
+    putchar('e');              
+    putchar('\n');             
 
-	return 0;
+    return 0;
 }

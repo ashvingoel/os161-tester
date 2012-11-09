@@ -75,6 +75,7 @@ int main()
 {
 
     pid_p = getpid();
+    putchar('e');
     pid_c = dofork();
 
     if (getpid() == pid_p) {
@@ -82,7 +83,6 @@ int main()
     }
 
     if (getpid() != pid_p) {
-        putchar('e');
         check();
         _exit(0);
     } else {

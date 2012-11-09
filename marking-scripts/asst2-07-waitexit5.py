@@ -6,7 +6,7 @@ import sys
 def testPrintChar(kernel_name):
 	global test
 	test = core.TestUnit(kernel_name, "Testing use of wait and exit V")
-	check1 = 'wep'
+	check1 = 'we'
 	check2 = 'Invalid argument'
 	test.send_command("p /testbin/waitexit5")
 	test.look_for_and_print_result(check1, 4)
