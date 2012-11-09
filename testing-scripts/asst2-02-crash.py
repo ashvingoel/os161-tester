@@ -15,7 +15,9 @@ def testCrash(kernel_name):
                        'g' : 5, 'h' : 2, 'i' : 2, 'j' : 4, 'k' : 4, \
                        'l' : 10, 'm' : 9, 'n' : 9, 'o' : 3}
 
-	for i in outputs.keys():
+        keylist = outputs.keys()
+        keylist.sort()
+	for i in keylist:
             res = test.send_command("p /testbin/crash")
             test.look_for("Choose:")
             # the second argument is 0, so don't wait for menu prompt
