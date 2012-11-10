@@ -15,11 +15,7 @@ def testPrintChar(kernel_name):
 		test.print_result(0, 8)
 	else:
 		output = test.kernel.match.group(0)
-		output_array['0'] = 0
-		output_array['a'] = 0
-		output_array['1'] = 0
-		output_array['b'] = 0
-		output_array['2'] = 0
+		output_array = {'0' : 0, 'a': 0, '1' : 0, 'b' : 0, '2':0}
 		for i in range(len(output)):
 			index = output[i]
 			output_array[index] += 1
