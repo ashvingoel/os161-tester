@@ -23,10 +23,9 @@ def testPrintChar(kernel_name):
 		for i in range(len(output)):
 			index = output[i]
 			output_array[index] += 1
-			print "index is "+index+" and value is "+str(output_array[index])
 		if (output_array['0'] == 2) and \
 				(output_array['a'] == 2) and \
-				(output_array('1'] == 4) and \
+				(output_array['1'] == 4) and \
 				(output_array['b'] == 4) and \
 				(output_array['2'] == 8):
 			test.print_result(8,8)
