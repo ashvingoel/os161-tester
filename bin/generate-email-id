@@ -59,7 +59,7 @@ while (<GROUP>) {
             ($err, $email_line) = &run_process("grep $names[$i] $roster");
 	    print $err
 	    print $email_line
-	    if ($err != 0){
+	    if ($err){
 		    next;
 	    }
             @emails = split(/,/, $email_line);
