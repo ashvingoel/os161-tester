@@ -57,6 +57,9 @@ while (<GROUP>) {
             # $group_submissions[$nr] = 0;
             $group_members[$nr][$i] = $names[$i];
             ($err, $email_line) = &run_process("grep $names[$i] $roster");
+	    if ($err != 0){
+		    next;
+	    }
             @emails = split(/,/, $email_line);
             chop($emails[4]);
             $email[$nr][$i] = $emails[4];
