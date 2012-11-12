@@ -50,6 +50,9 @@ while (<GROUP>) {
                 die "$names[$i] is already defined in " . 
                     "group $group_rn{$names[$i]}\n";
             }
+	    if ($#names == 0) {
+		    next;
+	    }
             # $group_nr{$names[$i]} = $nr;
             # $group_submissions[$nr] = 0;
             $group_members[$nr][$i] = $names[$i];
