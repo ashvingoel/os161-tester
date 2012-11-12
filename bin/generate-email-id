@@ -15,6 +15,7 @@ $group_cmd = "grep \"^os-\" /etc/group 2>/dev/null";
 sub run_process {
     local ($cmd) = @_;
     local ($err, $output);
+    print $cmd;
     $output = `$cmd`;
     $err = $?;
     $err = $err >> 8;
