@@ -58,7 +58,7 @@ while (<GROUP>) {
             chop($emails[4]);
             $email[$nr][$i] = $emails[4];
             if ($err > 0) {
-                die "grep returned error";
+               next; 
             }
         }
 	#print "nr = $nr, ";
