@@ -9,8 +9,8 @@ def testPrintChar(kernel_name):
 	check1 = 'we'
 	check2 = 'Invalid argument'
 	test.send_command("p /testbin/waitexit5")
-	test.look_for_and_print_result(check1, 4)
-	test.look_for_and_print_result(check2, 4)
+	test.look_for_and_print_result(check1, 2)
+	test.look_for_and_print_result(check2, 6)
 
 def main():
 	path = str(sys.argv[1])
