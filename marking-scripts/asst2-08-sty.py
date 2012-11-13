@@ -17,7 +17,8 @@ def testPrintChar(kernel_name):
 	fail = test.look_for(fail_check)
 	if fail >= 0:
 		test.print_result(0, 6)
-	test.look_for_and_print_result(check, 6)
+	else:
+		test.look_for_and_print_result(check, 6)
 
 def main():
 	path = str(sys.argv[1])
