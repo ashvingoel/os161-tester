@@ -75,10 +75,11 @@ int main()
 {
 
     pid_p = getpid();
+    putchar('w');
     pid_c = dofork();
 
     if (getpid() == pid_p) {
-        putchar('w');
+        check();
         dowait(pid_c);
     } else {
         putchar('e');

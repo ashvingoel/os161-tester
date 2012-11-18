@@ -128,11 +128,6 @@ os161_tester() {
         return
     fi
 
-    # if marking-scripts directory is not owned by effective group ID
-    if [ ! -G "$TEST_PATH/marking-scripts" ]; then
-        return
-    fi
-
     # Run all the post install hooks
     if [ -x "$TEST_PATH/marking-scripts/asst${ASSIGNMENT}-post.sh" ]; then
 	    echo "Running post install hooks"

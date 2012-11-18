@@ -14,7 +14,7 @@ def testForkTest(kernel_name):
 
         out = test.look_for("([0123]{30,30})$")
         if out < 0:
-            test.print_result(0, 20)
+            test.print_result(0, 8)
         else:
             output = test.kernel.match.group(0)
             output_array = [0] * 4

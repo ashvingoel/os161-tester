@@ -3,7 +3,7 @@
  * 
  * Test case: 
  *      run: p /testbin/test02-03-waitexit-4
- *      result expected: apc
+ *      result expected: att
  *
  */
 
@@ -47,53 +47,24 @@ static void check(void)
 	}
 }
 
-/*
- * based on dowait in forktest
- */
-static void dowait(int pid)
-{
-
-    int x;
-
-	if (pid<0) {
-		/* fork in question failed; just return */
-		return;
-	}
-	if (pid==0) {
-		/* in the fork in question we were the child; exit */
-		exit(0);
-	}
-
-	if (waitpid(pid, &x, 0)<0) 
-			warn("waitpid");
-	else if (x!=0)
-			warnx("pid %d: exit %d", pid, x);
-		
-}
-
 int main()
 {
 
     pid_p = getpid();
+    putchar('a');
     pid_c = dofork();
 
-
     if (getpid() == pid_p) {
-        putchar('a');
         check();
-    }
-
-    if (getpid() == pid_p) {
-        putchar('p');
+        putchar('t');
         _exit(0);
     } else {
-        check();
-        putchar('c');
+        putchar('t');
         _exit(0);
     }
 
     putchar('e');
     putchar('\n');
 
-	return 0;
+    return 0;
 }

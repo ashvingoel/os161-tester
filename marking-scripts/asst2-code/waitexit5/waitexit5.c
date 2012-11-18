@@ -3,7 +3,7 @@
  * 
  * Test case: 
  *      run: p /testbin/test02-03-waitexit-5
- *      result and error expected: wep/testbin/test02-03-waitexit-5: waitpid: Invalid argument 
+ *      result and error expected: we/testbin/test02-03-waitexit-5: waitpid: Invalid argument 
  *
  */
 
@@ -75,11 +75,11 @@ int main()
 {
 
     pid_p = getpid();
+    putchar('w');
     pid_c = dofork();
 
 
     if (getpid() == pid_p) {
-        putchar('w');
         dowait(pid_c);
     }
 
@@ -87,10 +87,7 @@ int main()
         check();
         putchar('e');
         _exit(0);
-    } else {
-        check();
-        putchar('p');
-    }
+    } 
 
     if (getpid() == pid_p) {
         dowait(pid_c);
