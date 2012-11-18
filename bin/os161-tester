@@ -1,20 +1,23 @@
 #!/bin/bash
 
-BIN_PATH=$HOME/cs161/bin
-TEST_PATH=/cad2/ece344f/os161-tester
+# change the install path to where sys161 is installed
+INSTALL_PATH=/cad2/ece344f
+
+BIN_PATH=${INSTALL_PATH}/cs161/bin
+TEST_PATH=${INSTALL_PATH}/os161-tester
 # svn repo path
 SVN_REP=svn+ssh://ug131.eecg.utoronto.ca/svn
 # number of repositories, starting from 1
 NR_REPS=39
 # by default, check all assignments
 ASSIGNMENTS="0 1 2 3"
-TESTER_BIN_PATH=/cad2/ece344f/os161-tester/bin
+TESTER_BIN_PATH=${INSTALL_PATH}/os161-tester/bin
 
 
 # Set up the TEST_PATH for a non-install location.
 TESTER_BIN_PATH_CANON=$(readlink -f $TESTER_BIN_PATH)
 CUR_PATH_CANON=$(dirname $(readlink -f $BASH_SOURCE))
-if [ "$TESTER_BIN_PATH_CANON" != "$CUR_PATH_CANON" ]; then
+if [ "$TESTER_BIN_PATH_CANON" != $CUR_PATH_CANON ]; then
     TEST_PATH=$CUR_PATH_CANON/..
     echo "Tester path is $TEST_PATH"
 fi
