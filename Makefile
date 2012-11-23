@@ -13,9 +13,11 @@ TESTER_SCRIPT=$(TESTER_DIR)/$(BIN_DIR)/os161-tester
 # TAs should have read access to it
 all: bin
 	mkdir -p $(TESTER_DIR) && \
-	rsync -avR --delete $(BIN_DIR) $(MARKING_DIR) $(OTHER_DIRS) $(TESTER_DIR) && \
-	chgrp e344F12 $(TESTER_DIR)/$(MARKING_DIR) && \
-	chmod o-rwx $(TESTER_DIR)/$(MARKING_DIR)
+	rsync -avR --delete $(BIN_DIR) $(MARKING_DIR) $(OTHER_DIRS) $(TESTER_DIR)
+
+# && \
+#	chgrp e344F12 $(TESTER_DIR)/$(MARKING_DIR) && \
+#	chmod o-rwx $(TESTER_DIR)/$(MARKING_DIR)
 
 bin:
 	ln -sf  $(TESTER_SCRIPT) $(INSTALL_BIN_DIR)
