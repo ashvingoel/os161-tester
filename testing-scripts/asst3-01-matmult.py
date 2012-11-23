@@ -1,4 +1,3 @@
-
 #!/usr/bin/python
 
 import core
@@ -14,7 +13,6 @@ def testPrintChar(kernel_name):
 def main():
 	path = str(sys.argv[1])
 	testPrintChar(path)
-
 
 
 if __name__ == "__main__":
