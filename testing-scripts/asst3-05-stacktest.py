@@ -2,13 +2,15 @@
 
 import core
 import sys
+import os
 
 def testPrintChar(kernel_name):
 	global test
+	stackfile = os.environ('TESTER_BIN_PATH']
 	test = core.TestUnit(kernel_name, "Testing stacktest")
 	test.set_timeout(10)
 	test.send_command("p /testbin/stacktest")
-	f = open('stacktest.in', 'r')
+	f = open(stackfile + '/../stacktest.in', 'r')
 	for check in f.readlines():
 		test.look_for_and_print_result(check.strip(), 1)
 	f.close()
