@@ -10,7 +10,7 @@ def testPrintChar(kernel_name):
 	test = core.TestUnit(kernel_name, "Testing stacktest")
 	test.set_timeout(10)
 	test.send_command("p /testbin/stacktest")
-	f = open(stackfile + '/testing-files/stacktest.in', 'r')
+	f = open(stackfile + '/testing-scripts/stacktest.in', 'r')
 	for check in f.readlines():
 		test.look_for_and_print_result(check.strip(), 1)
 	f.close()
