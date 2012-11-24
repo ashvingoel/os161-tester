@@ -6,7 +6,7 @@ import sys
 def testPrintChar(kernel_name):
 	global test
 	test = core.TestUnit(kernel_name, "Testing triplesort")
-	test.set_timeout(120)
+	test.set_timeout(600)
 	check = 'sort: Passed'
 	test.send_command('p /testbin/triplesort')
 	for i in range(3):
