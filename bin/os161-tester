@@ -155,7 +155,7 @@ os161_marker() {
     
     # checkout repository
     SVN_PATH=$SVN_REP/os-${GROUP}/svn/tags/asst${ASSIGNMENT}-end/kern
-    /bin/rm -rf os-${GROUP} && mkdir -p os-${GROUP} && cd os-${GROUP} && cp ${TEST_PATH}/src/os161.tar.bz2 && tar xf os161.tar.bz2 && cd os161 && svn co $SVN_PATH
+    /bin/rm -rf os-${GROUP} && mkdir -p os-${GROUP} && cd os-${GROUP} && cp ${TEST_PATH}/src/os161.tar.bz2 . && tar xf os161.tar.bz2 && cd os161 && svn co $SVN_PATH
     
     # make sure that the checkout is successful
     if [ $? -eq 0 ] ; then
