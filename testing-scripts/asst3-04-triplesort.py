@@ -8,6 +8,7 @@ def testPrintChar(kernel_name):
 	test = core.TestUnit(kernel_name, "Testing triplesort")
 	test.set_timeout(120)
 	check = 'sort: Passed'
+	test.send_command('p /testbin/triplesort')
 	for i in range(3):
 		test.look_for_and_print_result(check, 5)
 	#We should have finished everything by now, so let's just reduce the timeout
