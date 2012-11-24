@@ -10,7 +10,7 @@ class TestUnit:
 		self.kernel.logfile = open('os161.log', 'a')
 
 	def set_timeout(self, timeout):
-		self.timeout = timeout
+		self.kernel.timeout = timeout
 
 	def __init__(self, path_to_kernel, message):
                 try:
