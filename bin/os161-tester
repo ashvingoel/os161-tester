@@ -160,8 +160,7 @@ os161_marker() {
     # make sure that the checkout is successful
     if [ $? -eq 0 ] ; then
         # compile os161
-        BUILD_PATH=$(pwd)/root
-        cd asst${ASSIGNMENT}-end
+        BUILD_PATH=$(pwd)/../root
 
 	# run the pre-install hooks
 	if [ -x "$TEST_PATH/marking-scripts/asst${ASSIGNMENT}-pre.sh" ]; then
