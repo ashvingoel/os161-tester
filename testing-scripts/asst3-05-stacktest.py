@@ -6,7 +6,7 @@ import os
 
 def testPrintChar(kernel_name):
 	global test
-	stackfile = os.environ('TESTER_BIN_PATH']
+	stackfile = os.environ['TESTER_BIN_PATH']
 	test = core.TestUnit(kernel_name, "Testing stacktest")
 	test.set_timeout(10)
 	test.send_command("p /testbin/stacktest")
