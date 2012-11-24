@@ -7,9 +7,19 @@ def testPrintChar(kernel_name):
 	global test
 	test = core.TestUnit(kernel_name, "Testing matmult")
 	test.set_timeout(60)
-	check = 'answer is: 8772192\(should be 8772192\)'
+	check1 = 'answer is'
+	check2 = '8772192'
+	check3 = 'should be 8772192'
 	test.send_command("p /testbin/matmult")
-	test.look_for_and_print_result(check, 5)
+	ret = test.look_for(check1, 5)
+	if ret >= 0:
+		ret = test.look_for(check2, 5)
+		if ret >= 0:
+			test.look_for_and_print_result(check3, 5)
+		else:
+			test.print_result(0, 5)
+	else:
+		test.print_result(0,5)
 
 def main():
 	path = str(sys.argv[1])
