@@ -5,10 +5,10 @@ import sys
 
 def testPrintChar(kernel_name):
 	global test
-	test = core.TestUnit(kernel_name, "Testing palin")
+	test = core.TestUnit(kernel_name, "Testing stacktest")
 	test.set_timeout(60)
 	check = 'IS a palindrome'
-	test.send_command("p /testbin/palin")
+	test.send_command("p /testbin/stacktest")
 	test.look_for_and_print_result(check, 5)
 
 def main():
