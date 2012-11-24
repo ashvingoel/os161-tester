@@ -25,7 +25,7 @@ fi
 #setup the path, making sure that our path is first
 export PATH=$BIN_PATH:/usr/local/bin:/local/bin:/usr/bin:/bin
 #export TESTER_BIN_PATH for test cases which need it
-export $TEST_PATH
+export TEST_PATH=$TEST_PATH
 
 PROG=$(basename $0)
 
