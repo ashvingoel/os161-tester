@@ -6,10 +6,12 @@ import sys
 def testPrintChar(kernel_name):
 	global test
 	test = core.TestUnit(kernel_name, "Testing stacktest")
-	test.set_timeout(60)
-	check = 'IS a palindrome'
+	test.set_timeout(10)
 	test.send_command("p /testbin/stacktest")
-	test.look_for_and_print_result(check, 5)
+	f = open('stacktest.in', 'r')
+	for check in f.readlines():
+		test.look_for_and_print_result(check, 1)
+	f.close()
 
 def main():
 	path = str(sys.argv[1])
