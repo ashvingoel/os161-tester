@@ -17,9 +17,9 @@ def testPrintChar(kernel_name):
 			ret = test.look_for(check2)
 			if ret >=0:
 				test.look_for_and_print_result(check3, 5)
-			else
+			else:
 				test.print_result(0,5)
-		else
+		else:
 			test.print_result(0,5)
 	#We should have finished everything by now, so let's just reduce the timeout
 	test.set_timeout(10)
