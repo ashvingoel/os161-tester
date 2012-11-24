@@ -6,9 +6,11 @@ import os
 
 class TestUnit:
 	#Implicit assumptions, sys161 is in path
-
 	def set_log_file(self):
 		self.kernel.logfile = open('os161.log', 'a')
+
+	def set_timeout(self, timeout):
+		self.timeout = timeout
 
 	def __init__(self, path_to_kernel, message):
                 try:
