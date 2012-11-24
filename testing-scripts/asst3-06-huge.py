@@ -10,6 +10,7 @@ def testPrintChar(kernel_name):
 	test.set_timeout(300)
 	test.send_command("p /testbin/huge")
 	checks = ['stage \[1\] done', 'stage \[2\.0\] done', 'stage \[2\.1\] done', 'stage \[2\.2\] done', 'stage \[2\.3\] done', 'stage \[2\.4\] done', 'stage \[2\] done', 'You passed!']
+	for check in checks:
 		test.look_for_and_print_result(check.strip(), 1)
 
 def main():
