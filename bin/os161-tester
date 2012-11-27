@@ -118,7 +118,7 @@ os161_tester() {
     fi
 
     echo "Running tests for Assignment $ASSIGNMENT";
-    for test in $TESTER_PATH/testing-scripts/asst${ASSIGNMENT}*.py; do
+    for test in ${TESTER_PATH}/testing-scripts/asst${ASSIGNMENT}*.py; do
         if [ -x $test ]; then
             echo "Running: $test kernel";
             $test kernel;
@@ -129,28 +129,34 @@ os161_tester() {
 }
 
 # for students, this will dry run the marker, i.e., it will run the svn
-# checkout, build, but then it will not run the marking scripts
+# checkout, build, etc., and then run the tester programs
 os161_marker() {
     ASSIGNMENT="$1"
     GROUP="$2"
 
-    echo "Checking out repo for os-${GROUP}"
     # remember current dir
+    echo "Checking out repo for os-${GROUP}"
     pushd .
-    
-    # checkout kenrel from repository
+
+    # create a new directory for the group
+    /bin/rm -rf os-${GROUP} && mkdir -p os-${GROUP} && cd os-${GROUP}
+
+    # get the user-level programs, and apply any patches
+    tar -zxf ${TESTER_PATH}/src/os161-1.11.tar.gz && cd os161-1.11
+    for patch in ${TESTER_PATH}/src/patch.*; do
+        patch -p0 < ${patch}
+    done
+    # remove the kern directory
+    rm -rf kern
+
+    # now checkout kern directory from repository
     SVN_PATH=$SVN_REP/os-${GROUP}/svn/tags/asst${ASSIGNMENT}-end/kern
-    /bin/rm -rf os-${GROUP} && mkdir -p os-${GROUP} && cd os-${GROUP} && cp ${TESTER_PATH}/src/os161-1.11.tar.gz . && tar xf os161-1.11.tar.gz && cd os161 && svn co $SVN_PATH
+    svn co $SVN_PATH
+
     # make sure that the checkout is successful
     if [ $? -eq 0 ] ; then
         # compile os161
         BUILD_PATH=$(pwd)/../root
-
-	# run the pre-install hooks
-	if [ -x "$TESTER_PATH/marking-scripts/asst${ASSIGNMENT}-pre.sh" ]; then
-		echo "Running pre install hooks"
-		$TESTER_PATH/marking-scripts/asst${ASSIGNMENT}-pre.sh
-	fi
 
         ./configure --ostree=$BUILD_PATH && make -s
     
@@ -163,14 +169,16 @@ os161_marker() {
         cd kern/compile/ASST${ASSIGNMENT} && make -s depend && make -s && \
             make -s install
 
-	#copy the correct config
+	# setup the correct config file
         cd $BUILD_PATH && \
             cp ${TESTER_PATH}/sysconfig/sys161-asst${ASSIGNMENT}.conf sys161.conf
-	echo "Setup ${TESTER_PATH}/sysconfig/sys161-asst${ASSIGNMENT}.conf as the configuration"
+
         # run the tester
         os161_tester ${ASSIGNMENT} > ../../os161-tester-${GROUP}.log
         if [ -e "os161.log" ]; then
 	    /bin/cp os161.log ../../os161-${GROUP}.log
+        else
+            echo "os161.log not found"
         fi
         if [ -e "os161-mark.txt" ]; then
 	    /bin/cp os161-mark.txt ../../os161-mark-${GROUP}.txt
