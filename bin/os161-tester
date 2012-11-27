@@ -125,25 +125,6 @@ os161_tester() {
         fi
     done
 
-    # if marker is not set
-    if [ -z "$MARKER" ]; then
-        return
-    fi
-
-    # Run all the post install hooks
-    if [ -x "$TESTER_PATH/marking-scripts/asst${ASSIGNMENT}-post.sh" ]; then
-	    echo "Running post install hooks"
-	    $TESTER_PATH/marking-scripts/asst${ASSIGNMENT}-post.sh \
-                ${BUILD_PATH} ${TESTER_PATH}
-    fi
-
-    # run the marking scripts
-    for test in $TESTER_PATH/marking-scripts/asst${ASSIGNMENT}*.py; do
-        if [ -x $test ]; then
-            echo "Running: $test kernel";
-            $test kernel;
-        fi
-    done
     echo
 }
 
@@ -157,16 +138,13 @@ os161_marker() {
     # remember current dir
     pushd .
     
-    # checkout repository
-    SVN_PATH=$SVN_REP/os-${GROUP}/svn/tags/asst${ASSIGNMENT}-end
-    /bin/rm -rf os-${GROUP} && mkdir -p os-${GROUP} && cd os-${GROUP} && \
-        svn co $SVN_PATH
-    
+    # checkout kenrel from repository
+    SVN_PATH=$SVN_REP/os-${GROUP}/svn/tags/asst${ASSIGNMENT}-end/kern
+    /bin/rm -rf os-${GROUP} && mkdir -p os-${GROUP} && cd os-${GROUP} && cp ${TESTER_PATH}/src/os161.tar.bz2 . && tar xf os161.tar.bz2 && cd os161 && svn co $SVN_PATH
     # make sure that the checkout is successful
     if [ $? -eq 0 ] ; then
         # compile os161
-        BUILD_PATH=$(pwd)/root
-        cd asst${ASSIGNMENT}-end
+        BUILD_PATH=$(pwd)/../root
 
 	# run the pre-install hooks
 	if [ -x "$TESTER_PATH/marking-scripts/asst${ASSIGNMENT}-pre.sh" ]; then
