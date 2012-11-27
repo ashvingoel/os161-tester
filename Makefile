@@ -6,7 +6,7 @@ RESULTS_DIR=$(TOP_DIR)/results
 
 BIN_DIR=bin
 MARKING_DIR=marking-scripts
-OTHER_DIRS=core testing-scripts sysconfig
+OTHER_DIRS=src core testing-scripts sysconfig
 TESTER_SCRIPT=$(TESTER_DIR)/$(BIN_DIR)/os161-tester
 
 # students shouldn't have access to the marking directory, but

@@ -10,7 +10,9 @@ class TestUnit:
 		self.kernel.logfile = open('os161.log', 'a')
 
 	def set_timeout(self, timeout):
-		self.kernel.timeout = timeout
+            self.kernel.timeout = timeout
+            if self.verbose > 0:
+                print 'This test has a timeout of ' + str(timeout) + ' seconds'
 
 	def __init__(self, path_to_kernel, message):
                 try:

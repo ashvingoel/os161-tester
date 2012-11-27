@@ -4,28 +4,25 @@
 INSTALL_PATH=/cad2/ece344f
 
 BIN_PATH=${INSTALL_PATH}/cs161/bin
-TEST_PATH=${INSTALL_PATH}/os161-tester
+TESTER_PATH=${INSTALL_PATH}/os161-tester
 # svn repo path
 SVN_REP=svn+ssh://ug131.eecg.utoronto.ca/svn
 # number of repositories, starting from 1
 NR_REPS=39
 # by default, check all assignments
 ASSIGNMENTS="0 1 2 3"
-TESTER_BIN_PATH=${INSTALL_PATH}/os161-tester/bin
+TESTER_BIN_PATH=${TESTER_PATH}/bin
 
-
-# Set up the TEST_PATH for a non-install location.
+# Set up the TESTER_PATH for a non-install location.
 TESTER_BIN_PATH_CANON=$(readlink -f $TESTER_BIN_PATH)
 CUR_PATH_CANON=$(dirname $(readlink -f $BASH_SOURCE))
 if [ "$TESTER_BIN_PATH_CANON" != $CUR_PATH_CANON ]; then
-    TEST_PATH=$CUR_PATH_CANON/..
-    echo "Tester path is $TEST_PATH"
+    TESTER_PATH=$(readlink -f "$CUR_PATH_CANON/..")
+    echo "Tester path is $TESTER_PATH"
 fi
 
 #setup the path, making sure that our path is first
 export PATH=$BIN_PATH:/usr/local/bin:/local/bin:/usr/bin:/bin
-#export TESTER_BIN_PATH for test cases which need it
-export TEST_PATH=$TEST_PATH
 
 PROG=$(basename $0)
 
@@ -121,7 +118,7 @@ os161_tester() {
     fi
 
     echo "Running tests for Assignment $ASSIGNMENT";
-    for test in $TEST_PATH/testing-scripts/asst${ASSIGNMENT}*.py; do
+    for test in $TESTER_PATH/testing-scripts/asst${ASSIGNMENT}*.py; do
         if [ -x $test ]; then
             echo "Running: $test kernel";
             $test kernel;
@@ -134,13 +131,14 @@ os161_tester() {
     fi
 
     # Run all the post install hooks
-    if [ -x "$TEST_PATH/marking-scripts/asst${ASSIGNMENT}-post.sh" ]; then
+    if [ -x "$TESTER_PATH/marking-scripts/asst${ASSIGNMENT}-post.sh" ]; then
 	    echo "Running post install hooks"
-	    $TEST_PATH/marking-scripts/asst${ASSIGNMENT}-post.sh ${BUILD_PATH} ${TEST_PATH}
+	    $TESTER_PATH/marking-scripts/asst${ASSIGNMENT}-post.sh \
+                ${BUILD_PATH} ${TESTER_PATH}
     fi
 
     # run the marking scripts
-    for test in $TEST_PATH/marking-scripts/asst${ASSIGNMENT}*.py; do
+    for test in $TESTER_PATH/marking-scripts/asst${ASSIGNMENT}*.py; do
         if [ -x $test ]; then
             echo "Running: $test kernel";
             $test kernel;
@@ -161,7 +159,8 @@ os161_marker() {
     
     # checkout repository
     SVN_PATH=$SVN_REP/os-${GROUP}/svn/tags/asst${ASSIGNMENT}-end
-    /bin/rm -rf os-${GROUP} && mkdir -p os-${GROUP} && cd os-${GROUP} && svn co $SVN_PATH
+    /bin/rm -rf os-${GROUP} && mkdir -p os-${GROUP} && cd os-${GROUP} && \
+        svn co $SVN_PATH
     
     # make sure that the checkout is successful
     if [ $? -eq 0 ] ; then
@@ -170,9 +169,9 @@ os161_marker() {
         cd asst${ASSIGNMENT}-end
 
 	# run the pre-install hooks
-	if [ -x "$TEST_PATH/marking-scripts/asst${ASSIGNMENT}-pre.sh" ]; then
+	if [ -x "$TESTER_PATH/marking-scripts/asst${ASSIGNMENT}-pre.sh" ]; then
 		echo "Running pre install hooks"
-		$TEST_PATH/marking-scripts/asst${ASSIGNMENT}-pre.sh
+		$TESTER_PATH/marking-scripts/asst${ASSIGNMENT}-pre.sh
 	fi
 
         ./configure --ostree=$BUILD_PATH && make -s
@@ -183,11 +182,13 @@ os161_marker() {
         popd
     
         # build the kernel
-        cd kern/compile/ASST${ASSIGNMENT} && make -s depend && make -s && make -s install
+        cd kern/compile/ASST${ASSIGNMENT} && make -s depend && make -s && \
+            make -s install
 
 	#copy the correct config
-        cd $BUILD_PATH && cp ${TEST_PATH}/sysconfig/sys161-asst${ASSIGNMENT}.conf sys161.conf
-	echo "Setup ${TEST_PATH}/sysconfig/sys161-asst${ASSIGNMENT}.conf as the configuration"
+        cd $BUILD_PATH && \
+            cp ${TESTER_PATH}/sysconfig/sys161-asst${ASSIGNMENT}.conf sys161.conf
+	echo "Setup ${TESTER_PATH}/sysconfig/sys161-asst${ASSIGNMENT}.conf as the configuration"
         # run the tester
         os161_tester ${ASSIGNMENT} > ../../os161-tester-${GROUP}.log
         if [ -e "os161.log" ]; then
@@ -212,7 +213,8 @@ for i in "$ASSIGNMENTS"; do
     else
         # run the marker for each group
         for GROUP in $(seq -f "%03g" ${START} ${END}); do
-            # do we have access to the repository? students will have access to only their repository
+            # do we have access to the repository?
+            # students will have access to only their repository
             if expr "$(groups)" : ".*os-${GROUP}" > /dev/null; then
                 echo "Output being sent to os161-marker-${GROUP}.log, os161-tester-${GROUP}.log, os161-${GROUP}.log and os161-mark-${GROUP}.txt"
                 os161_marker $i $GROUP > os161-marker-${GROUP}.log 2>&1
