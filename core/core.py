@@ -48,7 +48,8 @@ class TestUnit:
         #         return self.verbose
 
 	# By default, we wait before we send a command.
-        # However, if wait is set to 0, then we don't wait.
+        # However, if wait is set to 0, then we don't wait AND
+        # we don't send the newline.
 	def send_command(self, cmd, wait=1):
                 if wait:
                     try:
@@ -63,7 +64,8 @@ class TestUnit:
 		cmd_char = list(cmd)
 		for i in cmd_char:
 			self.kernel.send(i)
-		self.kernel.send('\n')
+                if wait:
+                    self.kernel.send('\n')
 
 	def look_for(self, result):
 		try:
