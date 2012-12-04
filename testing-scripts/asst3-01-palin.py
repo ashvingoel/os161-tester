@@ -5,9 +5,9 @@ import sys
 
 def testPrintChar(kernel_name):
 	global test
-	test = core.TestUnit(kernel_name, "Testing palin")
+	test = core.TestUnit(kernel_name, "palin")
+	test.runprogram("/testbin/palin")
 	check = 'IS a palindrome'
-	test.send_command("p /testbin/palin")
 	test.look_for_and_print_result(check, 4)
 
 def main():

@@ -34,8 +34,8 @@ class TestUnit:
 	def __del__(self):
 		self.kernel.logfile.close()
                 if (self.total > 0):
-                    print 'Mark for test is ' + str(self.mark) + ' out of ' + \
-                        str(self.total)
+                    print 'Mark for ' + self.message + ' is ' + \
+                        str(self.mark) + ' out of ' + str(self.total)
                     marker = open('os161-mark.txt', 'a')
                     marker.write(self.message + ', ' + str(self.total) + \
                                      ', ' + str(self.mark) + '\n')
@@ -50,7 +50,7 @@ class TestUnit:
 	# By default, we wait before we send a command.
         # However, if wait is set to 0, then we don't wait AND
         # we don't send the newline.
-	def send_command(self, cmd, wait=1):
+	def send_command(self, cmd, wait = 1):
                 if wait:
                     try:
 			self.kernel.expect('OS\/161 kernel \[\? for menu\]\: ')
@@ -66,6 +66,9 @@ class TestUnit:
 			self.kernel.send(i)
                 if wait:
                     self.kernel.send('\n')
+
+        def runprogram(self, cmd, args = ""):
+            self.send_command("p " + cmd + " " + args);
 
 	def look_for(self, result):
 		try:

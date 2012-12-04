@@ -5,8 +5,8 @@ import sys
 
 def test(kernel_name):
 	test = core.TestUnit(kernel_name, "malloctest 5")
+        test.runprogram("/testbin/malloctest", "5")
 	test.set_timeout(40)
-        test.send_command("p /testbin/malloctest 5")
         test.look_for_and_print_result('\nPassed malloc test 5.', 10)
 
 def main():

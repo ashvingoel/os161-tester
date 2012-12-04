@@ -7,7 +7,7 @@ def testForkBomb(kernel_name):
 	global test
 	test = core.TestUnit(kernel_name, "Testing forkbomb")
 	check = 'OS\/161 kernel \[\? for menu\]\: '
-	test.send_command("p /testbin/forkbomb")
+	test.runprogram("/testbin/forkbomb")
 	result = test.look_for(check)
 
 	if result != -1:

@@ -10,7 +10,7 @@ def testPrintChar(kernel_name):
 	check = 'H.*e.*l.*l.*o.*w.*o.*r.*l.*d.*\!.*H.*e.*l.*l.*o.*p.*r.*i.*n.*t.*f.*\!'
 	#check = 'H*e*l*l*o*p*r*i*n*t*f*\!'
 	#check = 'H**e**l**l**o**p**r**i**n**t**f**\!'
-	test.send_command("p /testbin/printchar")
+	test.runprogram("/testbin/printchar")
 	test.look_for_and_print_result(check, 10)
 
 def main():

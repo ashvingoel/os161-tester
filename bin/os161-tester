@@ -124,7 +124,10 @@ os161_tester() {
             $test kernel;
         fi
     done
-
+    
+    if [ -e os161-mark.txt ]; then
+        awk -F "," 'BEGIN{total=0;mark=0}{total+=$2; mark+=$3}END{print "You received " mark " marks out of " total}' os161-mark.txt
+    fi
     echo
 }
 

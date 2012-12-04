@@ -7,10 +7,10 @@ import re
 def testPrintChar(kernel_name):
 	global test
         out = 0
-	test = core.TestUnit(kernel_name, "sty test")
+	test = core.TestUnit(kernel_name, "sty")
         check = '\nOperation took.* seconds'
 	for i in range(10):
-            test.send_command("p /testbin/sty")
+            test.runprogram("/testbin/sty")
             out = test.look_for(check)
             if out < 0:
                 break

@@ -7,8 +7,8 @@ import os
 def testPrintChar(kernel_name):
 	global test
         out = 0
-	test = core.TestUnit(kernel_name, "Testing stacktest")
-	test.send_command("p /testbin/stacktest")
+	test = core.TestUnit(kernel_name, "stacktest")
+	test.runprogram("/testbin/stacktest")
         for i in range(4000):
             check = "\ncalling foo: n-i = " + str(i)
             out = test.look_for(check)

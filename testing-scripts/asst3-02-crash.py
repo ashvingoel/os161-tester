@@ -8,7 +8,7 @@ import pexpect
 # this crash test doesn't test the 'o' option
 def testCrash(kernel_name):
 	global test
-	test = core.TestUnit(kernel_name, "Testing crash")
+	test = core.TestUnit(kernel_name, "crash")
 	#Please check this and the correct value
 	check = 'Fatal user mode trap '
         outputs = {'a' : 2, 'b' : 2, 'c' : 4, 'd' : 3, 'e' : 3, \
@@ -18,7 +18,7 @@ def testCrash(kernel_name):
         keylist = outputs.keys()
         keylist.sort()
 	for i in keylist:
-            res = test.send_command("p /testbin/crash")
+            res = test.runprogram("/testbin/crash")
             test.look_for("Choose:")
             # the second argument is 0, so don't wait for menu prompt
             res = test.send_command(i, 0)

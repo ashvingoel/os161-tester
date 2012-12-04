@@ -5,11 +5,11 @@ import sys
 
 def testPrintChar(kernel_name):
 	global test
-	test = core.TestUnit(kernel_name, "Testing arg")
+	test = core.TestUnit(kernel_name, "argtest")
+	test.runprogram("/testbin/argtest", "test")
 	check1 = 'argc: 2'
 	check2 = 'argv\[0\]: \/testbin\/argtest'
 	check3 = 'argv\[1\]: test'
-	test.send_command("p /testbin/argtest test")
 	test.look_for_and_print_result(check1, 2)
 	test.look_for_and_print_result(check2, 3)
 	test.look_for_and_print_result(check3, 3)

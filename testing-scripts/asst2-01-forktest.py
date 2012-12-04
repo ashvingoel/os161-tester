@@ -6,7 +6,7 @@ import sys
 def testForkTest(kernel_name):
 	global test
 	test = core.TestUnit(kernel_name, "Testing forktest")
-	test.send_command("p /testbin/forktest")
+	test.runprogram("/testbin/forktest")
 
         # when we fix forktest, this is all we need to look for
 	# check = '001111222222223333333333333333'
