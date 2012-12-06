@@ -6,7 +6,7 @@ import sys
 def main():
     test = core.TestUnit("forktest")
     test.runprogram("/testbin/forktest")
-    test.set_timeout(50)
+    test.set_timeout(150)
 
     # when we fix forktest, this is all we need to look for
     # check = '001111222222223333333333333333'
