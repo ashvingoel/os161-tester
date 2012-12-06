@@ -131,18 +131,16 @@ def catmouse(test, cmd, max_iterations):
     return max_iterations
 
 def main():
-    global test
     max_iter = 64
     result = 0
 
     # try cat with semaphores
-    kernel_name = str(sys.argv[1])
-    test = core.TestUnit(kernel_name, "Testing cat/mouse using semaphores")
+    test = core.TestUnit("cat/mouse using semaphores")
     result = catmouse(test, '1a', max_iter)
 
     if result < max_iter: # if failure
         # try cat with locks
-        test = core.TestUnit(kernel_name, "Testing cat/mouse using locks")
+        test = core.TestUnit("cat/mouse using locks")
         result = catmouse(test, '1b', max_iter)
 
     total_mark = 25;

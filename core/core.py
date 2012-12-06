@@ -3,6 +3,7 @@
 import pexpect
 import sys
 import os
+import shutil
 
 class TestUnit:
 	#Implicit assumptions, sys161 is in path
@@ -14,7 +15,7 @@ class TestUnit:
             if self.verbose > 0:
                 print 'This test has a timeout of ' + str(timeout) + ' seconds'
 
-	def __init__(self, path_to_kernel, message):
+	def __init__(self, message, path_to_kernel = "kernel"):
                 try:
                         self.verbose = os.environ['OS161_TESTER_VERBOSE']
                 except KeyError:
@@ -30,6 +31,8 @@ class TestUnit:
 		self.message = message
                 print message
 		self.set_log_file()
+                self.cwd = os.getcwd()
+                self.prog = "/testbin/os161testerprog"
 
 	def __del__(self):
 		self.kernel.logfile.close()
@@ -40,6 +43,10 @@ class TestUnit:
                     marker.write(self.message + ', ' + str(self.total) + \
                                      ', ' + str(self.mark) + '\n')
                     marker.close()
+                try:
+                    os.remove(self.cwd + self.prog)
+                except OSError:
+                    pass
 
         # def kernel(self):
         #         return self.kernel
@@ -68,7 +75,10 @@ class TestUnit:
                     self.kernel.send('\n')
 
         def runprogram(self, cmd, args = ""):
-            self.send_command("p " + cmd + " " + args);
+            # make a copy of the program, so that students don't try 
+            # to guess the output of a program by its name
+            shutil.copy(self.cwd + cmd, self.cwd + self.prog)
+            self.send_command("p " + self.prog + " " + args);
 
 	def look_for(self, result):
 		try:

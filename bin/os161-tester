@@ -120,15 +120,15 @@ os161_tester() {
     echo "Running tests for Assignment $ASSIGNMENT";
     for test in ${TESTER_PATH}/testing-scripts/asst${ASSIGNMENT}*.py; do
         if [ -x $test ]; then
-            echo "Running: $test kernel";
-            $test kernel;
+            echo "Running: $test";
+            $test;
+            echo
         fi
     done
-    
+
     if [ -e os161-mark.txt ]; then
         awk -F "," 'BEGIN{total=0;mark=0}{total+=$2; mark+=$3}END{print "You received " mark " marks out of " total}' os161-mark.txt
     fi
-    echo
 }
 
 # for students, this will dry run the marker, i.e., it will run the svn

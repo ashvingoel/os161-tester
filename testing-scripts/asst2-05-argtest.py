@@ -3,22 +3,16 @@
 import core
 import sys
 
-def testPrintChar(kernel_name):
-	global test
-	test = core.TestUnit(kernel_name, "argtest")
-	test.runprogram("/testbin/argtest", "test")
-	check1 = 'argc: 2'
-	check2 = 'argv\[0\]: \/testbin\/argtest'
-	check3 = 'argv\[1\]: test'
-	test.look_for_and_print_result(check1, 2)
-	test.look_for_and_print_result(check2, 3)
-	test.look_for_and_print_result(check3, 3)
-
 def main():
-	path = str(sys.argv[1])
-	testPrintChar(path)
-
-
+    test = core.TestUnit("argtest")
+    test.runprogram("/testbin/argtest", "test")
+    check1 = 'argc: 2'
+    # runprogram changes the name of the program
+    check2 = 'argv\[0\]: '+ test.prog
+    check3 = 'argv\[1\]: test'
+    test.look_for_and_print_result(check1, 2)
+    test.look_for_and_print_result(check2, 3)
+    test.look_for_and_print_result(check3, 3)
 
 if __name__ == "__main__":
 	main()

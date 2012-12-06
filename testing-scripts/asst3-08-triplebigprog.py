@@ -3,14 +3,11 @@
 import core
 import sys
 
-def test(kernel_name):
-	test = core.TestUnit(kernel_name, "triplebigprog")
-        test.runprogram("/testbin/triplebigprog")
-        test.look_for_and_print_result('\n/testbin/triplebigprog: Congratulations! You passed.', 20)
-
 def main():
-	path = str(sys.argv[1])
-	test(path)
+    test = core.TestUnit("triplebigprog")
+    test.runprogram("/testbin/triplebigprog")
+    # runprogram changes the name of the program
+    test.look_for_and_print_result('\n' + test.prog + ': Congratulations! You passed.', 20)
 
 if __name__ == "__main__":
 	main()

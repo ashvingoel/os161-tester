@@ -131,8 +131,7 @@ def main():
     nr_cars = 20
     all_cars = [ -1 ] * nr_cars
 
-    kernel_name = str(sys.argv[1])
-    test = core.TestUnit(kernel_name, "Testing stoplight")
+    test = core.TestUnit("stoplight")
     result = stoplight(test, nr_cars, all_cars)
     # count the number of cars that left the intersection successfully
     result = 0
