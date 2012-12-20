@@ -70,6 +70,7 @@ def generateFail(grp, asst, mark):
 	b_line += 'Your submission failed. Please check attachment for the reasons\n\n'
 	if mark:
 		b_line += 'Your design score is ' + str(mark['mark']) + ' out of ' + str(mark['total']) + '\n\n'
+		print grp
 		storeResults(grp, str(mark['mark']), str(mark['total']))
 	return b_line
 
