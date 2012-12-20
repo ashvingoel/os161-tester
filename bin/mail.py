@@ -157,7 +157,7 @@ def generateEmail(grp, asst, TA):
 	design = parseDesignMark(grp)
 	if not mark:
 		files = ["os161-marker-" + grp + ".log"]
-		body = generateFail(grp, asst, design)
+		body = generateFail(utorid , asst, design)
 	else:
 		if design:
 			mark.append(design)
