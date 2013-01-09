@@ -1,1 +1,1 @@
-/homes/a/ashvin/ece344/os161-tester/testing-scripts/asst2-02-crash.py
+asst2-02-crash.py
