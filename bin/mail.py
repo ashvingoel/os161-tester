@@ -70,6 +70,7 @@ def generateFail(grp, asst, mark):
 	b_line += 'Your submission failed. Please check attachment for the reasons\n\n'
 	if mark:
 		b_line += 'Your design score is ' + str(mark['mark']) + ' out of ' + str(mark['total']) + '\n\n'
+		print grp
 		storeResults(grp, str(mark['mark']), str(mark['total']))
 	return b_line
 
@@ -156,7 +157,7 @@ def generateEmail(grp, asst, TA):
 	design = parseDesignMark(grp)
 	if not mark:
 		files = ["os161-marker-" + grp + ".log"]
-		body = generateFail(grp, asst, design)
+		body = generateFail(utorid , asst, design)
 	else:
 		if design:
 			mark.append(design)
@@ -164,7 +165,6 @@ def generateEmail(grp, asst, TA):
 		body = generateBody(grp, asst, mark, utorid)
 	hello = generateSalutation(utorid)
 	bye = generateBye(TA)
-	email.append("dhaval@eecg.toronto.edu")
 	email.append(TA)
 	message = hello + body + bye
 	return generateMail(email, message, asst, grp, files, TA)
