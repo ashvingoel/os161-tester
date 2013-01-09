@@ -165,7 +165,6 @@ def generateEmail(grp, asst, TA):
 		body = generateBody(grp, asst, mark, utorid)
 	hello = generateSalutation(utorid)
 	bye = generateBye(TA)
-	email.append("dhaval@eecg.toronto.edu")
 	email.append(TA)
 	message = hello + body + bye
 	return generateMail(email, message, asst, grp, files, TA)
