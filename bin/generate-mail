@@ -1,0 +1,68 @@
+#!/bin/bash
+
+TESTER_PATH=$(dirname $(readlink -f $BASH_SOURCE))
+. $TESTER_PATH/setup
+
+function usage() {
+    echo "Usage: $PROG assignment_nr" 1>&2;
+    exit 1;
+}
+
+if [ $# -ne 1 ]; then
+    usage;
+fi
+NR=$1
+
+if [ ! -f "${ROSTER_FILE}" ]; then
+	echo "Roster file ${ROSTER_FILE} not found" 1>&2
+        exit 1
+fi
+
+for GROUP in $(seq -f "%03g" ${START} ${END}); do
+    MARKS=
+    if [ -f "os161-mark-${GROUP}.txt" ]; then
+        MARKS=$(awk -F "," 'BEGIN{mark=0}{mark+=$3}END{printf "%s", mark}' os161-mark-${GROUP}.txt)
+        TOTAL=$(awk -F "," 'BEGIN{total=0}{total+=$2}END{printf "%s", total}' os161-mark-${GROUP}.txt)
+    fi
+    if [ -z "$MARKS" ]; then
+        MARKS_LINE="You have received 0 marks in this assignment."
+    else
+        MARKS_LINE="You have received $MARKS marks out of a total of $TOTAL marks."
+    fi
+    cat <<EOF > msg.txt
+
+Dear Group ${GROUP},
+
+Your submission for Lab $NR has been marked.
+
+$MARKS_LINE
+
+Please see the attached files for details.
+
+Please contact $TA with any questions.
+
+ECE344 TAs
+EOF
+    EMAILS=""
+    for LOGINID in $(grep "os-${GROUP}" /etc/group | cut -d ":" -f 4 | \
+        sed 's/,/ /g'); do
+        LINE=$(grep ${LOGINID} ${ROSTER_FILE}) 2> /dev/null;
+        if [ -n "$LINE" ]; then
+            EMAIL=$(echo $LINE | awk -F, '{printf "%s", $5}');
+            if [ -z "$EMAILS" ]; then
+                EMAILS="$EMAIL"
+            else
+                EMAILS="$EMAILS, $EMAIL"
+            fi
+        fi
+    done
+
+    if [ -n "$EMAILS" ]; then
+        ${TESTER_PATH}/mail.py -t "$TA" -m "$EMAILS" -f msg.txt \
+            -a $NR -g ${GROUP}
+    fi
+done
+
+rm msg.txt
+
+exit 0

@@ -1,60 +1,54 @@
-Instructions for using os161-tester
------------------------------------
+Installing os161-tester
+-----------------------
 
-- Get the roster file from UofT portal and save it in the templates directory as
-  roster.csv file.
+1. Edit the "setup" file found in the "bin" directory to suit your needs. This
+   file has an INSTALL_PATH path variable. All relative paths below are with
+   respect to this path.
+
+2. Run the following make command in this directory to setup the "os161-tester"
+   and "results" directories in the INSTALL_PATH.
+
+make
+
+3. Get the roster file from UofT portal and save it in the results/roster.csv
+   file.
 
 - From Control Panel >> Course Tools > UT Manage Groups
 - Click View/Download Selected Roster
 - Check "Student ID" box.
 - Check "Email" box.
 
-- Run the following command in this directory to setup the
-  /cad2/ece344f/os161-tester/results directory and copy various files into this
-  directory.
+4. Make sure that the roster.csv file has the following format. This format is
+   used by the generate-mail command described below.
 
-make results 
-
-- Run the following command to install os161-tester.
-
-make
-
-- From now onwards, all commands below are run in the /cad2/ece344f/os161-tester
-  directory.
+UTORiD,First Name,Last Name,Student Number,Email
 
 
-- Run the following command to get emails for students. This command will put
-  the email information in results/emails.txt
+Marking
+-------
 
-bin/get-email.sh
-
-- Run the following command for marking. This command will generate results in
-  results/asst_nr. Note that this command generates results in the current
-  directory.
+1. Run the following command for marking. This command will generate results in
+   the current directory (i.e., results/asst_nr).
 
 cd results/asst_nr
 bin/os161-tester -m asst_nr
 
-- Run the following command to get the design documents of students. This
-  command will create the design documents in results/asst_nr/design
+2. After running the previous command, run the following command to generate a
+   mailbox file that you can review. The mailbox file is called
+   mail-asst_nr.mbox.
 
-bin/get-design-doc asst_nr
+bin/generate-mail asst_nr
 
-- TA should update the design marks in results/asst_nr/design-marks.csv based on
-  the template found in results/design-marks-format.csv
+3. Use mutt (or your preferred mail client) to sanity check the emails
 
-- Run the following command to generate an mbox that you can review
+mutt -f mail-asst_nr.mbox
 
-bin/mail.py -t "ta_name <ta_email_address>" -a asst_nr -d design_marks -m emails-list
+4. If everything looks good, email the results to the students.
 
-- To understand this comand in detail, please run
+cat mail-asst_nr.mbox | /usr/sbin/sendmail -t
 
-bin/mail.py --help
+5. Use the get-diff program to generate patches. These patches can be checked
+for similarity using the stanford checker.
 
-- Use mutt (or your preferred mail client) to sanity check the emails
+bin/get-diff asst_nr
 
-mutt -f test.mbox
-
-- If everything looks good, go ahead and email the results to the students
-
-bin/mail.py -t "ta_name <ta_email_address>" -a asst_nr -d design_marks -m emails-list -r

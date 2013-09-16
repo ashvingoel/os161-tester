@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# This file has variables that are sourced by other scripts in this directory
+
+# change the install path to where sys161 is installed
+INSTALL_PATH=/cad2/ece344f
+
+#setup the path, making sure that our path is first
+export PATH=${INSTALL_PATH}/cs161/bin:/usr/local/bin:/local/bin:/usr/bin:/bin
+
+# svn repo path
+SVN_REP=svn+ssh://ug250.eecg.utoronto.ca/svn
+
+# starting number of student groups
+START=1
+
+# ending number of student groups
+END=75
+
+# student roster file
+ROSTER_FILE=${INSTALL_PATH}/results/roster.csv
+
+# Head TA
+TA="Ashvin Goel <ashvin@eecg.toronto.edu>"

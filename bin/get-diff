@@ -1,0 +1,24 @@
+#!/bin/bash
+
+TESTER_PATH=$(dirname $(readlink -f $BASH_SOURCE))
+. $TESTER_PATH/setup
+
+PROG=$(basename $0)
+
+function usage() {
+    echo "Usage: $PROG assignment_nr" 1>&2;
+    exit 1;
+}
+
+if [ $# -ne 1 ]; then
+    usage;
+fi
+NR=$1
+
+for GROUP in $(seq -f "%03g" ${START} ${END}); do
+    SVN_PATH=${SVN_REP}/os-${GROUP}/svn/tags
+    SVN_START=${SVN_PATH}/asst${NR}-start/kern
+    SVN_END=${SVN_PATH}/asst${NR}-end/kern
+    echo "Downloading patch for os-${GROUP}"
+    svn diff ${SVN_START} ${SVN_END} > asst${NR}-${GROUP}.patch
+done

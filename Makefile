@@ -3,38 +3,28 @@ TOP_DIR=/cad2/ece344f
 TESTER_DIR=$(TOP_DIR)/os161-tester
 INSTALL_BIN_DIR=$(TOP_DIR)/cs161/bin
 RESULTS_DIR=$(TOP_DIR)/results
+RESULTS_DIRS=$(RESULTS_DIR) \
+	$(RESULTS_DIR)/asst0 \
+	$(RESULTS_DIR)/asst1 \
+	$(RESULTS_DIR)/asst2 \
+	$(RESULTS_DIR)/asst3
 
-BIN_DIR=bin
-MARKING_DIR=marking-scripts
-OTHER_DIRS=src core testing-scripts sysconfig
-TESTER_SCRIPT=$(TESTER_DIR)/$(BIN_DIR)/os161-tester
+DIRS=bin src scripts
+TESTER_SCRIPT=$(TESTER_DIR)/bin/os161-tester
 
-# students shouldn't have access to the marking directory, but
-# TAs should have read access to it
-all: bin
+all: tester results
+
+tester:
 	mkdir -p $(TESTER_DIR) && \
-	rsync -avR --delete $(BIN_DIR) $(MARKING_DIR) $(OTHER_DIRS) $(TESTER_DIR)
-
-# && \
-#	chgrp e344F12 $(TESTER_DIR)/$(MARKING_DIR) && \
-#	chmod o-rwx $(TESTER_DIR)/$(MARKING_DIR)
-
-bin:
+	rsync -avR --delete $(DIRS) $(TESTER_DIR) && \
+	chgrp -R e344F13 $(TESTER_DIR) && \
+	chmod -R o-w,g+w $(TESTER_DIR) && \
 	ln -sf  $(TESTER_SCRIPT) $(INSTALL_BIN_DIR)
 
-
-# run this once
-# students shouldn't have access to the results directory, but
-# TAs should have read-write access to it
+# results directory
 results:
-	mkdir -p $(RESULTS_DIR) && \
-	chgrp e344F12 $(RESULTS_DIR) && \
-	chmod o-rwx,g+w,g+s $(RESULTS_DIR) && \
-	mkdir -m g+w,o-rwx -p $(RESULTS_DIR)/asst0 \
-			      $(RESULTS_DIR)/asst1 \
-	                      $(RESULTS_DIR)/asst2 \
-			      $(RESULTS_DIR)/asst3 && \
-	cp templates/design-marks-format.csv templates/roster.csv $(RESULTS_DIR)
+	mkdir -p $(RESULTS_DIRS) && \
+	chgrp -R e344F13 $(RESULTS_DIRS) && \
+	chmod o-rwx,g+w,g+s $(RESULTS_DIRS)
 
-
-.PHONY: all bin results
+.PHONY: all tester bin results
