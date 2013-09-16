@@ -21,8 +21,8 @@ fi
 for GROUP in $(seq -f "%03g" ${START} ${END}); do
     MARKS=
     if [ -f "os161-mark-${GROUP}.txt" ]; then
-        MARKS=$(awk -F "," 'BEGIN{mark=0}{mark+=$3}END{printf "%s", mark}' os161-mark-${GROUP}.txt)
-        TOTAL=$(awk -F "," 'BEGIN{total=0}{total+=$2}END{printf "%s", total}' os161-mark-${GROUP}.txt)
+        MARKS=$(awk -F "," 'BEGIN{mark=0}{mark+=$2}END{printf "%s", mark}' os161-mark-${GROUP}.txt)
+        TOTAL=$(awk -F "," 'BEGIN{total=0}{total+=$3}END{printf "%s", total}' os161-mark-${GROUP}.txt)
     fi
     if [ -z "$MARKS" ]; then
         MARKS_LINE="You have received 0 marks in this assignment."

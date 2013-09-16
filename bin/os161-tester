@@ -97,7 +97,7 @@ os161_tester() {
     done
     # parse the marks file
     if [ -f "os161-mark.txt" ]; then
-        awk -F "," 'BEGIN{total=0;mark=0}{total+=$2; mark+=$3}END{print "You received " mark " marks out of a total of " total " marks."}' os161-mark.txt
+        awk -F "," 'BEGIN{mark=0; total=0}{mark+=$2; total+=$3}END{print "You received " mark " marks out of a total of " total " marks."}' os161-mark.txt
     fi
     return 0;
 }

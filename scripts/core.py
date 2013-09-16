@@ -37,8 +37,8 @@ class TestUnit:
                     print 'Mark for ' + self.message + ' is ' + \
                         str(self.mark) + ' out of ' + str(self.total)
                     marker = open('os161-mark.txt', 'a')
-                    marker.write(self.message + ', ' + str(self.total) + \
-                                     ', ' + str(self.mark) + '\n')
+                    marker.write(self.message + ', ' + str(self.mark) + \
+                                     ', ' + str(self.total) + '\n')
                     marker.close()
                 # try:
                 #     os.remove(self.cwd + self.prog)

@@ -7,8 +7,7 @@ def main():
     test = core.TestUnit("argtest")
     test.runprogram("/testbin/argtest", "test")
     check1 = 'argc: 2'
-    # runprogram changes the name of the program
-    check2 = 'argv\[0\]: '+ test.prog
+    check2 = 'argv\[0\]: '+ "/testbin/argtest"
     check3 = 'argv\[1\]: test'
     test.look_for_and_print_result(check1, 2)
     test.look_for_and_print_result(check2, 3)

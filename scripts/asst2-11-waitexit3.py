@@ -7,7 +7,7 @@ def main():
 	test = core.TestUnit("waitexit3")
         test.runprogram("/testbin/waitexit3")
 	check = 'acp'
-	test.look_for_and_print_result(check, 6)
+	test.look_for_and_print_result(check, 5)
 
 if __name__ == "__main__":
 	main()
