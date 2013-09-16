@@ -16,9 +16,9 @@ def main():
         if result == -1: # get out of outer loop on failure
             break
     if result == 0:
-        test.look_for_and_print_result('CV test done', 10)
+        test.look_for_and_print_result('CV test done', 15)
     else: # no partial mark
-        test.print_result(0, 10)
+        test.print_result(0, 15)
 
 
 if __name__ == "__main__":
