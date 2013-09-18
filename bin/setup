@@ -22,3 +22,33 @@ ROSTER_FILE=${INSTALL_PATH}/results/roster.csv
 
 # Head TA
 TA="Ashvin Goel <ashvin@eecg.toronto.edu>"
+
+# Marks for each assignment
+# Update these marks if the scripts are updated
+
+TOTAL_0=25
+TOTAL_1=100
+TOTAL_2=100
+TOTAL_3=200
+
+
+# common functions
+
+# sets global variables MARKS and TOTAL
+function get_marks() {
+    NR=$1
+    MARKS_FILE=$2
+
+    # TOTAL from above
+    TOTAL=$(eval echo \$TOTAL_$NR)
+    if [ -f "$MARKS_FILE" ]; then
+        MARKS=$(awk -F "," 'BEGIN{mark=0}{mark+=$2}END{printf "%s", mark}' $MARKS_FILE)
+        SUM=$(awk -F "," 'BEGIN{sum=0}{sum+=$3}END{printf "%s", sum}' $MARKS_FILE)
+        if [ "$SUM" -ne "$TOTAL" ]; then
+            echo "Sum: $SUM != Total: $TOTAL" 1>&2;
+        fi
+    fi
+    if [ -z "$MARKS" ]; then
+        MARKS=0
+    fi
+}

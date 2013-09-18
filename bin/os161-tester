@@ -95,10 +95,10 @@ os161_tester() {
             echo
         fi
     done
+
     # parse the marks file
-    if [ -f "os161-mark.txt" ]; then
-        awk -F "," 'BEGIN{mark=0; total=0}{mark+=$2; total+=$3}END{print "You received " mark " marks out of a total of " total " marks."}' os161-mark.txt
-    fi
+    get_marks $NR "os161-mark.txt"
+    echo "You have received $MARKS marks out of a total of $TOTAL marks."
     return 0;
 }
 
@@ -173,7 +173,7 @@ else
         # students will have access to only their repository
         if expr "$(groups)" : ".*os-${GROUP}" > /dev/null; then
             echo -n "Output being sent to "
-            echo -n "os161-pexpect-${GROUP}.log, os161-mark-${GROUP}.txt"
+            echo -n "os161-pexpect-${GROUP}.log, os161-mark-${GROUP}.txt, "
             echo "os161-tester-${GROUP}.log, os161-marker-${GROUP}.log"
 
             # remember current dir

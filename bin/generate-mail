@@ -4,13 +4,44 @@ TESTER_PATH=$(dirname $(readlink -f $BASH_SOURCE))
 . $TESTER_PATH/setup
 
 function usage() {
-    echo "Usage: $PROG assignment_nr" 1>&2;
+    echo "Usage: $PROG [-h] [-s start] [-e end] assignment_nr" 1>&2;
+    echo "           -h: show this message" 1>&2;
+    echo "     -s start: run marker starting from group 'start'" 1>&2;
+    echo "       -e end: run marker until group 'end'" 1>&2;
+    echo "assignment_nr: run test on lab number" 1>&2
+    echo "               must be 0, 1, 2 or 3" 1>&2;
     exit 1;
 }
+
+# getopts processing
+while getopts "hs:e:" ARG ; do
+    if [ ${ARG} = 's' ]; then
+        START=$OPTARG;
+        if ! [[ "$START" =~ ^[0-9]+$ ]] ; then
+            usage;
+        fi
+    elif [ ${ARG} = 'e' ]; then
+        END=$OPTARG;
+        if ! [[ "$END" =~ ^[0-9]+$ ]] ; then
+            usage;
+        fi
+    elif [ ${ARG} = 'h' ]; then
+        usage;
+    else
+        usage;
+    fi
+done
+
+shift $((OPTIND-1))
 
 if [ $# -ne 1 ]; then
     usage;
 fi
+
+if [ $1 != "0" -a $1 != "1" -a $1 != "2" -a $1 != "3" ]; then
+    usage;
+fi
+
 NR=$1
 
 if [ ! -f "${ROSTER_FILE}" ]; then
@@ -19,23 +50,14 @@ if [ ! -f "${ROSTER_FILE}" ]; then
 fi
 
 for GROUP in $(seq -f "%03g" ${START} ${END}); do
-    MARKS=
-    if [ -f "os161-mark-${GROUP}.txt" ]; then
-        MARKS=$(awk -F "," 'BEGIN{mark=0}{mark+=$2}END{printf "%s", mark}' os161-mark-${GROUP}.txt)
-        TOTAL=$(awk -F "," 'BEGIN{total=0}{total+=$3}END{printf "%s", total}' os161-mark-${GROUP}.txt)
-    fi
-    if [ -z "$MARKS" ]; then
-        MARKS_LINE="You have received 0 marks in this assignment."
-    else
-        MARKS_LINE="You have received $MARKS marks out of a total of $TOTAL marks."
-    fi
+    get_marks $NR "os161-mark-${GROUP}.txt"
     cat <<EOF > msg.txt
 
 Dear Group ${GROUP},
 
 Your submission for Lab $NR has been marked.
 
-$MARKS_LINE
+"You have received $MARKS marks out of a total of $TOTAL marks."
 
 Please see the attached files for details.
 
