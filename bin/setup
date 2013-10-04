@@ -15,13 +15,13 @@ SVN_REP=svn+ssh://ug250.eecg.utoronto.ca/svn
 START=1
 
 # ending number of student groups
-END=75
+END=99
 
 # student roster file
 ROSTER_FILE=${INSTALL_PATH}/results/roster.csv
 
 # Head TA
-TA="Ashvin Goel <ashvin@eecg.toronto.edu>"
+TA="Kuei (Jack) Sun <kuei.sun@utoronto.ca>"
 
 # Marks for each assignment
 # Update these marks if the scripts are updated
@@ -47,6 +47,8 @@ function get_marks() {
         if [ "$SUM" -ne "$TOTAL" ]; then
             echo "Sum: $SUM != Total: $TOTAL" 1>&2;
         fi
+    else
+        MARKS=""
     fi
     if [ -z "$MARKS" ]; then
         MARKS=0

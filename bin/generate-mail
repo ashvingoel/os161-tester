@@ -49,6 +49,9 @@ if [ ! -f "${ROSTER_FILE}" ]; then
         exit 1
 fi
 
+# remove old mbox file, if it exists
+rm -f mail-$NR.mbox
+
 for GROUP in $(seq -f "%03g" ${START} ${END}); do
     get_marks $NR "os161-mark-${GROUP}.txt"
     cat <<EOF > msg.txt
