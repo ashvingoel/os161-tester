@@ -24,7 +24,7 @@ tester:
 # results directory
 results:
 	mkdir -p $(RESULTS_DIRS) && \
-	chgrp -R e344F13 $(RESULTS_DIRS) && \
+	chgrp e344F13 $(RESULTS_DIRS) && \
 	chmod o-rwx,g+w,g+s $(RESULTS_DIRS)
 
 .PHONY: all tester bin results
