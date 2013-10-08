@@ -3,7 +3,7 @@
 # This file has variables that are sourced by other scripts in this directory
 
 # change the install path to where sys161 is installed
-INSTALL_PATH=/cad2/ece344f
+INSTALL_PATH=/home/sunk/homework/os161-tester
 
 #setup the path, making sure that our path is first
 export PATH=${INSTALL_PATH}/cs161/bin:/usr/local/bin:/local/bin:/usr/bin:/bin
@@ -19,6 +19,9 @@ END=99
 
 # student roster file
 ROSTER_FILE=${INSTALL_PATH}/results/roster.csv
+
+# number of sections
+NUM_SECTIONS=2
 
 # Head TA
 TA="Kuei (Jack) Sun <kuei.sun@utoronto.ca>"
