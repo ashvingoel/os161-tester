@@ -52,3 +52,28 @@ for similarity using the stanford checker.
 
 bin/get-diff asst_nr
 
+6. Download csv files from grade center by clicking on "Work Offline" followed
+   by "Download" for each lecture. For "Data", choose "Selected Column" and
+   pick the appropriate assignment column (e.g., for lab 0 you would pick the
+   equivalent column for lab 0). For "Options", choose "Comma" as your 
+   "Delimiter Type" and "My Computer" for your "Save Location. Click on
+   "Submit" followed by "Download" to download your file. Place all csv files
+   under the appropriate asst_nr folder.
+   
+7. Run the following command for updating the csv files (replace asst_nr where
+   appropriate)
+
+cd results/asst_nr
+bin/update-mark -n asst_nr *.csv
+
+8. The script should tell you how many marks were updated, and how many students
+   there are in total in all of the csv files combined (the two numbers should
+   be equal). 
+   
+9. Upload the csv files by going the grade center and click on "Work Offline"
+   followed by "Upload". Choose the correct csv file for the appropriate
+   lecture section, and press "Submit". You will see a confirmation page
+   which asks you which column(s) to update. Click "OK" to complete this step.
+   
+
+

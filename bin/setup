@@ -3,7 +3,7 @@
 # This file has variables that are sourced by other scripts in this directory
 
 # change the install path to where sys161 is installed
-INSTALL_PATH=/home/sunk/homework/os161-tester
+INSTALL_PATH=/cad2/ece344f
 
 #setup the path, making sure that our path is first
 export PATH=${INSTALL_PATH}/cs161/bin:/usr/local/bin:/local/bin:/usr/bin:/bin
