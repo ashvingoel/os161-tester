@@ -33,6 +33,11 @@ Marking
 cd results/asst_nr
 bin/os161-tester -m asst_nr
 
+   Hint: You can keep the marker running in the background, even after you logout,
+   by typing the following command:
+   
+nohup bin/os161-tester -m asst_nr &
+
 2. After running the previous command, run the following command to generate a
    mailbox file that you can review. The mailbox file is called
    mail-asst_nr.mbox.
