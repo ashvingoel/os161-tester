@@ -22,6 +22,7 @@ def main():
         # the second argument is 0, so don't wait for menu prompt
         res = test.send_command(i, 0)
         test.look_for_and_print_result(check + str(outputs[i]), 1)
+        res = test.send_command("")
 
 if __name__ == "__main__":
-	main()
+    main()
