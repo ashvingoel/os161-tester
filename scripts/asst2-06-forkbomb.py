@@ -9,7 +9,7 @@ def main():
     test.runprogram("/testbin/forkbomb")
     result = test.look_for(check)
 
-    if result != -1:
+    if result != test.errors['TIMEOUT']:
         test.print_result(0, 8)
     else:
         test.print_result(8, 8)

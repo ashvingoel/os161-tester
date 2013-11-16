@@ -33,7 +33,7 @@ Marking
 cd results/asst_nr
 bin/os161-tester -m asst_nr
 
-   Hint: You can keep the marker running in the background, even after you logout,
+   You can keep the marker running in the background, even after you logout,
    by typing the following command:
    
 nohup bin/os161-tester -m asst_nr &

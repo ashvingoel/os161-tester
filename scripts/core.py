@@ -25,25 +25,29 @@ class TestUnit:
                 self.kernel = pexpect.spawn(path, timeout = 10)
                 self.mark = 0
                 self.total = 0
+                self.crashed = 0
                 self.message = message
                 print message
                 # pexpect copies all input and output to this file
                 self.kernel.logfile = open('os161-pexpect.log', 'a')
                 self.cwd = os.getcwd()
+                self.prog = "/testbin/os161testerprog"
+                self.errors = {'CRASHED' : -1, 'TIMEOUT' : -2, 'EOF' : -3,
+                               'BUG' : -4 }
 
         def __del__(self):
                 self.kernel.logfile.close()
                 if (self.total > 0):
-                    print 'Mark for ' + self.message + ' is ' + \
-                        str(self.mark) + ' out of ' + str(self.total)
-                    marker = open('os161-mark.txt', 'a')
-                    marker.write(self.message + ', ' + str(self.mark) + \
+                        print 'Mark for ' + self.message + ' is ' + \
+                                str(self.mark) + ' out of ' + str(self.total)
+                        marker = open('os161-mark.txt', 'a')
+                        marker.write(self.message + ', ' + str(self.mark) + \
                                      ', ' + str(self.total) + '\n')
-                    marker.close()
-                # try:
-                #     os.remove(self.cwd + self.prog)
-                # except OSError:
-                #     pass
+                        marker.close()
+                try:
+                        os.remove(self.cwd + self.prog)
+                except OSError:
+                        pass
 
         # def kernel(self):
         #         return self.kernel
@@ -59,10 +63,12 @@ class TestUnit:
                     try:
                         self.kernel.expect('OS\/161 kernel \[\? for menu\]\: ')
                     except Exception:
+                        self.crashed = 1
                         print 'OS HAS CRASHED'
-                #The fun bit is, we need to send the command character by
-                #character to the simulator, otherwise we are going to have
-                #a lot of fun ;-)
+                        return
+                # The fun bit is, we need to send the command character by
+                # character to the simulator, otherwise we are going to have
+                # a lot of fun ;-)
                 if self.verbose > 1:
                         print "SENDING: " + cmd
                 cmd_char = list(cmd)
@@ -72,29 +78,32 @@ class TestUnit:
                     self.kernel.send('\n')
 
         def runprogram(self, cmd, args = ""):
-            # make a copy of the program, so that students don't try 
-            # to guess the output of a program by its name
-            # shutil.copy(self.cwd + cmd, self.cwd + self.prog)
-            # self.send_command("p " + self.prog + " " + args);
-            self.send_command("p " + cmd + " " + args);
+                # self.send_command("p " + cmd + " " + args);
+                # make a copy of the program, so that students don't try 
+                # to guess the output of a program by its name
+                shutil.copy(self.cwd + cmd, self.cwd + self.prog)
+                self.send_command("p " + self.prog + " " + args);
 
         def look_for(self, result):
+                if (self.crashed > 0):
+                        return self.errors['CRASHED']
                 try:
                         if self.verbose > 1:
                                 print "EXPECTING: " + str(result)
                         index = self.kernel.expect(result)
+                        # print "BEFORE: \"" + self.kernel.before + "\""
                         if self.verbose > 0:
                                 print "FOUND: " + self.kernel.match.group(0)
                 except pexpect.TIMEOUT, e:
                         print "TIMEOUT ERROR"
-                        return -1
+                        return self.errors['TIMEOUT']
                 except pexpect.EOF:
                         print "END OF FILE ERROR"
-                        return -2
+                        return self.errors['EOF']
                 except Exception, e:
                         print "UNEXPECTED ERROR", sys.exc_info()[0]
                         print "\nPLEASE REPORT THIS TO THE INSTRUCTOR OR A TA\n"
-                        return -3
+                        return self.errors['BUG']
                 return index
 
         def print_result(self, mark_obtained, mark):
