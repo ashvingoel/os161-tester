@@ -6,7 +6,7 @@ import sys
 def checkDBValue(test, res):
     check = 'Current value of dbflags is ' + res
     test.send_command("dbflags")
-    test.look_for_and_print_result(check, 1)
+    test.look_for_and_print_result_no_wait(check, 1)
 
 def setDBValue(test, value, on):
     path = "df " + str(value) + " " + on
@@ -16,7 +16,7 @@ def failDBValue(test, value, on):
     print "Turning " + on + " dbflags value " + str(value)
     check = 'Usage: df nr on\/off'
     setDBValue(test, value, on)
-    test.look_for_and_print_result(check, 1)
+    test.look_for_and_print_result_no_wait(check, 1)
 
 def testDBValue(test, value, on, res):
     print "Turning " + on + " dbflags value " + str(value)
@@ -26,9 +26,10 @@ def testDBValue(test, value, on, res):
 def main():
     test = core.TestUnit("dbflags")
 
-    #Check if we have the dbflags menu option
+    # Check if we have the dbflags menu option
     test.send_command("?o")
-    test.look_for_and_print_result('\[dbflags\] Debug flags', 1)
+    # parent is not synchronized with child, so don't wait for menu
+    test.look_for_and_print_result_no_wait('\[dbflags\] Debug flags', 1)
     checkDBValue(test, "0x0")
 
     on = "on"

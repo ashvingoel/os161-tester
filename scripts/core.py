@@ -6,7 +6,7 @@ import os
 import shutil
 
 class TestUnit:
-        #Implicit assumptions, sys161 is in path
+        # we assume that sys161 is in path
         def set_timeout(self, timeout):
             self.kernel.timeout = timeout
             if self.verbose > 0:
@@ -37,7 +37,7 @@ class TestUnit:
 
         def __del__(self):
                 self.kernel.logfile.close()
-                if (self.total > 0):
+                if self.total > 0:
                         print 'Mark for ' + self.message + ' is ' + \
                                 str(self.mark) + ' out of ' + str(self.total)
                         marker = open('os161-mark.txt', 'a')
@@ -55,32 +55,43 @@ class TestUnit:
         # def verbose(self):
         #         return self.verbose
 
+        # wait for menu
+        def wait_for_menu(self, wait):
+                if wait == 0:
+                    return
+                try:
+                        self.kernel.expect('OS\/161 kernel \[\? for menu\]\: ')
+                except Exception:
+                        self.crashed = 1
+                        print 'OS HAS CRASHED'
+
         # By default, we wait before we send a command.
         # However, if wait is set to 0, then we don't wait AND
         # we don't send the newline.
         def send_command(self, cmd, wait = 1):
-                if wait:
-                    try:
-                        self.kernel.expect('OS\/161 kernel \[\? for menu\]\: ')
-                    except Exception:
-                        self.crashed = 1
-                        print 'OS HAS CRASHED'
+                self.wait_for_menu(wait)
+                if self.crashed > 0:
                         return
+                if self.verbose > 1:
+                        print "SENDING: " + cmd
                 # The fun bit is, we need to send the command character by
                 # character to the simulator, otherwise we are going to have
                 # a lot of fun ;-)
-                if self.verbose > 1:
-                        print "SENDING: " + cmd
                 cmd_char = list(cmd)
                 for i in cmd_char:
                         self.kernel.send(i)
                 if wait:
                     self.kernel.send('\n')
 
+        def send_command_no_wait(self, cmd):
+                self.send_command(cmd, 0)
+
         def runprogram(self, cmd, args = ""):
                 # self.send_command("p " + cmd + " " + args);
                 # make a copy of the program, so that students don't try 
                 # to guess the output of a program by its name
+                if self.verbose > 1:
+                        print "Running: " + "p " + cmd + " " + args
                 shutil.copy(self.cwd + cmd, self.cwd + self.prog)
                 self.send_command("p " + self.prog + " " + args);
 
@@ -106,18 +117,23 @@ class TestUnit:
                         return self.errors['BUG']
                 return index
 
-        def print_result(self, mark_obtained, mark):
+        def print_result(self, mark_obtained, mark, wait = 1):
                 self.total += mark
                 self.mark += mark_obtained
-                if mark_obtained == mark:
+                if mark_obtained > 0:
+                    self.wait_for_menu(wait)
+                if (mark_obtained == mark) and (self.crashed == 0):
                         print "PASS"
                 else:
                         print "FAIL"
 
 
-        def look_for_and_print_result(self, result, mark):
+        def look_for_and_print_result(self, result, mark, wait = 1):
                 out = self.look_for(result)
-                if (out >= 0):
-                        self.print_result(mark, mark)
+                if out >= 0:
+                        self.print_result(mark, mark, wait)
                 else:
                         self.print_result(0, mark)
+
+        def look_for_and_print_result_no_wait(self, result, mark):
+                self.look_for_and_print_result(result, mark, 0)
