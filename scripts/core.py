@@ -21,6 +21,16 @@ class TestUnit:
                         self.verbose = int(self.verbose)
                 except ValueError:
                         self.verbose = 0
+
+                try:
+                        self.swapping = os.environ['OS161_SWAPPING']
+                except KeyError:
+                        self.swapping = 0
+                try:
+                        self.swapping = int(self.swapping)
+                except ValueError:
+                        self.swapping = 0
+
                 path = 'sys161 ' + str(path_to_kernel)
                 self.kernel = pexpect.spawn(path, timeout = 10)
                 self.mark = 0

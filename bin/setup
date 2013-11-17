@@ -26,14 +26,23 @@ NUM_SECTIONS=2
 # Head TA
 TA="Kuei (Jack) Sun <kuei.sun@utoronto.ca>"
 
+# Is swapping being implemented in ASST3? If it is not being implemented, 
+# some of the tests are not run.
+# OS161_SWAPPING=1
+export OS161_SWAPPING=0
+
 # Marks for each assignment
 # Update these marks if the scripts are updated
 
 TOTAL_0=25
 TOTAL_1=100
 TOTAL_2=100
-TOTAL_3=150
 
+if [ "$OS161_SWAPPING" -eq 1 ]; then
+    TOTAL_3=150
+else
+    TOTAL_3=110
+fi
 
 # common functions
 

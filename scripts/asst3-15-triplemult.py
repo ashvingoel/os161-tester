@@ -5,6 +5,8 @@ import sys
 
 def main():
     test = core.TestUnit("triplemat")
+    if test.swapping == 0:
+        return
     test.runprogram("/testbin/triplemat")
     test.set_timeout(720)
     # runprogram changes the name of the program
