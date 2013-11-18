@@ -5,6 +5,8 @@ import sys
 
 def main():
     test = core.TestUnit("forktest")
+    if test.swapping == 0:
+        return
     test.runprogram("/testbin/forktest")
     test.set_timeout(150)
 

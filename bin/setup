@@ -39,9 +39,9 @@ TOTAL_1=100
 TOTAL_2=100
 
 if [ "$OS161_SWAPPING" -eq 1 ]; then
-    TOTAL_3=150
+    TOTAL_3=175
 else
-    TOTAL_3=110
+    TOTAL_3=125
 fi
 
 # common functions
