@@ -48,9 +48,11 @@ bin/generate-mail asst_nr
 
 mutt -f mail-asst_nr.mbox
 
-4. If everything looks good, email the results to the students.
+4. If everything looks good, email the results to the students. The following
+command will breakup mail-asst_nr.mbox into one email file at a time and use
+sendmail to email the file to each group.
 
-cat mail-asst_nr.mbox | /usr/sbin/sendmail -t
+bin/send-mail asst_nr
 
 5. Use the get-diff program to generate patches. These patches can be checked
 for similarity using the stanford checker.
