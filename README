@@ -26,6 +26,10 @@ UTORiD,First Name,Last Name,Student Number,Email
 
 Marking
 -------
+0. First get a copy of the assignment sources.
+
+cd results/asst_nr
+bin/get-sources asst_nr
 
 1. Run the following command for marking. This command will generate results in
    the current directory (i.e., results/asst_nr).
@@ -54,10 +58,17 @@ sendmail to email the file to each group.
 
 bin/send-mail asst_nr
 
-5. Use the get-diff program to generate patches. These patches can be checked
-for similarity using the stanford checker.
+5. Use the get-diff program to generate patches. The program uses the sources
+that were downloaded by the get-sources program. The patches can be checked
+for similarity using moss, the stanford checker.
 
 bin/get-diff asst_nr
+bin/moss os-0[0-9][0-9].txt
+
+   Run the compare program to see how many lines have exact matches in the
+   different assignments. This program takes a long time to run.
+
+bin/compare
 
 6. Download csv files from grade center by clicking on "Work Offline" followed
    by "Download" for each lecture. For "Data", choose "Selected Column" and

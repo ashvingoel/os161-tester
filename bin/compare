@@ -1,0 +1,26 @@
+#!/bin/bash
+
+TESTER_PATH=$(dirname $(readlink -f $BASH_SOURCE))
+. $TESTER_PATH/setup
+
+for GROUP_NUM in $(seq -f "%03g" ${START} ${END}); do
+	GROUP=os-$GROUP_NUM
+	FILE=$GROUP.txt
+        SORTED_FILE=sorted-$GROUP_NUM.txt
+        rm -f $SORTED_FILE
+        touch $SORTED_FILE
+
+        cat $FILE | sed 's/ //g' | sed 's/\t//g' | sort > $SORTED_FILE
+done
+
+for GROUP_NUM1 in $(seq -f "%03g" ${START} ${END}); do
+        for GROUP_NUM2 in $(seq -f "%03g" ${START} ${END}); do
+                if [ $GROUP_NUM1 -gt $GROUP_NUM2 ]; then
+                    grep -Fxf \
+                        sorted-$GROUP_NUM1.txt sorted-$GROUP_NUM2.txt | \
+                        uniq > sorted-$GROUP_NUM1-$GROUP_NUM2.txt
+                fi
+        done
+done
+
+wc -l sorted-[0-9]*-[0-9]*.txt | sort -n
