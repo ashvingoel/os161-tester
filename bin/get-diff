@@ -68,14 +68,14 @@ for GROUP_NUM in $(seq -f "%03g" ${START} ${END}); do
         find $AFTER/$GROUP -name "*".[ch] | sort | \
 	while read -r FN; do
                 FO=${FN/$CURR/$PREV}
-                if [ ! -f $FO ]; then
-                    FO=/dev/zero
+                if [ -f $FN -a -f $FO ]; then
+                        cmp $FO $FN > /dev/null
+                        if [ $? -eq 0 ]; then
+                                continue;
+                        fi
                 fi
-                cmp $FO $FN > /dev/null
-                if [ $? -ne 0 ]; then
-                    add_header $FN $FILE
-                    diff -w $FN $FO >> $FILE
-                fi
+                add_header $FN $FILE
+                diff -w -N $FN $FO >> $FILE
         done
 done
 
