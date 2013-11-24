@@ -62,13 +62,19 @@ bin/send-mail asst_nr
 that were downloaded by the get-sources program. The patches can be checked
 for similarity using moss, the stanford checker.
 
-bin/get-diff asst_nr
-bin/moss os-0[0-9][0-9].txt
+compare/get-diff asst_nr
+compare/moss os-0[0-9][0-9].txt
 
-   Run the compare program to see how many lines have exact matches in the
-   different assignments. This program takes a long time to run.
+   Run the linecompare program to see how many lines have exact matches in
+   the different assignments. This program takes a long time to run.
 
-bin/compare
+compare/linecompare
+
+   You can also use the aggregator program that gets the sources from svn. This
+   program generates all files that have changed since the last assignment.
+
+compare/aggregator asst_nr
+compare/moss os-0[0-9][0-9].txt
 
 6. Download csv files from grade center by clicking on "Work Offline" followed
    by "Download" for each lecture. For "Data", choose "Selected Column" and
