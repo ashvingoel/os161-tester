@@ -29,7 +29,7 @@ Marking
 0. First get a copy of the assignment sources.
 
 cd results/asst_nr
-bin/get-sources asst_nr
+bin/get-src asst_nr
 
 1. Run the following command for marking. This command will generate results in
    the current directory (i.e., results/asst_nr).

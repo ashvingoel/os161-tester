@@ -43,10 +43,13 @@ fi
 
 NR=$1
 SVNDIR="tags/asst${NR}-end"
+SRC_PATH=$INSTALL_PATH/results/asst$NR/source
+
+mkdir -p ${SRC_PATH}
 
 for (( i=${START}; i <= ${END}; i++ ))
 do
 	FOLDER=`printf "os-%03d" "$i"`
 	URL=`printf "$SVN_REP/os-%03d/svn/$SVNDIR/kern" "$i"`
-	svn co $URL "$FOLDER/kern"
+	svn co $URL "$SRC_PATH/$FOLDER/kern"
 done

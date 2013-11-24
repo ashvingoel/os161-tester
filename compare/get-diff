@@ -56,7 +56,6 @@ NR=$1
 
 PREV=asst$((NR-1))
 CURR=asst$NR
-BEFORE=$INSTALL_PATH/results/$PREV/source
 AFTER=$INSTALL_PATH/results/$CURR/source
 
 for GROUP_NUM in $(seq -f "%03g" ${START} ${END}); do
