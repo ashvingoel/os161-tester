@@ -1,3 +1,16 @@
+Index: testbin/Makefile
+===================================================================
+--- testbin/Makefile	(revision 14)
++++ testbin/Makefile	(revision 15)
+@@ -54,6 +54,8 @@
+ 
+ 	(cd bigprog && $(MAKE) $@)
+ 	(cd triplebigprog && $(MAKE) $@)
++	(cd vectormult && $(MAKE) $@)
++
+ # But not:
+ #    malloctest     (no malloc/free until you write it)
+ #    userthreads    (no support in kernel API in base system)
 Index: testbin/vectormult/Makefile
 ===================================================================
 --- testbin/vectormult/Makefile	(revision 0)
@@ -14,6 +27,23 @@ Index: testbin/vectormult/Makefile
 +
 Index: testbin/vectormult/depend.mk
 ===================================================================
+--- testbin/vectormult/depend.mk	(revision 0)
++++ testbin/vectormult/depend.mk	(revision 15)
+@@ -0,0 +1,14 @@
++
++vectormult.o: \
++ vectormult.c \
++ $(OSTREE)/include/unistd.h \
++ $(OSTREE)/include/sys/types.h \
++ $(OSTREE)/include/machine/types.h \
++ $(OSTREE)/include/kern/types.h \
++ $(OSTREE)/include/kern/unistd.h \
++ $(OSTREE)/include/kern/ioctl.h \
++ $(OSTREE)/include/stdio.h \
++ $(OSTREE)/include/stdarg.h \
++ $(OSTREE)/include/err.h
++
++
 Index: testbin/vectormult/vectormult.c
 ===================================================================
 --- testbin/vectormult/vectormult.c	(revision 0)
@@ -100,16 +130,3 @@ Added: svn:ignore
    + vectormult
 
 
-Index: testbin/Makefile
-===================================================================
---- testbin/Makefile	(revision 14)
-+++ testbin/Makefile	(revision 15)
-@@ -54,6 +54,8 @@
- 
- 	(cd bigprog && $(MAKE) $@)
- 	(cd triplebigprog && $(MAKE) $@)
-+	(cd vectormult && $(MAKE) $@)
-+
- # But not:
- #    malloctest     (no malloc/free until you write it)
- #    userthreads    (no support in kernel API in base system)
