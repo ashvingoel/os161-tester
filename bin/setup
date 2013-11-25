@@ -28,8 +28,11 @@ TA="Kuei (Jack) Sun <kuei.sun@utoronto.ca>"
 
 # Is swapping being implemented in ASST3? If it is not being implemented, 
 # some of the tests are not run.
-# OS161_SWAPPING=1
-export OS161_SWAPPING=0
+# In the following code, if OS161_SWAPPING is already set by user, don't set it.
+# 
+# OS161_SWAPPING=${OS161_SWAPPING-1}
+OS161_SWAPPING=${OS161_SWAPPING-0}
+export OS161_SWAPPING
 
 # Marks for each assignment
 # Update these marks if the scripts are updated
