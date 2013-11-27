@@ -1,7 +1,7 @@
 #!/bin/bash
 
 TESTER_PATH=$(dirname $(readlink -f $BASH_SOURCE))
-. $TESTER_PATH/setup
+. $TESTER_PATH/../bin/setup
 
 for GROUP_NUM in $(seq -f "%03g" ${START} ${END}); do
 	GROUP=os-$GROUP_NUM
