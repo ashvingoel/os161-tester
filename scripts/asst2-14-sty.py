@@ -7,7 +7,7 @@ import re
 def main():
     out = 0
     test = core.TestUnit("sty")
-    check = '\nOperation took.* seconds'
+    check = '\n6 hogs are back in the pen.'
     for i in range(10):
         # TODO: should we check that we built sty
         test.runprogram("/testbin/sty")
