@@ -58,17 +58,29 @@ sendmail to email the file to each group.
 
 bin/send-mail asst_nr
 
-5. Use the get-diff program to generate patches. The program uses the sources
-that were downloaded by the get-sources program. The patches can be checked
-for similarity using moss, the stanford checker.
+5. Use the get-all-diff program to generate patches. The program uses the
+sources that were downloaded by the get-src program. The patches are named
+os-GROUP_NUM.txt. These patches can be checked for similarity using moss, the
+stanford checker.
 
-compare/get-diff asst_nr
+compare/get-all-diff asst_nr
 compare/moss os-0[0-9][0-9].txt
 
    Run the linecompare program to see how many lines have exact matches in
    the different assignments. This program takes a long time to run.
 
 compare/linecompare
+
+   Say you find a repository on the Internet that has the OS161 code. Download
+   it. Example: 
+
+git clone https://github.com/zqureshi/CSC369.git
+
+   Then create a patch file for this source from our sources using the get-diff
+   program, and then feed to moss.
+
+compare/get-diff CSC369/a3/src/kern os161-1.11/kern CSC369.txt
+compare/moss os-0[0-9][0-9].txt CSC369.txt
 
    You can also use the aggregator program that gets the sources from svn. This
    program generates all files that have changed since the last assignment.
