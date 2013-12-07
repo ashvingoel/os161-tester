@@ -46,7 +46,7 @@ nohup bin/os161-tester -m asst_nr &
    mailbox file that you can review. The mailbox file is called
    mail-asst_nr.mbox.
 
-bin/generate-mail asst_nr
+bin/generate-mail -n asst_nr
 
 3. Use mutt (or your preferred mail client) to sanity check the emails
 
